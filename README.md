@@ -1,29 +1,109 @@
-# Create T3 App
+# Valora
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+### "Command your inbox. Own your time."
 
-## What's next? How do I make an app with this?
+**The AI-native command center for Gmail and Google Calendar.**
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Valora is a Superhuman-grade productivity app — built for professionals who refuse to let their inbox run their life. Powered by Corsair integrations and a production-grade AI agent.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+🌐 [valorahq.in](https://valorahq.in) · 🐦 [@valorahq](https://twitter.com/valorahq)
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+---
 
-## Learn More
+## Features
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- **🤖 AI Priority Inbox** — LLM-powered email classification (urgent/high/normal/low)
+- **⌨️ Keyboard-first** — Full command palette + vim-like shortcuts
+- **📅 Unified command center** — Gmail + Google Calendar in one workspace
+- **🧠 AI Agent** — Chat with your inbox, schedule meetings, draft replies
+- **🔔 Real-time webhooks** — Corsair push notifications, no polling
+- **🔍 Lightning search** — pgvector semantic search under 1 second
+- **🛡️ Security Shield** — Auto-filter bank/OTP/sensitive emails
+- **🌙 Dark mode first** — Premium dark UI with light mode toggle
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+---
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Tech Stack
 
-## How do I deploy this?
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 15 (App Router) |
+| Styling | Tailwind CSS v4 + Radix UI |
+| Database | PostgreSQL (Neon) + pgvector |
+| Auth | NextAuth.js v5 (Google OAuth) |
+| AI | Groq (llama-3.3-70b) + Mem0 |
+| Email/Calendar | Corsair SDK |
+| ORM | Prisma |
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- pnpm 11+
+- PostgreSQL database (Neon recommended)
+
+### Setup
+
+```bash
+# 1. Clone
+git clone https://github.com/valora-hq/valora
+cd valora
+
+# 2. Install dependencies
+pnpm install
+
+# 3. Set up environment
+cp .env.example .env
+# Fill in all values in .env
+
+# 4. Push database schema
+pnpm db:push
+
+# 5. Start development server
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Required Environment Variables
+
+| Variable | Where to get it |
+|----------|----------------|
+| `AUTH_GOOGLE_ID` + `AUTH_GOOGLE_SECRET` | [console.cloud.google.com](https://console.cloud.google.com) |
+| `DATABASE_URL` | [neon.tech](https://neon.tech) |
+| `CORSAIR_KEK` | [corsair.dev](https://corsair.dev) |
+| `GROQ_API_KEY` | [console.groq.com](https://console.groq.com) |
+| `MEM0_API_KEY` | [app.mem0.ai](https://app.mem0.ai) (optional) |
+
+See `.env.example` for the full list.
+
+---
+
+## Documentation
+
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — System design, tech decisions, data flows
+- [CORSAIR_FEATURES.md](./CORSAIR_FEATURES.md) — All Corsair integrations used
+
+---
+
+## Scripts
+
+```bash
+pnpm dev          # Start dev server (turbo)
+pnpm build        # Production build
+pnpm db:push      # Push Prisma schema to database
+pnpm db:studio    # Open Prisma Studio
+pnpm typecheck    # TypeScript type check
+pnpm lint         # ESLint
+```
+
+---
+
+## License
+
+Open source — MIT License.
+
+Built at a hackathon with ❤️ and ☕ | Powered by [Corsair](https://corsair.dev)
