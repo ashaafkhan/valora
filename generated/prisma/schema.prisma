@@ -1,0 +1,254 @@
+// prisma/schema.prisma
+// Valora Database Schema — optimized for speed and AI features
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../generated/prisma"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgvector(map: "vector")]
+}
+
+// NextAuth required models
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Valora core models
+model User {
+  id                 String    @id @default(cuid())
+  email              String?   @unique
+  name               String?
+  image              String?
+  emailVerified      DateTime?
+  provider           String    @default("google")
+  googleAccessToken  String?   @db.Text
+  googleRefreshToken String?   @db.Text
+  tokenExpiresAt     DateTime?
+  onboardingDone     Boolean   @default(false)
+  preferences        Json      @default("{}")
+  theme              String    @default("dark")
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  accounts       Account[]
+  sessions       Session[]
+  emails         Email[]
+  calendarEvents CalendarEvent[]
+  agentChats     AgentChat[]
+  agentMemories  AgentMemory[]
+  labelRules     LabelRule[]
+
+  @@index([email])
+}
+
+model EmailThread {
+  id        String   @id // Gmail thread ID
+  subject   String
+  snippet   String   @db.Text
+  emails    Email[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Email {
+  id             String                       @id @default(cuid())
+  userId         String
+  gmailId        String                       @unique
+  threadId       String
+  subject        String
+  fromEmail      String
+  fromName       String?
+  toEmails       String[]
+  ccEmails       String[]
+  body           String                       @db.Text
+  bodyPreview    String                       @db.Text
+  labels         String[]
+  isRead         Boolean                      @default(false)
+  isStarred      Boolean                      @default(false)
+  isArchived     Boolean                      @default(false)
+  priorityScore  Int                          @default(40)
+  priorityLabel  String                       @default("normal")
+  isSensitive    Boolean                      @default(false)
+  sensitiveTypes String[]
+  sentAt         DateTime
+  receivedAt     DateTime
+  embedding      Unsupported("vector(1536)")?
+  createdAt      DateTime                     @default(now())
+  updatedAt      DateTime                     @updatedAt
+
+  user   User        @relation(fields: [userId], references: [id])
+  thread EmailThread @relation(fields: [threadId], references: [id])
+
+  @@index([userId, receivedAt(sort: Desc)])
+  @@index([userId, priorityLabel])
+  @@index([userId, isRead])
+  @@index([threadId])
+  @@index([gmailId])
+}
+
+model CalendarEvent {
+  id            String   @id @default(cuid())
+  userId        String
+  googleEventId String   @unique
+  calendarId    String
+  title         String
+  description   String?  @db.Text
+  location      String?
+  startTime     DateTime
+  endTime       DateTime
+  isAllDay      Boolean  @default(false)
+  attendees     Json     @default("[]")
+  recurrence    String?
+  videoLink     String?
+  status        String   @default("confirmed")
+  color         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, startTime])
+  @@index([googleEventId])
+}
+
+model AgentChat {
+  id        String   @id @default(cuid())
+  userId    String
+  role      String
+  content   String   @db.Text
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+}
+
+model AgentMemory {
+  id        String   @id @default(cuid())
+  userId    String
+  mem0Id    String?  @unique
+  content   String   @db.Text
+  category  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, category])
+}
+
+model LabelRule {
+  id         String   @id @default(cuid())
+  userId     String
+  name       String
+  conditions Json
+  actions    Json
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model WebhookLog {
+  id         String   @id @default(cuid())
+  source     String
+  payload    Json
+  processed  Boolean  @default(false)
+  error      String?
+  receivedAt DateTime @default(now())
+
+  @@index([source, receivedAt])
+}
+
+// ─── Corsair SDK required models ───────────────────────────────────────────
+
+model CorsairIntegration {
+  id        String           @id
+  createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime         @updatedAt @map("updated_at") @db.Timestamptz
+  name      String
+  config    Json             @default("{}")
+  dek       String?
+  accounts  CorsairAccount[]
+
+  @@map("corsair_integrations")
+}
+
+model CorsairAccount {
+  id            String             @id
+  createdAt     DateTime           @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt     DateTime           @updatedAt @map("updated_at") @db.Timestamptz
+  tenantId      String             @map("tenant_id")
+  integrationId String             @map("integration_id")
+  config        Json               @default("{}")
+  dek           String?
+  integration   CorsairIntegration @relation(fields: [integrationId], references: [id])
+  entities      CorsairEntity[]
+  events        CorsairEvent[]
+
+  @@map("corsair_accounts")
+}
+
+model CorsairEntity {
+  id         String         @id
+  createdAt  DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt  DateTime       @updatedAt @map("updated_at") @db.Timestamptz
+  accountId  String         @map("account_id")
+  entityId   String         @map("entity_id")
+  entityType String         @map("entity_type")
+  version    String
+  data       Json           @default("{}")
+  account    CorsairAccount @relation(fields: [accountId], references: [id])
+
+  @@map("corsair_entities")
+}
+
+model CorsairEvent {
+  id        String         @id
+  createdAt DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime       @updatedAt @map("updated_at") @db.Timestamptz
+  accountId String         @map("account_id")
+  eventType String         @map("event_type")
+  payload   Json           @default("{}")
+  status    String?
+  account   CorsairAccount @relation(fields: [accountId], references: [id])
+
+  @@map("corsair_events")
+}
