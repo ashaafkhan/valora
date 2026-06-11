@@ -22,10 +22,10 @@ export async function GET(request: NextRequest) {
       redirectUri,
     });
 
-    // Redirect to the connect page with success status
+    // Redirect to the onboarding page with success status
     return NextResponse.redirect(
       new URL(
-        `/connect?success=true&plugin=${result.plugin}&tenantId=${result.tenantId}`,
+        `/onboarding?success=true&plugin=${result.plugin}&tenantId=${result.tenantId}`,
         request.nextUrl.origin
       )
     );
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.redirect(
       new URL(
-        `/connect?error=${encodeURIComponent(errorMessage)}`,
+        `/onboarding?error=${encodeURIComponent(errorMessage)}`,
         request.nextUrl.origin
       )
     );

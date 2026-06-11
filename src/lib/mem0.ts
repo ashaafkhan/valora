@@ -27,9 +27,8 @@ export async function addMemory(
   try {
     const result = await client.add(
       messages.map((m) => ({ role: m.role, content: m.content })),
-      { user_id: userId },
+      { user_id: userId } as any,
     );
-    // @ts-expect-error - Mem0 SDK types may vary
     return (result as { id?: string })?.id ?? null;
   } catch (err) {
     console.error("[Mem0] addMemory error:", err);
@@ -47,7 +46,7 @@ export async function searchMemory(
   if (!client) return [];
 
   try {
-    const results = await client.search(query, { user_id: userId, limit });
+    const results = await client.search(query, { filters: { user_id: userId }, limit } as any);
     // @ts-expect-error - Mem0 SDK response shape
     return (results as Array<{ memory?: string }>).map(
       (r) => r.memory ?? "",
@@ -64,7 +63,7 @@ export async function getUserMemories(userId: string): Promise<string[]> {
   if (!client) return [];
 
   try {
-    const results = await client.getAll({ user_id: userId });
+    const results = await client.getAll({ user_id: userId } as any);
     // @ts-expect-error - Mem0 SDK response shape
     return (results as Array<{ memory?: string }>).map(
       (r) => r.memory ?? "",
