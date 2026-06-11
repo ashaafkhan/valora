@@ -145,3 +145,44 @@ export async function summarizeEmail(body: string, maxLength = 150): Promise<str
 
   return completion.choices[0]?.message?.content ?? body.slice(0, maxLength);
 }
+
+// ── Email-to-Calendar Meeting Extraction ─────────────────────────
+export interface ExtractedMeeting {
+  title: string;
+  attendees: string[];
+  suggestedTime: string; // YYYY-MM-DDTHH:MM:SSZ format or human-readable
+  duration: number; // in minutes
+}
+
+export async function extractMeetingFromEmail(emailBody: string): Promise<ExtractedMeeting> {
+  const prompt = `Extract meeting details from this email. Return ONLY valid JSON matching this schema:
+  {"title": "meeting title", "attendees": ["email1", "email2"], "suggestedTime": "ISO_DATETIME_STRING_OR_EMPTY", "duration": 30}
+  
+  Do not include any explanation or markdown formatting, just raw JSON.
+  
+  Email body:
+  ${emailBody.slice(0, 2000)}`;
+
+  try {
+    const completion = await groq.chat.completions.create({
+      model: AI_MODEL,
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.1,
+      response_format: { type: "json_object" },
+    });
+
+    const raw = completion.choices[0]?.message?.content ?? "{}";
+    const parsed = JSON.parse(raw) as ExtractedMeeting;
+
+    // Validate properties
+    parsed.title = parsed.title || "Meeting from Email";
+    parsed.attendees = Array.isArray(parsed.attendees) ? parsed.attendees.filter(Boolean) : [];
+    parsed.suggestedTime = parsed.suggestedTime || "";
+    parsed.duration = typeof parsed.duration === "number" ? parsed.duration : 30;
+
+    return parsed;
+  } catch (err) {
+    console.error("AI meeting extraction failed:", err);
+    return { title: "Meeting from Email", attendees: [], suggestedTime: "", duration: 30 };
+  }
+}
