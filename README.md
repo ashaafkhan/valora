@@ -6,7 +6,7 @@
 
 Valora is a Superhuman-grade productivity app — built for professionals who refuse to let their inbox run their life. Powered by Corsair integrations and a production-grade AI agent.
 
-🌐 [valorahq.in](https://valorahq.in) · 🐦 [@valorahq](https://twitter.com/valorahq)
+🌐 [valorahq.in](https://valorahq.in) 
 
 ---
 
