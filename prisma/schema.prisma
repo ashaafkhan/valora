@@ -108,7 +108,7 @@ model Email {
   sensitiveTypes String[]
   sentAt        DateTime
   receivedAt    DateTime
-  embedding     Unsupported("vector(1536)")?
+  embedding     Unsupported("vector(768)")?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 

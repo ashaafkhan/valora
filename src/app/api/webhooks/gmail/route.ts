@@ -9,6 +9,7 @@ import crypto from "crypto";
 import { db } from "@/server/db";
 import { scoreEmailPriority } from "@/lib/ai";
 import { scanEmailContent } from "@/lib/security";
+import { generateEmailEmbedding } from "@/lib/vectors";
 
 // ── HMAC Signature Verification ───────────────────────────────
 function verifySignature(payload: string, signature: string): boolean {
@@ -127,6 +128,8 @@ export async function POST(request: NextRequest) {
           isRead: false,
         },
       });
+
+      generateEmailEmbedding(gmailId, `${subject} ${body}`).catch(() => {});
 
       await db.webhookLog.updateMany({
         where: { source: "gmail", processed: false },

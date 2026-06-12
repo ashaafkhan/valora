@@ -6,6 +6,7 @@ import { corsair } from "@/server/corsair";
 import { db } from "@/server/db";
 import { scoreEmailPriority } from "./ai";
 import { scanEmailContent } from "./security";
+import { generateEmailEmbedding } from "./vectors";
 
 // ── Header Parsing Helpers ─────────────────────────────────────
 function getHeader(headers: Array<{ name?: string; value?: string }>, name: string): string {
@@ -262,7 +263,7 @@ export async function syncGmailInbox(userId: string, maxThreads = 20): Promise<{
         const result = batchResults[j]!;
 
         try {
-          await db.email.create({
+          const saved = await db.email.create({
             data: {
               userId,
               gmailId: msg.gmailId,
@@ -286,6 +287,7 @@ export async function syncGmailInbox(userId: string, maxThreads = 20): Promise<{
               receivedAt: msg.receivedAt,
             },
           });
+          generateEmailEmbedding(saved.id, `${msg.msgSubject} ${msg.body}`).catch(() => {});
           synced++;
         } catch (err) {
           console.error(`Failed to save email ${msg.gmailId}:`, err);
