@@ -10,6 +10,33 @@ interface Message {
   content: string;
 }
 
+// Robust wrapper with automatic retry and model fallback (llama-3.1-8b-instant)
+async function groqChatCompletionWithRetry(params: any, retries = 2) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      return await groq.chat.completions.create(params);
+    } catch (err: any) {
+      console.warn(`[Groq] Completion attempt ${i + 1} failed:`, err?.message || err);
+      if (i === retries) {
+        if (params.model === AI_MODEL) {
+          console.log("[Groq] Falling back to llama-3.1-8b-instant");
+          try {
+            return await groq.chat.completions.create({
+              ...params,
+              model: "llama-3.1-8b-instant",
+            });
+          } catch (fallbackErr) {
+            throw fallbackErr;
+          }
+        }
+        throw err;
+      }
+      // Delay before retry (exponential backoff)
+      await new Promise((resolve) => setTimeout(resolve, (i + 1) * 800));
+    }
+  }
+}
+
 export async function GET() {
   try {
     const session = await auth();
@@ -149,8 +176,8 @@ Important rules:
 User Preferences/Context:
 ${memoryContext}`;
 
-    // 4. Call Groq
-    const completion = await groq.chat.completions.create({
+    // 4. Call Groq with Retry/Fallback
+    const completion: any = await groqChatCompletionWithRetry({
       model: AI_MODEL,
       messages: [
         { role: "system", content: systemPrompt },
@@ -173,7 +200,13 @@ ${memoryContext}`;
     if (toolCalls && toolCalls.length > 0) {
       const toolCall = toolCalls[0]!;
       const toolName = toolCall.function.name;
-      const toolArgs = JSON.parse(toolCall.function.arguments) as Record<string, unknown>;
+
+      let toolArgs: Record<string, any> = {};
+      try {
+        toolArgs = JSON.parse(toolCall.function.arguments) as Record<string, unknown>;
+      } catch (err) {
+        console.error("[Agent] Failed to parse tool arguments:", toolCall.function.arguments, err);
+      }
 
       // A. Write tools (send_email, create_event) -> Return tool call information to client for UI confirmation card
       if (toolName === "send_email" || toolName === "create_event") {
@@ -199,8 +232,8 @@ ${memoryContext}`;
         toolResultData = res.success ? res.data : { error: res.error };
       }
 
-      // Feed tool result back to Groq for final textual answer
-      const secondCompletion = await groq.chat.completions.create({
+      // Feed tool result back to Groq for final textual answer (with Retry/Fallback)
+      const secondCompletion: any = await groqChatCompletionWithRetry({
         model: AI_MODEL,
         messages: [
           { role: "system", content: systemPrompt },
