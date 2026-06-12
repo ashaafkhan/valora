@@ -1,27 +1,21 @@
-# Valora
+# Valora — AI Command Center for Gmail & Calendar
 
-### "Command your inbox. Own your time."
+> Command your inbox. Own your time.
 
-**The AI-native command center for Gmail and Google Calendar.**
+**valorahq.in** | [Live Demo](https://valorahq.in) | [Setup Guide](./SETUP.md)
 
-Valora is a Superhuman-grade productivity app — built for professionals who refuse to let their inbox run their life. Powered by Corsair integrations and a production-grade AI agent.
-
-🌐 [valorahq.in](https://valorahq.in) 
-
----
+Valora is an open-source, Superhuman-grade email and calendar command center.
+Built with Next.js, Postgres, and Corsair. AI-powered with Groq and memory via Mem0.
 
 ## Features
 
-- **🤖 AI Priority Inbox** — LLM-powered email classification (urgent/high/normal/low)
-- **⌨️ Keyboard-first** — Full command palette + vim-like shortcuts
-- **📅 Unified command center** — Gmail + Google Calendar in one workspace
-- **🧠 AI Agent** — Chat with your inbox, schedule meetings, draft replies
-- **🔔 Real-time webhooks** — Corsair push notifications, no polling
-- **🔍 Lightning search** — pgvector semantic search under 1 second
-- **🛡️ Security Shield** — Auto-filter bank/OTP/sensitive emails
-- **🌙 Dark mode first** — Premium dark UI with light mode toggle
-
----
+- 🤖 **AI Agent** — Natural language email & calendar control with persistent memory
+- ⚡ **Priority Inbox** — LLM-powered email scoring (Urgent → Low)
+- 🛡️ **Security Shield** — Auto-detect and blur sensitive emails (OTPs, bank details)
+- ⌨️ **Keyboard-first** — Every action has a shortcut. ⌘K command palette.
+- 🔍 **Lightning Search** — pgvector semantic search across all emails in <500ms
+- 📡 **Real-time** — Corsair webhooks, no polling ever
+- 📅 **Unified** — Email + Calendar in one command center
 
 ## Tech Stack
 
@@ -35,72 +29,25 @@ Valora is a Superhuman-grade productivity app — built for professionals who re
 | Email/Calendar | Corsair SDK |
 | ORM | Prisma |
 
----
+## Setup
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 20+
-- pnpm 11+
-- PostgreSQL database (Neon recommended)
-
-### Setup
-
-```bash
-# 1. Clone
-git clone https://github.com/valora-hq/valora
-cd valora
-
-# 2. Install dependencies
-pnpm install
-
-# 3. Set up environment
-cp .env.example .env
-# Fill in all values in .env
-
-# 4. Push database schema
-pnpm db:push
-
-# 5. Start development server
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Required Environment Variables
-
-| Variable | Where to get it |
-|----------|----------------|
-| `AUTH_GOOGLE_ID` + `AUTH_GOOGLE_SECRET` | [console.cloud.google.com](https://console.cloud.google.com) |
-| `DATABASE_URL` | [neon.tech](https://neon.tech) |
-| `CORSAIR_KEK` | [corsair.dev](https://corsair.dev) |
-| `GROQ_API_KEY` | [console.groq.com](https://console.groq.com) |
-| `MEM0_API_KEY` | [app.mem0.ai](https://app.mem0.ai) (optional) |
-
-See `.env.example` for the full list.
-
----
+See [SETUP.md](./SETUP.md) for complete setup instructions.
 
 ## Documentation
 
 - [ARCHITECTURE.md](./ARCHITECTURE.md) — System design, tech decisions, data flows
 - [CORSAIR_FEATURES.md](./CORSAIR_FEATURES.md) — All Corsair integrations used
 
----
-
 ## Scripts
 
 ```bash
 pnpm dev          # Start dev server (turbo)
 pnpm build        # Production build
-pnpm db:push      # Push Prisma schema to database
-pnpm db:studio    # Open Prisma Studio
 pnpm typecheck    # TypeScript type check
 pnpm lint         # ESLint
+pnpm db:push      # Push Prisma schema to database
+pnpm db:studio    # Open Prisma Studio
 ```
-
----
 
 ## License
 

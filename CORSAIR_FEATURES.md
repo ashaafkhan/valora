@@ -117,4 +117,4 @@ The Corsair SDK is initialized via the `@corsair-dev/cli` setup, which configure
 
 ---
 
-*Last updated: Stage 1 — Vision, Branding & Market Research*
+*Last updated: Stage 17 — Deployment, Demo & Submission*

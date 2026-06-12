@@ -107,14 +107,19 @@ src/
 │   ├── agent/                       # AI agent chat components
 │   └── shared/                      # Sidebar, CommandPalette, etc.
 ├── lib/
-│   ├── corsair.ts                   # Corsair SDK helpers
 │   ├── ai.ts                        # Groq AI client
-│   ├── mem0.ts                      # Memory client
+│   ├── gmail.ts                     # Gmail integration via Corsair
+│   ├── calendar.ts                  # Calendar integration via Corsair
 │   ├── security.ts                  # Sensitive content detection
-│   └── shortcuts.ts                 # Keyboard shortcut registry
+│   ├── shortcuts.ts                 # Keyboard shortcut registry
+│   ├── vectors.ts                   # Vector search engine (pgvector + Groq)
+│   ├── mem0.ts                      # Memory client
+│   ├── agent-tools.ts               # AI agent tool implementations
+│   └── api-handler.ts               # Error handling wrapper for routes
 ├── server/
 │   ├── auth.ts                      # NextAuth config
 │   ├── db.ts                        # Prisma client
+│   ├── corsair.ts                   # Corsair SDK client
 │   └── api/                         # tRPC routers
 ├── store/
 │   ├── emailStore.ts                # Zustand email state
@@ -123,7 +128,9 @@ src/
 ├── hooks/
 │   ├── useKeyboard.ts
 │   ├── useCommandPalette.ts
-│   └── useEmailSync.ts
+│   ├── useEmailSync.ts
+│   ├── useEmailMutations.ts            # Optimistic archive/star/read
+│   └── useAgentChat.ts
 ├── styles/
 │   └── globals.css                  # Valora design system
 └── types/
@@ -171,4 +178,4 @@ See `.env.example` for full list. Critical vars:
 
 ---
 
-*Last updated: Stage 1 — Vision, Branding & Market Research*
+*Last updated: Stage 16 — Performance, Optimization & Code Quality*

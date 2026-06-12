@@ -1,6 +1,16 @@
 /**
- * Valora — Gmail Integration Helpers
- * Handles interaction with Gmail via Corsair and database synchronization
+ * @file gmail.ts
+ * @description Gmail integration — sync, send, archive, star, mark-read via Corsair
+ *
+ * WHY: All email operations must go through Corsair (not the Gmail API directly).
+ * Corsair handles OAuth token refresh, rate limiting, and provides a unified API.
+ *
+ * ARCHITECTURE NOTE: Each operation syncs to the local DB after the Corsair call so
+ * the UI stays fast (reads from DB, not from Gmail API). This also enables offline
+ * access and vector search over stored emails.
+ *
+ * OPTIMIZATION: Every synced email gets an AI priority score and a security shield
+ * scan. These run inside the sync function so they happen automatically on first load.
  */
 import { corsair } from "@/server/corsair";
 import { db } from "@/server/db";

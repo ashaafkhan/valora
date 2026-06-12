@@ -1,6 +1,15 @@
 /**
- * Valora — Google Calendar Integration Helpers
- * Handles interaction with Google Calendar via Corsair and database synchronization
+ * @file calendar.ts
+ * @description Google Calendar integration — sync, create, update, delete events via Corsair
+ *
+ * WHY: Same architecture as gmail.ts — all calendar operations go through Corsair.
+ * This keeps OAuth token management in one place and provides real-time webhook support.
+ *
+ * ARCHITECTURE NOTE: Events are stored locally in Postgres for fast reads. The UI
+ * reads from the local DB and writes to Corsair, which syncs to Google Calendar.
+ *
+ * OPTIMIZATION: Natural language scheduling ("lunch tomorrow at 1pm") is parsed
+ * by the AI agent before creating the event, enabling the "Schedule Meeting" flow.
  */
 import { corsair } from "@/server/corsair";
 import { db } from "@/server/db";

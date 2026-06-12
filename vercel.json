@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "prisma generate && prisma db push && next build",
+  "framework": "nextjs",
+  "regions": ["bom1"],
+  "functions": {
+    "app/api/agent/chat/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/webhooks/gmail/route.ts": {
+      "maxDuration": 10
+    }
+  }
+}
