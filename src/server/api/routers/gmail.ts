@@ -144,4 +144,37 @@ export const gmailRouter = createTRPCRouter({
       const meeting = await extractMeetingFromEmail(input.emailBody);
       return meeting;
     }),
+
+  // ── Get Recent Contacts (for type-ahead) ─────────────────────
+  getRecentContacts: protectedProcedure
+    .query(async ({ ctx }) => {
+      const userId = ctx.session.user.id;
+      const recentEmails = await ctx.db.email.findMany({
+        where: { userId },
+        select: {
+          fromEmail: true,
+          fromName: true,
+          toEmails: true,
+        },
+        orderBy: { receivedAt: "desc" },
+        take: 100,
+      });
+
+      const contactsMap = new Map<string, string>();
+      for (const email of recentEmails) {
+        if (email.fromEmail) {
+          contactsMap.set(email.fromEmail.toLowerCase(), email.fromName ?? "");
+        }
+        for (const to of email.toEmails) {
+          if (to && !contactsMap.has(to.toLowerCase())) {
+            contactsMap.set(to.toLowerCase(), "");
+          }
+        }
+      }
+
+      return Array.from(contactsMap.entries()).map(([email, name]) => ({
+        email,
+        name: name || undefined,
+      }));
+    }),
 });

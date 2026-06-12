@@ -4,6 +4,7 @@
  */
 import { corsair } from "@/server/corsair";
 import { db } from "@/server/db";
+import { groq, AI_MODEL } from "@/lib/ai";
 
 // ── Sync Calendar Events ────────────────────────────────────────
 export async function syncCalendarEvents(
@@ -195,5 +196,98 @@ export async function deleteCalendarEvent(userId: string, googleEventId: string)
   } catch (err) {
     console.error("[Calendar] Delete event failed:", err);
     throw err;
+  }
+}
+
+// ── Natural Language Schedule Parsing (AI-powered) ──────────────
+export interface ParsedSchedule {
+  title: string;
+  attendeeEmail: string;
+  startISO: string;
+  endISO: string;
+  hasConflict: boolean;
+  conflictWith?: string;
+}
+
+export async function parseNaturalSchedule(
+  input: string,
+  userId: string,
+): Promise<ParsedSchedule> {
+  // Fetch upcoming events for conflict context
+  const now = new Date();
+  const weekOut = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+  const upcomingEvents = await db.calendarEvent.findMany({
+    where: {
+      userId,
+      startTime: { gte: now, lte: weekOut },
+    },
+    select: { title: true, startTime: true, endTime: true },
+    orderBy: { startTime: "asc" },
+    take: 20,
+  });
+
+  const eventContext = upcomingEvents
+    .map((e) => `"${e.title}" from ${e.startTime.toISOString()} to ${e.endTime.toISOString()}`)
+    .join("\n");
+
+  const prompt = `You are Valora's AI scheduling assistant. Parse this scheduling request and return ONLY valid JSON.
+
+Current time: ${now.toISOString()}
+
+Existing calendar events this week:
+${eventContext || "No events scheduled yet."}
+
+Scheduling request: "${input}"
+
+Return JSON with this exact shape:
+{
+  "title": "Meeting title",
+  "attendeeEmail": "attendee@email.com or empty string",
+  "startISO": "ISO 8601 datetime string",
+  "endISO": "ISO 8601 datetime string",
+  "hasConflict": false,
+  "conflictWith": "conflicting event title or empty string"
+}
+
+Rules:
+- If no year specified, assume current year
+- Default duration is 30 minutes unless specified
+- Check if proposed time overlaps any existing event; set hasConflict=true if so
+- If no email found, use empty string
+- Return ONLY the JSON object, no markdown, no explanation`;
+
+  try {
+    const completion = await groq.chat.completions.create({
+      model: AI_MODEL,
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.1,
+      max_tokens: 300,
+      response_format: { type: "json_object" },
+    });
+
+    const raw = completion.choices[0]?.message?.content ?? "{}";
+    const parsed = JSON.parse(raw) as ParsedSchedule;
+
+    // Validate required fields
+    parsed.title = parsed.title || "New Meeting";
+    parsed.attendeeEmail = parsed.attendeeEmail || "";
+    parsed.startISO = parsed.startISO || now.toISOString();
+    parsed.endISO =
+      parsed.endISO ||
+      new Date(now.getTime() + 30 * 60 * 1000).toISOString();
+    parsed.hasConflict = parsed.hasConflict ?? false;
+    parsed.conflictWith = parsed.conflictWith || "";
+
+    return parsed;
+  } catch (err) {
+    console.error("[Calendar] NL parse failed:", err);
+    return {
+      title: "New Meeting",
+      attendeeEmail: "",
+      startISO: now.toISOString(),
+      endISO: new Date(now.getTime() + 30 * 60 * 1000).toISOString(),
+      hasConflict: false,
+    };
   }
 }
