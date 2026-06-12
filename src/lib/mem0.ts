@@ -10,9 +10,7 @@ let _client: MemoryClient | null = null;
 
 function getClient(): MemoryClient | null {
   if (!process.env.MEM0_API_KEY) return null;
-  if (!_client) {
-    _client = new MemoryClient({ apiKey: process.env.MEM0_API_KEY });
-  }
+  _client ??= new MemoryClient({ apiKey: process.env.MEM0_API_KEY });
   return _client;
 }
 
@@ -27,7 +25,7 @@ export async function addMemory(
   try {
     const result = await client.add(
       messages.map((m) => ({ role: m.role, content: m.content })),
-      { user_id: userId } as any,
+      { user_id: userId } as Parameters<MemoryClient["add"]>[1],
     );
     return (result as { id?: string })?.id ?? null;
   } catch (err) {
@@ -46,7 +44,10 @@ export async function searchMemory(
   if (!client) return [];
 
   try {
-    const results = await client.search(query, { filters: { user_id: userId }, limit } as any);
+    const results = await client.search(
+      query,
+      { filters: { user_id: userId }, limit } as Parameters<MemoryClient["search"]>[1]
+    );
     // @ts-expect-error - Mem0 SDK response shape
     return (results as Array<{ memory?: string }>).map(
       (r) => r.memory ?? "",
@@ -63,7 +64,7 @@ export async function getUserMemories(userId: string): Promise<string[]> {
   if (!client) return [];
 
   try {
-    const results = await client.getAll({ user_id: userId } as any);
+    const results = await client.getAll({ user_id: userId } as Parameters<MemoryClient["getAll"]>[0]);
     // @ts-expect-error - Mem0 SDK response shape
     return (results as Array<{ memory?: string }>).map(
       (r) => r.memory ?? "",

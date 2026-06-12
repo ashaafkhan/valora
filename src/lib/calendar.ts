@@ -29,9 +29,9 @@ export async function syncCalendarEvents(
       if (!item.id) continue;
 
       try {
-        const title = item.summary || "(No Title)";
-        const description = item.description || null;
-        const location = item.location || null;
+        const title = item.summary ?? "(No Title)";
+        const description = item.description ?? null;
+        const location = item.location ?? null;
 
         // Parse start/end dates
         const startStr = item.start?.dateTime ?? item.start?.date;
@@ -44,17 +44,17 @@ export async function syncCalendarEvents(
 
         // Parse attendees
         const attendees = Array.isArray(item.attendees)
-          ? item.attendees.map((a: any) => ({
+          ? (item.attendees as Array<{ email?: string; displayName?: string; responseStatus?: string }>).map((a) => ({
               email: a.email ?? "",
               name: a.displayName ?? "",
               status: a.responseStatus ?? "needsAction",
             }))
           : [];
 
-        const status = item.status || "confirmed";
-        const color = item.colorId || null;
+        const status = item.status ?? "confirmed";
+        const color = item.colorId ?? null;
         const recurrence = Array.isArray(item.recurrence) ? item.recurrence.join("\n") : null;
-        const videoLink = item.hangoutLink || null;
+        const videoLink = item.hangoutLink ?? null;
 
         await db.calendarEvent.upsert({
           where: { googleEventId: item.id },
@@ -113,25 +113,31 @@ export async function createCalendarEvent(params: {
   description?: string;
   location?: string;
   attendees?: string[];
-}): Promise<any> {
+}): Promise<unknown> {
   const { userId, title, startTime, endTime, description, location, attendees } = params;
 
   try {
     const formattedAttendees = attendees?.map((email) => ({ email })) ?? [];
 
+    type CreateParams = Parameters<
+      ReturnType<typeof corsair.withTenant>["googlecalendar"]["api"]["events"]["create"]
+    >[0];
+
     const res = await corsair
       .withTenant(userId)
       .googlecalendar.api.events.create({
-        summary: title,
-        description,
-        location,
-        start: { dateTime: startTime.toISOString() },
-        end: { dateTime: endTime.toISOString() },
-        attendees: formattedAttendees,
-      } as any);
+        event: {
+          summary: title,
+          description,
+          location,
+          start: { dateTime: startTime.toISOString() },
+          end: { dateTime: endTime.toISOString() },
+          attendees: formattedAttendees,
+        }
+      } as CreateParams);
 
     // Sync the newly created event to local DB
-    if (res && res.id) {
+    if (res?.id) {
       await syncCalendarEvents(userId);
     }
 
@@ -151,11 +157,17 @@ export async function updateCalendarEvent(params: {
   endTime?: Date;
   description?: string;
   location?: string;
-}): Promise<any> {
+}): Promise<unknown> {
   const { userId, googleEventId, title, startTime, endTime, description, location } = params;
 
   try {
-    const patchBody: Record<string, any> = {};
+    type UpdateParams = Parameters<
+      ReturnType<typeof corsair.withTenant>["googlecalendar"]["api"]["events"]["update"]
+    >[0];
+
+    type EventBody = NonNullable<UpdateParams["event"]>;
+
+    const patchBody: EventBody = {};
     if (title) patchBody.summary = title;
     if (description !== undefined) patchBody.description = description;
     if (location !== undefined) patchBody.location = location;
@@ -166,10 +178,10 @@ export async function updateCalendarEvent(params: {
       .withTenant(userId)
       .googlecalendar.api.events.update({
         id: googleEventId,
-        ...patchBody,
-      } as any);
+        event: patchBody,
+      });
 
-    if (res && res.id) {
+    if (res?.id) {
       await syncCalendarEvents(userId);
     }
 
@@ -183,11 +195,15 @@ export async function updateCalendarEvent(params: {
 // ── Delete Event ───────────────────────────────────────────────
 export async function deleteCalendarEvent(userId: string, googleEventId: string): Promise<void> {
   try {
+    type DeleteParams = Parameters<
+      ReturnType<typeof corsair.withTenant>["googlecalendar"]["api"]["events"]["delete"]
+    >[0];
+
     await corsair
       .withTenant(userId)
       .googlecalendar.api.events.delete({
         id: googleEventId,
-      } as any);
+      });
 
     // Delete locally
     await db.calendarEvent.deleteMany({
@@ -277,7 +293,7 @@ Rules:
       parsed.endISO ||
       new Date(now.getTime() + 30 * 60 * 1000).toISOString();
     parsed.hasConflict = parsed.hasConflict ?? false;
-    parsed.conflictWith = parsed.conflictWith || "";
+    parsed.conflictWith = parsed.conflictWith ?? "";
 
     return parsed;
   } catch (err) {

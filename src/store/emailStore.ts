@@ -162,7 +162,7 @@ export const selectFilteredEmails = (state: EmailState) => {
       (e) =>
         e.subject.toLowerCase().includes(q) ||
         e.fromEmail.toLowerCase().includes(q) ||
-        e.fromName?.toLowerCase().includes(q) ||
+        (e.fromName?.toLowerCase().includes(q) ?? false) ||
         e.bodyPreview.toLowerCase().includes(q),
     );
   }

@@ -12,7 +12,6 @@ import {
   Calendar,
   Bot,
   Settings,
-  Archive,
   Star,
   PenSquare,
   ArrowRight,
@@ -123,7 +122,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
 
   // Group by category
   const grouped = filteredCommands.reduce<Record<string, Command[]>>((acc, cmd) => {
-    if (!acc[cmd.category]) acc[cmd.category] = [];
+    acc[cmd.category] ??= [];
     acc[cmd.category]!.push(cmd);
     return acc;
   }, {});

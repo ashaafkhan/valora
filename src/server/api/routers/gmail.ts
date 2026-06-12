@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { type Prisma } from "../../../../generated/prisma";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
   syncGmailInbox,
@@ -23,9 +24,9 @@ export const gmailRouter = createTRPCRouter({
       const { label, priority, searchQuery } = input;
       const userId = ctx.session.user.id;
 
-      const whereClause: any = {
+      const whereClause: Prisma.EmailWhereInput = {
         userId,
-        isArchived: label === "archive" ? true : false,
+        isArchived: label === "archive",
       };
 
       if (label && label !== "all" && label !== "archive") {

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Mail, Calendar, Sparkles, Search, Settings, LogOut, ShieldAlert } from "lucide-react";
+import { Mail, Calendar, Sparkles, Search, Settings, LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 
@@ -79,19 +79,19 @@ export default function Sidebar({ user }: SidebarProps) {
           {user.image ? (
             <Image
               src={user.image}
-              alt={user.name || "User"}
+              alt={user.name ?? "User"}
               width={32}
               height={32}
               className="w-8 h-8 rounded-xl object-cover border border-border"
             />
           ) : (
             <div className="w-8 h-8 rounded-xl bg-surface-hover flex items-center justify-center font-bold text-xs text-text-secondary border border-border">
-              {user.name?.slice(0, 1).toUpperCase() || "U"}
+              {user.name?.slice(0, 1).toUpperCase() ?? "U"}
             </div>
           )}
           <div className="min-w-0 flex-1">
             <p className="text-xs font-bold text-text-primary truncate leading-none">
-              {user.name || "User"}
+              {user.name ?? "User"}
             </p>
             <p className="text-[10px] text-text-muted truncate mt-1 leading-none font-mono">
               {user.email}

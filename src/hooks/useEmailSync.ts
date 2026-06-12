@@ -11,7 +11,7 @@ import { api } from "@/trpc/react";
 const SYNC_INTERVAL_MS = 2 * 60 * 1000; // 2 minutes passive refresh
 
 export function useEmailSync() {
-  const { setEmails, setLoading, addEmail } = useEmailStore();
+  const { setEmails, setLoading } = useEmailStore();
   const lastSyncRef = useRef<Date | null>(null);
 
   const emailsQuery = api.gmail.getEmails.useQuery(
@@ -28,7 +28,7 @@ export function useEmailSync() {
   // Sync emails into store
   useEffect(() => {
     if (emailsQuery.data) {
-      setEmails(emailsQuery.data as any);
+      setEmails(emailsQuery.data as unknown as Parameters<typeof setEmails>[0]);
       lastSyncRef.current = new Date();
     }
   }, [emailsQuery.data, setEmails]);

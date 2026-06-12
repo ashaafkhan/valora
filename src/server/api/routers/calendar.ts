@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { type Prisma } from "../../../../generated/prisma";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
   syncCalendarEvents,
@@ -21,12 +22,15 @@ export const calendarRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      const where: any = { userId };
-
-      if (input.from) where.startTime = { gte: new Date(input.from) };
-      if (input.to) {
-        where.startTime = { ...where.startTime, lte: new Date(input.to) };
-      }
+      const where: Prisma.CalendarEventWhereInput = {
+        userId,
+        ...(input.from || input.to ? {
+          startTime: {
+            ...(input.from ? { gte: new Date(input.from) } : {}),
+            ...(input.to ? { lte: new Date(input.to) } : {}),
+          }
+        } : {})
+      };
 
       return ctx.db.calendarEvent.findMany({
         where,
@@ -205,7 +209,15 @@ export const calendarRouter = createTRPCRouter({
         throw new Error("Event not found");
       }
 
-      let attendees = Array.isArray(event.attendees) ? (event.attendees as any[]) : [];
+      interface CalendarAttendee {
+        email?: string;
+        name?: string;
+        status?: string;
+      }
+
+      const attendees = (Array.isArray(event.attendees)
+        ? event.attendees
+        : []) as CalendarAttendee[];
 
       // Find or add user attendee status
       const userIndex = attendees.findIndex(
@@ -214,30 +226,40 @@ export const calendarRouter = createTRPCRouter({
 
       const responseStatus = input.status === "tentative" ? "tentative" : input.status;
 
+      const updatedAttendees = [...attendees];
       if (userIndex !== -1) {
-        attendees[userIndex] = {
-          ...attendees[userIndex],
-          status: responseStatus,
-        };
+        const existing = updatedAttendees[userIndex];
+        if (existing) {
+          updatedAttendees[userIndex] = {
+            ...existing,
+            status: responseStatus,
+          };
+        }
       } else {
-        attendees.push({
+        updatedAttendees.push({
           email: userEmail,
           name: ctx.session.user.name ?? undefined,
           status: responseStatus,
         });
       }
 
+      type UpdateParams = Parameters<
+        ReturnType<typeof corsair.withTenant>["googlecalendar"]["api"]["events"]["update"]
+      >[0];
+
       // Call Corsair to update attendees on Google Calendar
       await corsair
         .withTenant(userId)
         .googlecalendar.api.events.update({
           id: input.googleEventId,
-          attendees: attendees.map((a) => ({
-            email: a.email,
-            displayName: a.name || undefined,
-            responseStatus: a.status,
-          })),
-        } as any);
+          event: {
+            attendees: updatedAttendees.map((a) => ({
+              email: a.email,
+              displayName: a.name ?? undefined,
+              responseStatus: a.status,
+            })),
+          },
+        } as UpdateParams);
 
       // Resync calendar events to local DB
       await syncCalendarEvents(userId);

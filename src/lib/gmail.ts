@@ -14,7 +14,8 @@ function getHeader(headers: Array<{ name?: string; value?: string }>, name: stri
 
 function parseFrom(fromHeader: string): { name: string; email: string } {
   if (!fromHeader) return { name: "", email: "" };
-  const match = fromHeader.match(/^(.*?)\s*<([^>]+)>$/);
+  const regex = /^(.*?)\s*<([^>]+)>$/;
+  const match = regex.exec(fromHeader);
   if (match) {
     return {
       name: match[1]?.replace(/^["']|["']$/g, "").trim() ?? "",
@@ -26,11 +27,12 @@ function parseFrom(fromHeader: string): { name: string; email: string } {
 
 function parseEmailList(headerValue: string): string[] {
   if (!headerValue) return [];
+  const regex = /<([^>]+)>/;
   return headerValue
     .split(",")
     .map((e) => {
-      const match = e.match(/<([^>]+)>/);
-      return (match && match[1] ? match[1] : e).trim();
+      const match = regex.exec(e);
+      return (match?.[1] ?? e).trim();
     })
     .filter(Boolean);
 }
@@ -41,7 +43,47 @@ function decodeBase64(data: string): string {
   return Buffer.from(base64, "base64").toString("utf-8");
 }
 
-function getBody(payload: any): string {
+interface MessagePart {
+  body?: {
+    data?: string | null;
+  } | null;
+  parts?: MessagePart[] | null;
+}
+
+interface GmailMessage {
+  id?: string | null;
+  snippet?: string | null;
+  internalDate?: string | null;
+  labelIds?: string[] | null;
+  payload?: {
+    headers?: Array<{ name?: string; value?: string }> | null;
+    body?: {
+      data?: string | null;
+    } | null;
+    parts?: MessagePart[] | null;
+  } | null;
+}
+
+interface ParsedMessage {
+  gmailId: string;
+  threadId: string;
+  msgSubject: string;
+  fromEmail: string;
+  fromName: string;
+  toEmails: string[];
+  ccEmails: string[];
+  body: string;
+  bodyPreview: string;
+  labels: string[];
+  isRead: boolean;
+  isStarred: boolean;
+  isArchived: boolean;
+  sentAt: Date;
+  receivedAt: Date;
+}
+
+function getBody(payload?: MessagePart | null): string {
+  if (!payload) return "";
   if (payload.body?.data) {
     return decodeBase64(payload.body.data);
   }
@@ -68,6 +110,9 @@ export async function syncGmailInbox(userId: string, maxThreads = 20): Promise<{
       return { synced: 0, failed: 0 };
     }
 
+    const allMessages: Array<{ message: GmailMessage; threadId: string }> = [];
+    const threadMap = new Map<string, { subject: string; snippet: string }>();
+
     for (const threadListItem of res.threads) {
       if (!threadListItem.id) continue;
       try {
@@ -76,106 +121,181 @@ export async function syncGmailInbox(userId: string, maxThreads = 20): Promise<{
           id: threadListItem.id,
         });
 
-        if (!threadDetails.messages || threadDetails.messages.length === 0) continue;
+        const messages = (threadDetails.messages ?? []) as GmailMessage[];
+        if (messages.length === 0) continue;
 
-        // Upsert the Thread record
-        const latestMessage = threadDetails.messages[threadDetails.messages.length - 1];
+        // Collect latest thread header details
+        const latestMessage = messages[messages.length - 1];
         if (!latestMessage) continue;
         const headers = latestMessage.payload?.headers ?? [];
         const subject = getHeader(headers, "subject") || "(No Subject)";
         const snippet = latestMessage.snippet ?? "";
 
-        await db.emailThread.upsert({
-          where: { id: threadListItem.id },
-          create: {
-            id: threadListItem.id,
-            subject,
-            snippet,
-          },
-          update: {
-            subject,
-            snippet,
-            updatedAt: new Date(),
-          },
-        });
+        threadMap.set(threadListItem.id, { subject, snippet });
 
-        // Process each message in the thread
-        for (const message of threadDetails.messages) {
+        for (const message of messages) {
           if (!message.id) continue;
+          allMessages.push({ message, threadId: threadListItem.id });
+        }
+      } catch (err) {
+        console.error(`Failed to fetch thread ${threadListItem.id}:`, err);
+        failed++;
+      }
+    }
 
-          // Check if message is already in our DB
-          const existing = await db.email.findUnique({
-            where: { gmailId: message.id },
-            select: { id: true },
-          });
+    if (allMessages.length === 0) {
+      return { synced: 0, failed };
+    }
 
-          if (existing) continue; // Skip if already synced
+    // Query DB in one single batch to check for existing emails
+    const allMessageIds = allMessages.map((item) => item.message.id ?? "").filter(Boolean);
+    const existingEmails = await db.email.findMany({
+      where: {
+        gmailId: { in: allMessageIds },
+      },
+      select: { gmailId: true },
+    });
+    const existingIds = new Set(existingEmails.map((e) => e.gmailId));
 
-          const msgHeaders = message.payload?.headers ?? [];
-          const msgSubject = getHeader(msgHeaders, "subject") || "(No Subject)";
-          const fromHeader = getHeader(msgHeaders, "from");
-          const { name: fromName, email: fromEmail } = parseFrom(fromHeader);
-          const toEmails = parseEmailList(getHeader(msgHeaders, "to"));
-          const ccEmails = parseEmailList(getHeader(msgHeaders, "cc"));
+    const newMessages = allMessages.filter((item) => !existingIds.has(item.message.id ?? ""));
 
-          const body = getBody(message.payload) || message.snippet || "";
-          const bodyPreview = message.snippet ?? body.slice(0, 200);
+    if (newMessages.length === 0) {
+      return { synced: 0, failed };
+    }
 
-          const labels = message.labelIds ?? [];
-          const isRead = !labels.includes("UNREAD");
-          const isStarred = labels.includes("STARRED");
-          const isArchived = !labels.includes("INBOX");
+    // Upsert all required thread parents first
+    for (const [threadId, info] of threadMap.entries()) {
+      await db.emailThread.upsert({
+        where: { id: threadId },
+        create: {
+          id: threadId,
+          subject: info.subject,
+          snippet: info.snippet,
+        },
+        update: {
+          subject: info.subject,
+          snippet: info.snippet,
+          updatedAt: new Date(),
+        },
+      });
+    }
 
-          const receivedAt = new Date(parseInt(message.internalDate ?? String(Date.now())));
-          const sentAt = new Date(getHeader(msgHeaders, "date") || receivedAt.toISOString());
+    // Parse and prepare new message data structures
+    const parsedMessages: ParsedMessage[] = [];
+    for (const item of newMessages) {
+      const message = item.message;
+      const threadId = item.threadId;
 
-          // AI Priority Engine
-          const aiPriority = await scoreEmailPriority({
-            subject: msgSubject,
-            fromEmail,
-            fromName,
-            bodyPreview,
-            labels,
-          });
+      const msgHeaders = (message.payload?.headers ?? []) as Array<{ name?: string; value?: string }>;
+      const msgSubject = getHeader(msgHeaders, "subject") || "(No Subject)";
+      const fromHeader = getHeader(msgHeaders, "from");
+      const { name: fromName, email: fromEmail } = parseFrom(fromHeader);
+      const toEmails = parseEmailList(getHeader(msgHeaders, "to"));
+      const ccEmails = parseEmailList(getHeader(msgHeaders, "cc"));
 
-          // Security Shield
-          const securityScan = scanEmailContent({
-            subject: msgSubject,
-            body,
-            fromEmail,
-          });
+      const body = getBody(message.payload) || (message.snippet ?? "");
+      const bodyPreview = message.snippet ?? body.slice(0, 200);
 
-          // Save Email record
+      const labels = message.labelIds ?? [];
+      const isRead = !labels.includes("UNREAD");
+      const isStarred = labels.includes("STARRED");
+      const isArchived = !labels.includes("INBOX");
+
+      const receivedAt = new Date(parseInt(message.internalDate ?? String(Date.now())));
+      const sentAt = new Date(getHeader(msgHeaders, "date") || receivedAt.toISOString());
+
+      parsedMessages.push({
+        gmailId: message.id ?? "",
+        threadId,
+        msgSubject,
+        fromEmail,
+        fromName,
+        toEmails,
+        ccEmails,
+        body,
+        bodyPreview,
+        labels,
+        isRead,
+        isStarred,
+        isArchived,
+        sentAt,
+        receivedAt,
+      });
+    }
+
+    // Batch process in chunks of 10
+    const batchSize = 10;
+    for (let i = 0; i < parsedMessages.length; i += batchSize) {
+      const batch = parsedMessages.slice(i, i + batchSize);
+
+      const batchResults = await Promise.all(
+        batch.map(async (msg) => {
+          try {
+            const aiPriority = await scoreEmailPriority({
+              subject: msg.msgSubject,
+              fromEmail: msg.fromEmail,
+              fromName: msg.fromName,
+              bodyPreview: msg.bodyPreview,
+              labels: msg.labels,
+            });
+
+            const securityScan = scanEmailContent({
+              subject: msg.msgSubject,
+              body: msg.body,
+              fromEmail: msg.fromEmail,
+            });
+
+            return { aiPriority, securityScan };
+          } catch (err) {
+            console.error(`AI processing failed for message ${msg.gmailId}:`, err);
+            return {
+              aiPriority: { label: "normal" as const, score: 40, reason: "Fallback" },
+              securityScan: { isSensitive: false, sensitiveTypes: [] },
+            };
+          }
+        })
+      );
+
+      // Save chunk to database
+      for (let j = 0; j < batch.length; j++) {
+        const msg = batch[j]!;
+        const result = batchResults[j]!;
+
+        try {
           await db.email.create({
             data: {
               userId,
-              gmailId: message.id,
-              threadId: threadListItem.id,
-              subject: msgSubject,
-              fromEmail,
-              fromName: fromName || null,
-              toEmails,
-              ccEmails,
-              body,
-              bodyPreview,
-              labels,
-              isRead,
-              isStarred,
-              isArchived,
-              priorityScore: aiPriority.score,
-              priorityLabel: aiPriority.label,
-              isSensitive: securityScan.isSensitive,
-              sensitiveTypes: securityScan.sensitiveTypes,
-              sentAt,
-              receivedAt,
+              gmailId: msg.gmailId,
+              threadId: msg.threadId,
+              subject: msg.msgSubject,
+              fromEmail: msg.fromEmail,
+              fromName: msg.fromName ?? null,
+              toEmails: msg.toEmails,
+              ccEmails: msg.ccEmails,
+              body: msg.body,
+              bodyPreview: msg.bodyPreview,
+              labels: msg.labels,
+              isRead: msg.isRead,
+              isStarred: msg.isStarred,
+              isArchived: msg.isArchived,
+              priorityScore: result.aiPriority.score,
+              priorityLabel: result.aiPriority.label,
+              isSensitive: result.securityScan.isSensitive,
+              sensitiveTypes: result.securityScan.sensitiveTypes,
+              sentAt: msg.sentAt,
+              receivedAt: msg.receivedAt,
             },
           });
-
           synced++;
+        } catch (err) {
+          console.error(`Failed to save email ${msg.gmailId}:`, err);
+          failed++;
         }
-      } catch (err) {
-        console.error(`Failed to sync thread ${threadListItem.id}:`, err);
-        failed++;
+      }
+
+      // Delay 500ms between batches to satisfy rate limits
+      if (i + batchSize < parsedMessages.length) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
       }
     }
   } catch (err) {
@@ -193,7 +313,7 @@ export async function sendGmailEmail(params: {
   subject: string;
   body: string; // HTML body support
   cc?: string[];
-}): Promise<any> {
+}): Promise<unknown> {
   const { userId, to, subject, body, cc } = params;
 
   // Build raw MIME message
@@ -216,7 +336,7 @@ export async function sendGmailEmail(params: {
   try {
     const res = await corsair.withTenant(userId).gmail.api.messages.send({
       raw: rawMime,
-    } as any);
+    });
 
     return res;
   } catch (err) {
@@ -232,7 +352,7 @@ export async function archiveEmail(userId: string, gmailId: string): Promise<voi
     await corsair.withTenant(userId).gmail.api.messages.modify({
       id: gmailId,
       removeLabelIds: ["INBOX"],
-    } as any);
+    });
 
     // Update locally in DB
     await db.email.update({
@@ -251,7 +371,7 @@ export async function starEmail(userId: string, gmailId: string, star: boolean):
       id: gmailId,
       addLabelIds: star ? ["STARRED"] : [],
       removeLabelIds: star ? [] : ["STARRED"],
-    } as any);
+    });
 
     await db.email.update({
       where: { gmailId },
@@ -269,7 +389,7 @@ export async function markEmailRead(userId: string, gmailId: string, read: boole
       id: gmailId,
       addLabelIds: read ? [] : ["UNREAD"],
       removeLabelIds: read ? ["UNREAD"] : [],
-    } as any);
+    });
 
     await db.email.update({
       where: { gmailId },
