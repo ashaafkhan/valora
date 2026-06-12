@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { useEmailStore, selectFilteredEmails } from "@/store/emailStore";
 import { useCalendarStore } from "@/store/calendarStore";
 import { useRouter } from "next/navigation";
 import { api } from "@/trpc/react";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboard";
 import EmailList from "@/components/inbox/EmailList";
 import EmailThread from "@/components/inbox/EmailThread";
 import ComposeModal from "@/components/inbox/ComposeModal";
@@ -79,27 +80,6 @@ export default function InboxPage() {
   useEffect(() => {
     setLoading(emailsQuery.isLoading);
   }, [emailsQuery.isLoading, setLoading]);
-
-  // ── Keyboard Shortcuts ──────────────────────────────────────────
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      // Skip if focused inside an input/textarea
-      const tag = (e.target as HTMLElement).tagName.toLowerCase();
-      if (["input", "textarea"].includes(tag)) return;
-
-      switch (e.key) {
-        case "c":
-        case "C":
-          openCompose();
-          break;
-        case "Escape":
-          closeThread();
-          break;
-      }
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [openCompose, closeThread]);
 
   // ── Handlers ───────────────────────────────────────────────────
   const handleSelectEmail = useCallback(
@@ -196,6 +176,91 @@ export default function InboxPage() {
   const threadEmails = activeThread
     ? ((threadQuery.data ?? []) as Email[])
     : [];
+
+  // ── Keyboard Shortcuts (after handlers) ───────────────────────
+  const inboxShortcuts = useMemo(() => {
+    const getSelected = () => {
+      if (!selectedEmailId) return null;
+      return emails.find((e) => e.id === selectedEmailId) ?? null;
+    };
+
+    return [
+      {
+        shortcut: { key: "c" },
+        action: () => openCompose(),
+      },
+      {
+        shortcut: { key: "Escape" },
+        action: () => { if (activeThread) closeThread(); },
+      },
+      {
+        shortcut: { key: "e" },
+        action: () => {
+          const email = getSelected();
+          if (email) handleArchive(email.gmailId);
+        },
+      },
+      {
+        shortcut: { key: "r" },
+        action: () => {
+          const email = getSelected();
+          if (!email) return;
+          if (email.isRead) {
+            useEmailStore.getState().markAsUnread(email.id);
+          } else {
+            markAsRead(email.id);
+          }
+          markReadMutation.mutate({ gmailId: email.gmailId, read: !email.isRead });
+        },
+      },
+      {
+        shortcut: { key: "*" },
+        action: () => {
+          const email = getSelected();
+          if (email) handleToggleStar(email.id);
+        },
+      },
+      {
+        shortcut: { key: "j" },
+        action: () => {
+          const ids = displayEmails.map((e) => e.id);
+          if (ids.length === 0) return;
+          const curIdx = selectedEmailId ? ids.indexOf(selectedEmailId) : -1;
+          const next = curIdx < ids.length - 1 ? curIdx + 1 : 0;
+          const email = displayEmails[next];
+          if (email) handleSelectEmail(email);
+        },
+      },
+      {
+        shortcut: { key: "k" },
+        action: () => {
+          const ids = displayEmails.map((e) => e.id);
+          if (ids.length === 0) return;
+          const curIdx = selectedEmailId ? ids.indexOf(selectedEmailId) : 1;
+          const prev = curIdx > 0 ? curIdx - 1 : ids.length - 1;
+          const email = displayEmails[prev];
+          if (email) handleSelectEmail(email);
+        },
+      },
+      {
+        shortcut: { key: "Enter" },
+        action: () => {
+          if (!selectedEmailId) {
+            const first = displayEmails[0];
+            if (first) handleSelectEmail(first);
+          }
+        },
+      },
+      {
+        shortcut: { key: "x" },
+        action: () => {
+          if (selectedEmailId) useEmailStore.getState().toggleEmailSelection(selectedEmailId);
+        },
+      },
+    ];
+  }, [emails, selectedEmailId, activeThread, displayEmails, openCompose, closeThread, handleArchive, handleToggleStar, handleSelectEmail, markAsRead, markReadMutation]);
+
+  useKeyboardShortcuts(inboxShortcuts);
 
   return (
     <div className="flex h-full w-full overflow-hidden">

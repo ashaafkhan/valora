@@ -110,6 +110,86 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
       action: () => { router.push("/inbox"); onClose(); },
       category: "email",
     },
+    {
+      id: "email-archive",
+      label: "Archive Selected",
+      description: "Archive the currently selected email",
+      icon: <Mail className="w-4 h-4" />,
+      shortcut: "E",
+      action: () => {
+        const store = useEmailStore.getState();
+        const id = store.selectedEmailId;
+        if (id) store.archiveEmail(id);
+        onClose();
+      },
+      category: "email",
+    },
+    {
+      id: "email-markread",
+      label: "Mark as Read/Unread",
+      description: "Toggle read status of selected email",
+      icon: <Mail className="w-4 h-4" />,
+      shortcut: "R",
+      action: () => {
+        const store = useEmailStore.getState();
+        const id = store.selectedEmailId;
+        if (id) {
+          const email = store.emails.find((e) => e.id === id);
+          if (email) {
+            if (email.isRead) store.markAsUnread(id);
+            else store.markAsRead(id);
+          }
+        }
+        onClose();
+      },
+      category: "email",
+    },
+    // Calendar actions
+    {
+      id: "cal-today",
+      label: "Go to Today",
+      description: "Jump to today in calendar",
+      icon: <Calendar className="w-4 h-4 text-emerald-400" />,
+      shortcut: "T",
+      action: () => { router.push("/calendar"); onClose(); },
+      category: "settings",
+    },
+    {
+      id: "cal-week",
+      label: "Week View",
+      description: "Switch to week view",
+      icon: <Calendar className="w-4 h-4" />,
+      shortcut: "W",
+      action: () => { router.push("/calendar"); onClose(); },
+      category: "settings",
+    },
+    {
+      id: "cal-event",
+      label: "New Event",
+      description: "Create a new calendar event",
+      icon: <Calendar className="w-4 h-4 text-primary-light" />,
+      shortcut: "N",
+      action: () => { router.push("/calendar"); onClose(); },
+      category: "settings",
+    },
+    // AI Agent commands
+    {
+      id: "agent-chat",
+      label: "Open AI Agent",
+      description: "Chat with Valora Copilot",
+      icon: <Bot className="w-4 h-4 text-primary-light" />,
+      shortcut: "G A",
+      action: () => { router.push("/agent"); onClose(); },
+      category: "ai",
+    },
+    {
+      id: "agent-schedule",
+      label: "Quick Schedule",
+      description: "Use AI to schedule a meeting",
+      icon: <Calendar className="w-4 h-4 text-primary-light" />,
+      action: () => { router.push("/calendar"); onClose(); },
+      category: "ai",
+    },
   ];
 
   const filteredCommands = query.trim()

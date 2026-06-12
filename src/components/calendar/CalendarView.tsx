@@ -4,7 +4,7 @@
  * Valora — CalendarView (Stage 8)
  * Main calendar shell — toolbar, view switcher (Day/Week/Month), and view rendering
  */
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import type { CalendarEvent, CalendarViewMode } from "@/types";
 import {
   ChevronLeft,
@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { format, startOfWeek, endOfWeek, startOfMonth } from "date-fns";
 import { useCalendarStore } from "@/store/calendarStore";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboard";
 import { api } from "@/trpc/react";
 
 import WeekView from "./WeekView";
@@ -85,6 +86,20 @@ export default function CalendarView() {
       setEvents(eventsQuery.data as any);
     }
   }, [eventsQuery.data, setEvents]);
+
+  // ── Calendar Keyboard Shortcuts ─────────────────────────────
+  const calendarShortcuts = useMemo(() => [
+    { shortcut: { key: "t" }, action: () => goToToday() },
+    { shortcut: { key: "d" }, action: () => setViewMode("day") },
+    { shortcut: { key: "w" }, action: () => setViewMode("week") },
+    { shortcut: { key: "m" }, action: () => setViewMode("month") },
+    { shortcut: { key: "n" }, action: () => openCreateEvent() },
+    { shortcut: { key: "ArrowLeft" }, action: () => goToPrevious() },
+    { shortcut: { key: "ArrowRight" }, action: () => goToNext() },
+    { shortcut: { key: "Escape" }, action: () => { if (selectedEventId) selectEvent(null); if (isCreatingEvent) closeCreateEvent(); } },
+  ], [goToToday, setViewMode, openCreateEvent, goToPrevious, goToNext, selectedEventId, selectEvent, isCreatingEvent, closeCreateEvent]);
+
+  useKeyboardShortcuts(calendarShortcuts);
 
   const syncMutation = api.calendar.syncEvents.useMutation({
     onSuccess: () => {

@@ -6,14 +6,18 @@
 
 import { useEffect, useCallback } from "react";
 import { matchesShortcut, isTypingInInput } from "@/lib/shortcuts";
-import type { KeyboardShortcut } from "@/types";
+
+export interface ShortcutDef {
+  key: string;
+  modifier?: "ctrl" | "meta" | "shift" | "alt";
+}
 
 /**
  * Register a keyboard shortcut that fires `action` when the key combo is pressed.
  * Automatically removed on component unmount.
  */
 export function useKeyboard(
-  shortcut: Omit<KeyboardShortcut, "action">,
+  shortcut: ShortcutDef,
   action: () => void,
   options?: {
     enabled?: boolean;
@@ -44,7 +48,7 @@ export function useKeyboard(
  * Register multiple shortcuts at once.
  */
 export function useKeyboardShortcuts(
-  shortcuts: Array<{ shortcut: Omit<KeyboardShortcut, "action">; action: () => void }>,
+  shortcuts: Array<{ shortcut: ShortcutDef; action: () => void }>,
   options?: { enabled?: boolean },
 ) {
   const { enabled = true } = options ?? {};

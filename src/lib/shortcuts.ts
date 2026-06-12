@@ -67,7 +67,7 @@ export function formatShortcutKey(shortcut: Omit<KeyboardShortcut, "action">): s
 // ── Shortcut Matching ──────────────────────────────────────────
 export function matchesShortcut(
   event: KeyboardEvent,
-  shortcut: Omit<KeyboardShortcut, "action">,
+  shortcut: { key: string; modifier?: string },
 ): boolean {
   if (event.key.toLowerCase() !== shortcut.key.toLowerCase()) return false;
 
