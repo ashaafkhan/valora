@@ -69,6 +69,13 @@ async function registerWebhooks() {
   console.log(`   Base URL: ${BASE_URL}`);
   console.log(`   Corsair:  ${CORSAIR_BASE}\n`);
 
+  if (CORSAIR_BASE.includes("localhost") || CORSAIR_API_KEY === "self_hosted") {
+    console.log("ℹ️  Self-hosted Corsair mode detected.");
+    console.log("   Webhooks are managed internally by the local database engine and plugins.");
+    console.log("\n✨  Done.");
+    return;
+  }
+
   // ── Gmail Webhook ────────────────────────────────────────────
   try {
     const gmailUrl = `${BASE_URL}/api/webhooks/gmail`;
