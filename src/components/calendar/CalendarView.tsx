@@ -13,7 +13,7 @@ import {
   RefreshCw,
   Loader2,
 } from "lucide-react";
-import { format, startOfWeek, endOfWeek, startOfMonth } from "date-fns";
+import { format, startOfWeek, endOfWeek } from "date-fns";
 import { useCalendarStore } from "@/store/calendarStore";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboard";
 import { api } from "@/trpc/react";
@@ -83,7 +83,7 @@ export default function CalendarView() {
   // Sync events into store when query data arrives
   useEffect(() => {
     if (eventsQuery.data) {
-      setEvents(eventsQuery.data as any);
+      setEvents(eventsQuery.data as unknown as CalendarEvent[]);
     }
   }, [eventsQuery.data, setEvents]);
 
@@ -204,7 +204,7 @@ export default function CalendarView() {
   );
 
   const handleSendInvite = useCallback(
-    (email: string) => {
+    (_email: string) => {
       if (!selectedEvent) return;
       // Triggered in EventDetailPanel, just a callback bridge
     },
@@ -225,7 +225,7 @@ export default function CalendarView() {
     clearPrefillEvent();
   }, [closeCreateEvent, clearPrefillEvent]);
 
-  const displayedEvents = (eventsQuery.data as any ?? events) as CalendarEvent[];
+  const displayedEvents = ((eventsQuery.data as unknown as CalendarEvent[] | undefined) ?? events);
   const eventDates = displayedEvents.map((e) => new Date(e.startTime));
 
   const VIEW_MODES: { key: CalendarViewMode; label: string }[] = [
@@ -402,7 +402,7 @@ export default function CalendarView() {
                 description: editingEvent.description,
                 location: editingEvent.location,
                 attendees: Array.isArray(editingEvent.attendees)
-                  ? (editingEvent.attendees as any[])
+                  ? (editingEvent.attendees as Array<{ email: string; name?: string; status: string }>)
                   : [],
               }
             : null

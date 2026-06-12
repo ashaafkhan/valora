@@ -18,20 +18,20 @@ export function useEmailMutations() {
   const utils = api.useUtils();
 
   const archiveMutation = api.gmail.archive.useMutation({
-    onError: (_err, vars) => {
-      utils.gmail.getEmails.invalidate();
+    onError: (_err, _vars) => {
+      void utils.gmail.getEmails.invalidate();
     },
   });
 
   const starMutation = api.gmail.star.useMutation({
     onError: () => {
-      utils.gmail.getEmails.invalidate();
+      void utils.gmail.getEmails.invalidate();
     },
   });
 
   const markReadMutation = api.gmail.markRead.useMutation({
     onError: () => {
-      utils.gmail.getEmails.invalidate();
+      void utils.gmail.getEmails.invalidate();
     },
   });
 

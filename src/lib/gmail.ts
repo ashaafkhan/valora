@@ -297,7 +297,7 @@ export async function syncGmailInbox(userId: string, maxThreads = 20): Promise<{
               receivedAt: msg.receivedAt,
             },
           });
-          generateEmailEmbedding(saved.id, `${msg.msgSubject} ${msg.body}`).catch(() => {});
+          generateEmailEmbedding(saved.id, `${msg.msgSubject} ${msg.body}`).catch((e) => console.warn("[Vectors] Embedding failed:", e));
           synced++;
         } catch (err) {
           console.error(`Failed to save email ${msg.gmailId}:`, err);

@@ -31,7 +31,7 @@ export function MemoryContext() {
   }, []);
 
   useEffect(() => {
-    fetchMemories();
+    void fetchMemories();
   }, [fetchMemories]);
 
   const handleDelete = async (memoryId: string) => {

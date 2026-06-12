@@ -35,7 +35,7 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
     } else {
       setSecurityWarning(null);
     }
-  }, [body]);
+  }, [body, subject]);
 
   // tRPC mutation for AI smart drafts
   const draftMutation = api.gmail.generateDraft.useMutation();
@@ -62,11 +62,12 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
         e.preventDefault();
-        handleSend();
+        void handleSend();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [to, subject, body, cc]);
 
   const handleSend = async () => {

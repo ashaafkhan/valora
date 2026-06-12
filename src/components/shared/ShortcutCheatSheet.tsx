@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback } from "react";
 import { SHORTCUT_DEFINITIONS, formatShortcutKey } from "@/lib/shortcuts";
 import { Keyboard } from "lucide-react";
 

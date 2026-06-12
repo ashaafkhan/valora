@@ -3,7 +3,9 @@
  * Persistent agent memory across sessions
  */
 import MemoryClient from "mem0ai";
-import type { AgentMessage } from "@/types";
+
+/** Minimal message shape used for Mem0 — only role + content needed */
+type MemoryMessage = { role: "user" | "assistant"; content: string };
 
 // Lazy-init client (Mem0 is optional)
 let _client: MemoryClient | null = null;
@@ -17,7 +19,7 @@ function getClient(): MemoryClient | null {
 // ── Add Memory ─────────────────────────────────────────────────
 export async function addMemory(
   userId: string,
-  messages: AgentMessage[],
+  messages: MemoryMessage[],
 ): Promise<string | null> {
   const client = getClient();
   if (!client) return null;

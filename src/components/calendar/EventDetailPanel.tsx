@@ -8,7 +8,6 @@ import type { CalendarEvent } from "@/types";
 import {
   X,
   MapPin,
-  Clock,
   Video,
   Users,
   Edit2,
@@ -40,6 +39,13 @@ function formatDuration(start: Date, end: Date): string {
   return rem > 0 ? `${hrs}h ${rem}m` : `${hrs}h`;
 }
 
+/** Shape of attendees stored in JSON column */
+interface Attendee {
+  email: string;
+  name?: string;
+  status?: string;
+}
+
 export default function EventDetailPanel({
   event,
   onClose,
@@ -55,8 +61,8 @@ export default function EventDetailPanel({
 
   const start = new Date(event.startTime);
   const end = new Date(event.endTime);
-  const attendees = Array.isArray(event.attendees)
-    ? (event.attendees as any[])
+  const attendees: Attendee[] = Array.isArray(event.attendees)
+    ? (event.attendees as Attendee[])
     : [];
 
   const handleDelete = async () => {
@@ -160,11 +166,11 @@ export default function EventDetailPanel({
                 <div key={i} className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
                     <div className="w-6 h-6 rounded-lg bg-zinc-800 flex items-center justify-center text-[10px] font-bold text-zinc-400 flex-shrink-0">
-                      {(a.name || a.email || "?")[0]?.toUpperCase()}
+                      {((a.name ?? a.email) ?? "?")[0]?.toUpperCase()}
                     </div>
                     <div className="min-w-0">
                       <div className="text-xs text-zinc-300 truncate">
-                        {a.name || a.email}
+                        {a.name ?? a.email}
                       </div>
                       {a.name && (
                         <div className="text-[10px] text-zinc-600 truncate">{a.email}</div>
@@ -193,7 +199,7 @@ export default function EventDetailPanel({
             {/* Send invite to first attendee */}
             {attendees[0]?.email && (
               <button
-                onClick={() => onSendInvite(attendees[0].email)}
+                onClick={() => onSendInvite(attendees[0]!.email)}
                 disabled={sendInviteMutation.isPending}
                 className="w-full mt-2 px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 text-xs font-semibold rounded-xl flex items-center justify-center gap-1.5 transition disabled:opacity-50"
               >
