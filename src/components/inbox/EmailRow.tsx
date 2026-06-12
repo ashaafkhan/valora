@@ -1,9 +1,10 @@
 "use client";
 
 import type { Email } from "@/types";
-import { Star } from "lucide-react";
+import { Star, ShieldAlert } from "lucide-react";
 import PriorityBadge from "./PriorityBadge";
 import ShieldBadge from "./ShieldBadge";
+import { redactSensitiveContent } from "@/lib/security";
 import { format } from "date-fns";
 
 interface EmailRowProps {
@@ -110,7 +111,7 @@ export default function EmailRow({
             {email.subject}
           </span>
           <span className="text-text-muted text-xs truncate max-w-[250px] font-normal">
-            — {email.bodyPreview}
+            — {email.isSensitive ? redactSensitiveContent(email.bodyPreview, email.sensitiveTypes) : email.bodyPreview}
           </span>
         </div>
       </div>

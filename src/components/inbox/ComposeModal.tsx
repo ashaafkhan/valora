@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Send, Sparkles, Loader2, Clock, Calendar } from "lucide-react";
+import { X, Send, Sparkles, Loader2, Clock, Calendar, ShieldAlert } from "lucide-react";
 import { useEmailStore } from "@/store/emailStore";
 import { api } from "@/trpc/react";
+import { scanEmailContent, getShieldLabel } from "@/lib/security";
 
 interface ComposeModalProps {
   onSend: (payload: { to: string; subject: string; body: string; cc?: string[]; scheduledAt?: Date }) => Promise<void>;
@@ -20,6 +21,21 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
   const [isDrafting, setIsDrafting] = useState(false);
   const [scheduledAt, setScheduledAt] = useState<string>(""); // ISO string from datetime-local input
   const [showScheduler, setShowScheduler] = useState(false);
+  const [securityWarning, setSecurityWarning] = useState<string | null>(null);
+
+  // Scan body for sensitive content whenever it changes
+  useEffect(() => {
+    if (!body.trim()) {
+      setSecurityWarning(null);
+      return;
+    }
+    const result = scanEmailContent({ subject, body, fromEmail: "" });
+    if (result.isSensitive && result.sensitiveTypes.length > 0) {
+      setSecurityWarning(getShieldLabel(result.sensitiveTypes));
+    } else {
+      setSecurityWarning(null);
+    }
+  }, [body]);
 
   // tRPC mutation for AI smart drafts
   const draftMutation = api.gmail.generateDraft.useMutation();
@@ -172,6 +188,14 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
           className="flex-1 bg-transparent border-0 outline-none p-0 text-sm text-zinc-100 placeholder-zinc-700 focus:ring-0 resize-none min-h-[220px]"
         />
       </div>
+
+      {/* Security warning */}
+      {securityWarning && (
+        <div className="mx-4 mb-0 px-3.5 py-2 rounded-xl bg-yellow-500/5 border border-yellow-500/15 flex items-center gap-2 text-[11px] text-yellow-400 font-medium">
+          <ShieldAlert className="w-3.5 h-3.5 flex-shrink-0" />
+          <span>Sensitive content detected: {securityWarning}. Review before sending.</span>
+        </div>
+      )}
 
       {/* Footer bar */}
       <div className="p-4 bg-zinc-950 border-t border-zinc-800 flex items-center justify-between">

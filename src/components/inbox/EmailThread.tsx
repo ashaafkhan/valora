@@ -19,6 +19,7 @@ import {
 import { useState } from "react";
 import PriorityBadge from "./PriorityBadge";
 import ShieldBadge from "./ShieldBadge";
+import { SensitiveEmailBody } from "./SensitiveEmailBody";
 import { format } from "date-fns";
 import { api } from "@/trpc/react";
 
@@ -286,12 +287,16 @@ export default function EmailThread({
                   </div>
 
                   {/* Body HTML/Text rendering */}
-                  <div
-                    className="text-sm text-text-secondary leading-relaxed overflow-x-auto whitespace-pre-wrap select-text font-sans"
-                    dangerouslySetInnerHTML={{
-                      __html: email.body.includes("</") ? email.body : email.body.replace(/\n/g, "<br/>"),
-                    }}
-                  />
+                  {email.isSensitive && email.sensitiveTypes.length > 0 ? (
+                    <SensitiveEmailBody body={email.body} types={email.sensitiveTypes} />
+                  ) : (
+                    <div
+                      className="text-sm text-text-secondary leading-relaxed overflow-x-auto whitespace-pre-wrap select-text font-sans"
+                      dangerouslySetInnerHTML={{
+                        __html: email.body.includes("</") ? email.body : email.body.replace(/\n/g, "<br/>"),
+                      }}
+                    />
+                  )}
                 </div>
               )}
             </div>
