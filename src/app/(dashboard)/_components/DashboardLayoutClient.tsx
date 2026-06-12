@@ -21,7 +21,7 @@ export default function DashboardLayoutClient({
   const { isOpen, close, open } = useCommandPalette();
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#080808]">
+    <div className="flex h-screen w-screen overflow-hidden bg-background text-text-primary theme-transition">
       <Sidebar user={user} />
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <TopBar onOpenCommandPalette={open} />

@@ -1,10 +1,10 @@
 "use client";
 
 import type { Email } from "@/types";
-import { Star, MailOpen, Mail, Shield } from "lucide-react";
+import { Star } from "lucide-react";
 import PriorityBadge from "./PriorityBadge";
 import ShieldBadge from "./ShieldBadge";
-import { formatDistanceToNow, format } from "date-fns";
+import { format } from "date-fns";
 
 interface EmailRowProps {
   email: Email;
@@ -29,7 +29,7 @@ function stringToColor(str: string): string {
     "bg-rose-500/10 text-rose-400 border-rose-500/20",
     "bg-amber-500/10 text-amber-400 border-amber-500/20",
   ];
-  return colors[Math.abs(hash) % colors.length] || colors[0]!;
+  return colors[Math.abs(hash) % colors.length] ?? colors[0]!;
 }
 
 export default function EmailRow({
@@ -40,7 +40,7 @@ export default function EmailRow({
   onToggleStar,
   onClick,
 }: EmailRowProps) {
-  const senderName = email.fromName || email.fromEmail.split("@")[0] || "Unknown";
+  const senderName = email.fromName ?? email.fromEmail.split("@")[0] ?? "Unknown";
   const initials = senderName.slice(0, 2).toUpperCase();
   const avatarColor = stringToColor(email.fromEmail);
 
@@ -54,11 +54,11 @@ export default function EmailRow({
   return (
     <div
       onClick={onClick}
-      className={`group px-4 py-3 border-b border-[#222222]/80 flex items-center gap-3 cursor-pointer transition-all duration-200 select-none relative
-        ${isFocused ? "bg-zinc-900/60 border-l-[3px] border-l-[#7C3AED] pl-[13px]" : "bg-transparent"}
-        ${isSelected ? "bg-[#1C1640]/40" : ""}
-        ${!email.isRead ? "font-semibold text-white bg-zinc-900/15" : "font-normal text-[#888888]"}
-        hover:bg-zinc-900/50 hover:border-l-[3px] hover:border-l-[#7C3AED]/50 hover:pl-[13px]`}
+      className={`group px-4 py-3 border-b border-border/80 flex items-center gap-3 cursor-pointer transition-all duration-200 select-none relative theme-transition
+        ${isFocused ? "bg-surface-hover/80 border-l-[3px] border-l-primary pl-[13px] valora-glow" : "bg-transparent"}
+        ${isSelected ? "bg-primary/10" : ""}
+        ${!email.isRead ? "font-semibold text-text-primary bg-primary/[0.03]" : "font-normal text-text-secondary"}
+        hover:bg-surface-hover/50 hover:border-l-[3px] hover:border-l-primary-light hover:pl-[13px]`}
     >
       {/* Checkbox (Bulk Action Selection) */}
       <div
@@ -71,8 +71,8 @@ export default function EmailRow({
         <input
           type="checkbox"
           checked={isSelected}
-          onChange={() => {}} // Controlled via onClick parent event
-          className="w-3.5 h-3.5 rounded border-[#222222] bg-[#111] text-[#7C3AED] focus:ring-[#7C3AED]/20 focus:ring-offset-0 cursor-pointer accent-[#7C3AED]"
+          readOnly
+          className="w-3.5 h-3.5 rounded border-border bg-background text-primary focus:ring-primary/20 focus:ring-offset-0 cursor-pointer accent-primary"
         />
       </div>
 
@@ -82,8 +82,8 @@ export default function EmailRow({
           e.stopPropagation();
           onToggleStar(email.id, e);
         }}
-        className={`w-5 h-5 flex items-center justify-center flex-shrink-0 transition hover:scale-115 ${
-          email.isStarred ? "text-amber-400" : "text-zinc-600 hover:text-zinc-400"
+        className={`w-5 h-5 flex items-center justify-center flex-shrink-0 transition hover:scale-115 duration-200 ${
+          email.isStarred ? "text-amber-400" : "text-text-muted hover:text-text-secondary"
         }`}
       >
         <Star className="w-4 h-4" fill={email.isStarred ? "currentColor" : "none"} />
@@ -97,19 +97,19 @@ export default function EmailRow({
       {/* Message Info block */}
       <div className="flex-1 min-w-0 pr-2">
         <div className="flex items-center justify-between gap-2">
-          <span className={`truncate text-sm ${!email.isRead ? "text-zinc-100 font-bold" : "text-zinc-300"}`}>
+          <span className={`truncate text-sm ${!email.isRead ? "text-text-primary font-bold" : "text-text-primary font-medium"}`}>
             {senderName}
           </span>
-          <span className="text-[10px] text-zinc-500 flex-shrink-0 font-mono">
+          <span className="text-[10px] text-text-muted flex-shrink-0 font-mono">
             {timeStr}
           </span>
         </div>
         
         <div className="flex items-center gap-1.5 mt-0.5">
-          <span className={`truncate text-xs ${!email.isRead ? "text-white" : "text-[#888888]"}`}>
+          <span className={`truncate text-xs ${!email.isRead ? "text-text-primary font-semibold" : "text-text-secondary"}`}>
             {email.subject}
           </span>
-          <span className="text-zinc-500 text-xs truncate max-w-[250px] font-normal">
+          <span className="text-text-muted text-xs truncate max-w-[250px] font-normal">
             — {email.bodyPreview}
           </span>
         </div>
@@ -122,15 +122,15 @@ export default function EmailRow({
       </div>
 
       {/* Keyboard Shortcut Hints shown on Hover */}
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden group-hover:flex items-center gap-1 bg-[#111111]/90 border border-[#222222] rounded-lg p-1.5 z-10 shadow-lg select-none">
-        <span className="text-[9px] text-zinc-500 font-mono flex items-center gap-1">
-          <kbd className="px-1 py-0.5 bg-zinc-900 border border-zinc-800 rounded font-bold">E</kbd> Archive
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden group-hover:flex items-center gap-1 valora-glass rounded-lg p-1.5 z-10 shadow-lg select-none">
+        <span className="text-[9px] text-text-muted font-mono flex items-center gap-1">
+          <kbd className="px-1 py-0.5 bg-background border border-border rounded font-bold">E</kbd> Archive
         </span>
-        <span className="text-[9px] text-zinc-500 font-mono flex items-center gap-1 ml-1.5">
-          <kbd className="px-1 py-0.5 bg-zinc-900 border border-zinc-800 rounded font-bold">R</kbd> Read
+        <span className="text-[9px] text-text-muted font-mono flex items-center gap-1 ml-1.5">
+          <kbd className="px-1 py-0.5 bg-background border border-border rounded font-bold">R</kbd> Read
         </span>
-        <span className="text-[9px] text-zinc-500 font-mono flex items-center gap-1 ml-1.5">
-          <kbd className="px-1 py-0.5 bg-zinc-900 border border-zinc-800 rounded font-bold">*</kbd> Star
+        <span className="text-[9px] text-text-muted font-mono flex items-center gap-1 ml-1.5">
+          <kbd className="px-1 py-0.5 bg-background border border-border rounded font-bold">*</kbd> Star
         </span>
       </div>
     </div>

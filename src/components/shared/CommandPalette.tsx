@@ -182,24 +182,24 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+        className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 transition-opacity"
         onClick={onClose}
       />
 
       {/* Palette */}
-      <div className="fixed top-[20vh] left-1/2 -translate-x-1/2 w-full max-w-[580px] bg-[#111111] border border-[#333333] rounded-2xl shadow-2xl shadow-black/60 z-50 overflow-hidden animate-fade-in-scale">
+      <div className="fixed top-[20vh] left-1/2 -translate-x-1/2 w-full max-w-[580px] valora-glass rounded-2xl z-50 overflow-hidden animate-fade-in theme-transition valora-glow">
         {/* Search Input */}
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[#222222]">
-          <Search className="w-4 h-4 text-zinc-500 flex-shrink-0" />
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-border/80 bg-background/25">
+          <Search className="w-4 h-4 text-text-muted flex-shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
             placeholder="Type a command or search..."
-            className="flex-1 bg-transparent border-0 outline-none text-sm text-zinc-100 placeholder-zinc-600 focus:ring-0"
+            className="flex-1 bg-transparent border-0 outline-none text-sm text-text-primary placeholder-text-muted focus:ring-0"
           />
-          <kbd className="text-[10px] text-zinc-600 font-mono bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
+          <kbd className="text-[10px] text-text-muted font-mono bg-background border border-border px-1.5 py-0.5 rounded">
             ESC
           </kbd>
         </div>
@@ -207,13 +207,13 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
         {/* Results */}
         <div className="max-h-[380px] overflow-y-auto py-2 scrollbar-thin">
           {filteredCommands.length === 0 ? (
-            <div className="px-4 py-8 text-center text-sm text-zinc-600">
+            <div className="px-4 py-8 text-center text-sm text-text-muted">
               No commands found for &quot;{query}&quot;
             </div>
           ) : (
             Object.entries(grouped).map(([category, cmds]) => (
               <div key={category} className="mb-1">
-                <div className="px-4 py-1.5 text-[10px] font-semibold text-zinc-600 uppercase tracking-widest">
+                <div className="px-4 py-1.5 text-[10px] font-semibold text-text-muted uppercase tracking-widest">
                   {categoryLabels[category] ?? category}
                 </div>
                 {cmds.map((cmd) => {
@@ -224,15 +224,15 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                       key={cmd.id}
                       onClick={cmd.action}
                       onMouseEnter={() => setSelectedIndex(idx)}
-                      className={`w-full px-4 py-2.5 flex items-center gap-3 text-left transition-colors ${
+                      className={`w-full px-4 py-2.5 flex items-center gap-3 text-left transition-colors theme-transition ${
                         isSelected
-                          ? "bg-[#1C1640] text-white"
-                          : "text-zinc-300 hover:bg-zinc-900/50"
+                          ? "bg-primary/15 text-text-primary border-l-[3px] border-l-primary pl-[13px]"
+                          : "text-text-secondary hover:bg-surface-hover/50 pl-4"
                       }`}
                     >
                       <span
                         className={`flex-shrink-0 ${
-                          isSelected ? "text-[#A855F7]" : "text-zinc-500"
+                          isSelected ? "text-primary-light" : "text-text-muted"
                         }`}
                       >
                         {cmd.icon}
@@ -240,7 +240,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-medium truncate">{cmd.label}</div>
                         {cmd.description && (
-                          <div className="text-xs text-zinc-500 truncate">
+                          <div className="text-xs text-text-secondary/80 truncate">
                             {cmd.description}
                           </div>
                         )}
@@ -250,7 +250,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                           {cmd.shortcut.split(" ").map((k, i) => (
                             <kbd
                               key={i}
-                              className="text-[10px] text-zinc-500 font-mono bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded"
+                              className="text-[10px] text-text-muted font-mono bg-background border border-border px-1.5 py-0.5 rounded"
                             >
                               {k}
                             </kbd>
@@ -258,7 +258,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                         </div>
                       )}
                       {isSelected && (
-                        <ArrowRight className="w-3.5 h-3.5 text-[#A855F7] flex-shrink-0" />
+                        <ArrowRight className="w-3.5 h-3.5 text-primary-light flex-shrink-0" />
                       )}
                     </button>
                   );
@@ -269,16 +269,16 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
         </div>
 
         {/* Footer hint */}
-        <div className="px-4 py-2.5 border-t border-[#222222] flex items-center justify-between text-[10px] text-zinc-600 font-mono">
+        <div className="px-4 py-2.5 border-t border-border/80 flex items-center justify-between text-[10px] text-text-muted font-mono bg-background/25">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1">
-              <kbd className="bg-zinc-900 border border-zinc-800 px-1 rounded">↑↓</kbd> navigate
+              <kbd className="bg-background border border-border px-1 rounded">↑↓</kbd> navigate
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="bg-zinc-900 border border-zinc-800 px-1 rounded">↵</kbd> select
+              <kbd className="bg-background border border-border px-1 rounded">↵</kbd> select
             </span>
           </div>
-          <span className="flex items-center gap-1 text-[#7C3AED]">
+          <span className="flex items-center gap-1 text-primary-light font-bold">
             <Clock className="w-3 h-3" /> Valora Command Palette
           </span>
         </div>

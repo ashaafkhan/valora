@@ -29,7 +29,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
 
   if (!mounted) {
     return (
-      <div className={`w-8 h-8 rounded-xl bg-zinc-900 border border-zinc-800 ${className}`} />
+      <div className={`w-8 h-8 rounded-xl bg-surface border border-border ${className}`} />
     );
   }
 
@@ -37,12 +37,12 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
     <button
       onClick={toggle}
       title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-      className={`w-8 h-8 rounded-xl border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 flex items-center justify-center transition-all hover:border-zinc-700 ${className}`}
+      className={`w-8 h-8 rounded-xl border border-border bg-surface hover:bg-surface-hover flex items-center justify-center transition-all active:scale-90 hover:border-primary/50 duration-300 theme-transition ${className}`}
     >
       {isDark ? (
-        <Sun className="w-3.5 h-3.5 text-zinc-400 hover:text-amber-400 transition-colors" />
+        <Sun className="w-3.5 h-3.5 text-text-secondary hover:text-amber-400 transition-all duration-300 transform hover:rotate-45" />
       ) : (
-        <Moon className="w-3.5 h-3.5 text-zinc-400 hover:text-[#A855F7] transition-colors" />
+        <Moon className="w-3.5 h-3.5 text-text-secondary hover:text-primary-light transition-all duration-300 transform hover:-rotate-12" />
       )}
     </button>
   );

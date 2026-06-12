@@ -31,20 +31,20 @@ export default function TopBar({ onOpenCommandPalette }: TopBarProps) {
   }, [onOpenCommandPalette]);
 
   return (
-    <header className="h-14 border-b border-[#222222]/80 bg-[#0A0A0A]/40 backdrop-blur flex items-center justify-between px-6 gap-6 flex-shrink-0 select-none">
+    <header className="h-14 border-b border-border/80 bg-background/40 backdrop-blur flex items-center justify-between px-6 gap-6 flex-shrink-0 select-none theme-transition">
       {/* Search Input Box */}
       <div className="flex-1 max-w-xl relative flex items-center group">
-        <Search className="absolute left-3.5 w-4 h-4 text-zinc-500 group-focus-within:text-[#7C3AED] transition-colors pointer-events-none" />
+        <Search className="absolute left-3.5 w-4 h-4 text-text-muted group-focus-within:text-primary transition-colors pointer-events-none" />
         <input
           ref={searchInputRef}
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search mail and attachments..."
-          className="w-full pl-10 pr-12 py-1.5 bg-zinc-900/35 hover:bg-zinc-900/50 focus:bg-zinc-950 border border-zinc-800/80 focus:border-[#7C3AED]/50 rounded-xl text-xs text-zinc-200 placeholder-zinc-500 outline-none transition focus:ring-1 focus:ring-[#7C3AED]/10"
+          className="w-full pl-10 pr-12 py-1.5 bg-surface/35 hover:bg-surface/50 focus:bg-surface border border-border focus:border-primary/50 rounded-xl text-xs text-text-primary placeholder-text-muted outline-none transition focus:ring-1 focus:ring-primary/10 theme-transition"
         />
         {/* Hotkey hint inside search box */}
-        <kbd className="absolute right-3.5 px-1.5 py-0.5 bg-zinc-950 border border-zinc-800 text-[9px] font-mono text-zinc-500 rounded pointer-events-none group-focus-within:hidden select-none">
+        <kbd className="absolute right-3.5 px-1.5 py-0.5 bg-background border border-border text-[9px] font-mono text-text-muted rounded pointer-events-none group-focus-within:hidden select-none">
           /
         </kbd>
       </div>
@@ -55,7 +55,7 @@ export default function TopBar({ onOpenCommandPalette }: TopBarProps) {
         <button
           onClick={onOpenCommandPalette}
           title="Open Command Palette (⌘K)"
-          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-zinc-900/60 hover:bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-zinc-500 hover:text-zinc-300 transition"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-surface/60 hover:bg-surface border border-border rounded-xl text-xs text-text-muted hover:text-text-primary transition theme-transition"
         >
           <Command className="w-3.5 h-3.5" />
           <span className="hidden sm:inline font-mono text-[10px]">⌘K</span>
@@ -67,7 +67,7 @@ export default function TopBar({ onOpenCommandPalette }: TopBarProps) {
         {/* Compose Button Trigger */}
         <button
           onClick={() => openCompose()}
-          className="px-4 py-1.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow shadow-[#7C3AED]/20 active:scale-95"
+          className="px-4 py-1.5 bg-primary hover:bg-primary-light text-primary-foreground text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow shadow-primary/20 active:scale-95 theme-transition"
         >
           <Plus className="w-3.5 h-3.5" />
           Compose

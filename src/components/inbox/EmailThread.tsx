@@ -60,14 +60,12 @@ export default function EmailThread({
   const unsubscribeUrl = (() => {
     const allBodies = emailsInThread.map((e) => e.body).join(" ");
     // Match common unsubscribe link patterns
-    const urlMatch = allBodies.match(
-      /href=["'](https?:\/\/[^"']*unsubscrib[^"']*)["']/i
-    );
+    const regex1 = /href=["'](https?:\/\/[^"']*unsubscrib[^"']*)["']/i;
+    const urlMatch = regex1.exec(allBodies);
     if (urlMatch?.[1]) return urlMatch[1];
     // Fallback: look for plain URLs with unsubscribe
-    const plainMatch = allBodies.match(
-      /(https?:\/\/\S*unsubscrib\S*)/i
-    );
+    const regex2 = /(https?:\/\/\S*unsubscrib\S*)/i;
+    const plainMatch = regex2.exec(allBodies);
     return plainMatch?.[1] ?? null;
   })();
 
@@ -77,18 +75,18 @@ export default function EmailThread({
 
   if (isLoading) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-[#070707] h-full text-zinc-500">
-        <Loader2 className="w-8 h-8 animate-spin text-[#7C3AED]" />
+      <div className="flex-1 flex items-center justify-center bg-background h-full text-text-muted theme-transition">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
   }
 
   if (emailsInThread.length === 0) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center bg-[#070707] h-full text-zinc-600 p-8">
-        <User className="w-10 h-10 text-zinc-800 mb-2" />
+      <div className="flex-1 flex flex-col items-center justify-center bg-background h-full text-text-muted p-8 theme-transition">
+        <User className="w-10 h-10 text-text-muted/65 mb-2" />
         <p className="text-sm font-medium">No conversation selected</p>
-        <p className="text-xs text-zinc-500 mt-1">
+        <p className="text-xs text-text-secondary mt-1">
           Select an email thread from the inbox to read.
         </p>
       </div>
@@ -165,11 +163,11 @@ export default function EmailThread({
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-[#070707] text-[#F8F8F8]">
+    <div className="flex-1 flex flex-col h-full bg-background text-text-primary theme-transition">
       {/* Thread Header Toolbar */}
-      <div className="px-6 py-4 border-b border-[#222222]/80 flex items-center justify-between gap-4 flex-shrink-0 bg-[#0A0A0A]/40 backdrop-blur">
+      <div className="px-6 py-4 border-b border-border/80 flex items-center justify-between gap-4 flex-shrink-0 bg-background/40 backdrop-blur">
         <div className="min-w-0">
-          <h1 className="text-base font-bold text-zinc-100 truncate">{subject}</h1>
+          <h1 className="text-base font-bold text-text-primary truncate">{subject}</h1>
           <div className="flex items-center gap-2 mt-1.5 flex-wrap">
             <PriorityBadge label={latestEmail.priorityLabel} score={latestEmail.priorityScore} />
             {latestEmail.isSensitive && <ShieldBadge types={latestEmail.sensitiveTypes} />}
@@ -185,7 +183,7 @@ export default function EmailThread({
               target="_blank"
               rel="noopener noreferrer"
               title="One-click unsubscribe from this mailing list"
-              className="px-3 py-1.5 bg-rose-900/10 hover:bg-rose-900/25 text-rose-400 border border-rose-800/30 hover:border-rose-700/50 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition"
+              className="px-3 py-1.5 bg-error/10 hover:bg-error/20 text-error border border-error/25 hover:border-error/45 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition duration-200 theme-transition"
             >
               <MailX className="w-3.5 h-3.5" />
               Unsubscribe
@@ -196,7 +194,7 @@ export default function EmailThread({
           <button
             onClick={handleExtractMeeting}
             disabled={isExtracting}
-            className="px-3 py-1.5 bg-[#7C3AED]/15 hover:bg-[#7C3AED]/25 text-[#A855F7] border border-[#7C3AED]/30 hover:border-[#7C3AED]/50 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50"
+            className="px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary-light border border-primary/25 hover:border-primary/45 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition duration-200 disabled:opacity-50 theme-transition"
           >
             {isExtracting ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -209,8 +207,8 @@ export default function EmailThread({
           {/* Star Action */}
           <button
             onClick={() => onToggleStar(latestEmail.gmailId, !latestEmail.isStarred)}
-            className={`p-2 rounded-xl border border-[#222222] bg-zinc-950 transition hover:bg-zinc-900 ${
-              latestEmail.isStarred ? "text-amber-400 border-amber-500/10" : "text-zinc-400 hover:text-white"
+            className={`p-2 rounded-xl border border-border bg-surface transition hover:bg-surface-hover theme-transition ${
+              latestEmail.isStarred ? "text-amber-400 border-amber-500/10" : "text-text-secondary hover:text-text-primary"
             }`}
           >
             <Star className="w-4 h-4" fill={latestEmail.isStarred ? "currentColor" : "none"} />
@@ -219,7 +217,7 @@ export default function EmailThread({
           {/* Archive Action */}
           <button
             onClick={() => onArchive(latestEmail.gmailId)}
-            className="p-2 rounded-xl border border-[#222222] bg-zinc-950 text-zinc-400 hover:text-white transition hover:bg-zinc-900"
+            className="p-2 rounded-xl border border-border bg-surface text-text-secondary hover:text-text-primary transition hover:bg-surface-hover theme-transition"
             title="Archive email (E)"
           >
             <Archive className="w-4 h-4" />
@@ -236,52 +234,52 @@ export default function EmailThread({
           return (
             <div
               key={email.id}
-              className={`border border-[#222222]/80 rounded-2xl overflow-hidden transition-all duration-200 bg-[#0F0F0F]
-                ${expanded ? "ring-1 ring-zinc-800" : "opacity-75 hover:opacity-100"}`}
+              className={`border border-border/80 rounded-2xl overflow-hidden transition-all duration-200 bg-surface/85
+                ${expanded ? "ring-1 ring-border/80 shadow-md valora-glow" : "opacity-75 hover:opacity-100"}`}
             >
               {/* Message Header Bar */}
               <div
                 onClick={() => toggleExpand(email.id)}
-                className="px-5 py-3.5 flex items-center justify-between cursor-pointer hover:bg-zinc-900/30"
+                className="px-5 py-3.5 flex items-center justify-between cursor-pointer hover:bg-surface-hover/30 transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center font-bold text-xs text-zinc-400">
-                    {email.fromName?.slice(0, 1) || email.fromEmail.slice(0, 1).toUpperCase()}
+                  <div className="w-8 h-8 rounded-lg bg-surface-hover border border-border flex items-center justify-center font-bold text-xs text-text-secondary">
+                    {email.fromName?.slice(0, 1) ?? email.fromEmail.slice(0, 1).toUpperCase()}
                   </div>
                   <div>
-                    <span className="text-sm font-semibold text-zinc-100">
-                      {email.fromName || email.fromEmail}
+                    <span className="text-sm font-semibold text-text-primary">
+                      {email.fromName ?? email.fromEmail}
                     </span>
-                    <span className="text-xs text-zinc-500 ml-1.5">
+                    <span className="text-xs text-text-muted ml-1.5 font-mono">
                       &lt;{email.fromEmail}&gt;
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className="text-xs text-zinc-500 font-mono">
+                  <span className="text-xs text-text-muted font-mono">
                     {format(date, "MMM d, yyyy h:mm a")}
                   </span>
                   {expanded ? (
-                    <ChevronDown className="w-4 h-4 text-zinc-500" />
+                    <ChevronDown className="w-4 h-4 text-text-muted" />
                   ) : (
-                    <ChevronRight className="w-4 h-4 text-zinc-500" />
+                    <ChevronRight className="w-4 h-4 text-text-muted" />
                   )}
                 </div>
               </div>
 
               {/* Message Body Content */}
               {expanded && (
-                <div className="px-5 py-4 border-t border-[#222222]/60 bg-zinc-950/20">
+                <div className="px-5 py-4 border-t border-border/60 bg-background/15">
                   {/* Recipients details */}
-                  <div className="text-[10px] text-zinc-500 space-y-1 mb-4 pb-3 border-b border-[#222222]/40 font-sans">
+                  <div className="text-[10px] text-text-muted space-y-1 mb-4 pb-3 border-b border-border/40 font-sans">
                     <p>
-                      <span className="font-semibold text-zinc-400">To:</span>{" "}
+                      <span className="font-semibold text-text-secondary">To:</span>{" "}
                       {email.toEmails.join(", ")}
                     </p>
                     {email.ccEmails.length > 0 && (
                       <p>
-                        <span className="font-semibold text-zinc-400">Cc:</span>{" "}
+                        <span className="font-semibold text-text-secondary">Cc:</span>{" "}
                         {email.ccEmails.join(", ")}
                       </p>
                     )}
@@ -289,7 +287,7 @@ export default function EmailThread({
 
                   {/* Body HTML/Text rendering */}
                   <div
-                    className="text-sm text-zinc-300 leading-relaxed overflow-x-auto whitespace-pre-wrap select-text font-sans"
+                    className="text-sm text-text-secondary leading-relaxed overflow-x-auto whitespace-pre-wrap select-text font-sans"
                     dangerouslySetInnerHTML={{
                       __html: email.body.includes("</") ? email.body : email.body.replace(/\n/g, "<br/>"),
                     }}
@@ -302,22 +300,22 @@ export default function EmailThread({
       </div>
 
       {/* Inline Reply Box at Bottom */}
-      <div className="p-4 border-t border-[#222222]/80 bg-[#0A0A0A] flex-shrink-0">
-        <div className="relative border border-[#222222] rounded-2xl bg-zinc-950 p-2 focus-within:ring-1 focus-within:ring-[#7C3AED]">
+      <div className="p-4 border-t border-border bg-surface flex-shrink-0 theme-transition">
+        <div className="relative border border-border rounded-2xl bg-background p-2 focus-within:ring-1 focus-within:ring-primary focus-within:border-primary/50 focus-within:valora-glow transition duration-300">
           <textarea
             value={replyBody}
             onChange={(e) => setReplyBody(e.target.value)}
-            placeholder={`Reply to ${latestEmail.fromName || latestEmail.fromEmail}...`}
-            className="w-full bg-transparent border-0 outline-none focus:ring-0 text-sm text-zinc-100 placeholder-zinc-500 p-3 h-24 resize-none"
+            placeholder={`Reply to ${latestEmail.fromName ?? latestEmail.fromEmail}...`}
+            className="w-full bg-transparent border-0 outline-none focus:ring-0 text-sm text-text-primary placeholder-text-muted p-3 h-24 resize-none"
           />
 
-          <div className="flex justify-between items-center px-2 pt-2 border-t border-[#222222]/60 mt-1">
+          <div className="flex justify-between items-center px-2 pt-2 border-t border-border/60 mt-1">
             <div className="flex items-center gap-1.5">
               {/* AI Draft helper button */}
               <button
                 onClick={handleAIDraft}
                 disabled={isDrafting}
-                className="px-3 py-1.5 bg-[#7C3AED]/10 hover:bg-[#7C3AED]/20 border border-[#7C3AED]/20 hover:border-[#7C3AED]/40 text-purple-400 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition disabled:opacity-50"
+                className="px-3 py-1.5 bg-primary/10 hover:bg-primary/20 border border-primary/20 hover:border-primary/45 text-primary-light text-xs font-semibold rounded-xl flex items-center gap-1.5 transition disabled:opacity-50 theme-transition"
               >
                 {isDrafting ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -331,10 +329,10 @@ export default function EmailThread({
             <button
               onClick={handleSendReply}
               disabled={isReplying || !replyBody.trim()}
-              className="px-4 py-1.5 bg-white hover:bg-zinc-100 disabled:bg-zinc-800 disabled:text-zinc-600 text-black text-xs font-semibold rounded-xl flex items-center gap-1.5 transition shadow"
+              className="px-4 py-1.5 bg-text-primary hover:bg-text-primary/90 disabled:bg-surface-hover disabled:text-text-muted text-background text-xs font-bold rounded-xl flex items-center gap-1.5 transition active:scale-95 duration-200 theme-transition"
             >
               {isReplying ? (
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-zinc-400" />
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-text-muted" />
               ) : (
                 <Send className="w-3.5 h-3.5" />
               )}

@@ -5,41 +5,105 @@
    "Command your inbox. Own your time."
    ============================================ */
 
+:root {
+  /* Default Dark Mode Theme */
+  --background: #050505;
+  --surface: #0b0b0c;
+  --surface-hover: #141416;
+  --border: #1a1a1c;
+  
+  --primary: #7c3aed;
+  --primary-light: #a855f7;
+  --primary-foreground: #f8f8f8;
+  --accent: #c4b5fd;
+
+  --text-primary: #f8f8f8;
+  --text-secondary: #8a8a93;
+  --text-muted: #52525b;
+
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+
+  --urgent: #ef4444;
+  --high: #f59e0b;
+  --normal: #8a8a93;
+  --low: #52525b;
+
+  --glow-color: rgba(124, 58, 237, 0.12);
+  --glow-color-strong: rgba(124, 58, 237, 0.25);
+  --background-glass: rgba(11, 11, 12, 0.8);
+  --border-glass: rgba(255, 255, 255, 0.05);
+  --shadow-glass: rgba(0, 0, 0, 0.4);
+}
+
+.light {
+  /* Light Mode Theme */
+  --background: #fafafc;
+  --surface: #ffffff;
+  --surface-hover: #f4f4f7;
+  --border: #e4e4e7;
+
+  --primary: #7c3aed;
+  --primary-light: #a855f7;
+  --primary-foreground: #ffffff;
+  --accent: #6d28d9;
+
+  --text-primary: #09090b;
+  --text-secondary: #71717a;
+  --text-muted: #a1a1aa;
+
+  --success: #059669;
+  --warning: #d97706;
+  --error: #dc2626;
+
+  --urgent: #dc2626;
+  --high: #d97706;
+  --normal: #71717a;
+  --low: #a1a1aa;
+
+  --glow-color: rgba(124, 58, 237, 0.06);
+  --glow-color-strong: rgba(124, 58, 237, 0.18);
+  --background-glass: rgba(255, 255, 255, 0.85);
+  --border-glass: rgba(0, 0, 0, 0.08);
+  --shadow-glass: rgba(0, 0, 0, 0.06);
+}
+
 @theme {
   /* Fonts */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, "Cascadia Code",
     "Source Code Pro", Menlo, Monaco, Consolas, monospace;
 
-  /* Core palette — Valora brand */
-  --color-background: #0a0a0a;
-  --color-surface: #111111;
-  --color-surface-hover: #1a1a1a;
-  --color-border: #222222;
+  /* Theme Core palette */
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
 
   /* Primary — Valora purple */
-  --color-primary: #7c3aed;
-  --color-primary-light: #a855f7;
-  --color-primary-foreground: #f8f8f8;
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-foreground: var(--primary-foreground);
 
   /* Accent */
-  --color-accent: #c4b5fd;
+  --color-accent: var(--accent);
 
   /* Text */
-  --color-text-primary: #f8f8f8;
-  --color-text-secondary: #888888;
-  --color-text-muted: #444444;
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
 
   /* Semantic */
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
 
   /* Priority labels */
-  --color-urgent: #ef4444;
-  --color-high: #f59e0b;
-  --color-normal: #888888;
-  --color-low: #444444;
+  --color-urgent: var(--urgent);
+  --color-high: var(--high);
+  --color-normal: var(--normal);
+  --color-low: var(--low);
 
   /* Animations */
   --animate-fade-in: fadeIn 0.2s ease-in-out;
@@ -85,14 +149,15 @@ html {
 }
 
 body {
-  background-color: #0a0a0a;
-  color: #f8f8f8;
+  background-color: var(--background);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: 14px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100dvh;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Custom Scrollbar ──────────────────────── */
@@ -102,27 +167,28 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: var(--border);
   border-radius: 3px;
+  transition: background-color 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7c3aed;
+  background: var(--primary);
 }
 
 /* ── Text Selection ────────────────────────── */
 ::selection {
-  background-color: rgba(124, 58, 237, 0.35);
-  color: #f8f8f8;
+  background-color: rgba(124, 58, 237, 0.3);
+  color: var(--text-primary);
 }
 
 /* ── Focus Ring ────────────────────────────── */
 :focus-visible {
-  outline: 2px solid #7c3aed;
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -131,17 +197,18 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.25;
-  color: #f8f8f8;
+  color: var(--text-primary);
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 a {
-  color: #a855f7;
+  color: var(--primary-light);
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
 a:hover {
-  color: #c4b5fd;
+  color: var(--accent);
 }
 
 code, kbd, pre {
@@ -154,35 +221,38 @@ kbd {
   align-items: center;
   justify-content: center;
   padding: 2px 6px;
-  background: #1a1a1a;
-  border: 1px solid #333;
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
   border-radius: 4px;
   font-size: 11px;
-  color: #888;
+  color: var(--text-secondary);
   line-height: 1.4;
   white-space: nowrap;
 }
 
 /* ── Valora Utility Classes ────────────────── */
 .valora-surface {
-  background-color: #111111;
-  border: 1px solid #222222;
-  border-radius: 8px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .valora-glass {
-  background: rgba(17, 17, 17, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--background-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 8px 32px 0 var(--shadow-glass);
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .valora-glow {
-  box-shadow: 0 0 20px rgba(124, 58, 237, 0.15);
+  box-shadow: 0 0 25px var(--glow-color);
 }
 
 .valora-glow-strong {
-  box-shadow: 0 0 40px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 0 40px var(--glow-color-strong);
 }
 
 .animate-fade-in {
@@ -201,15 +271,24 @@ kbd {
   animation: pulsePurple 2s infinite;
 }
 
+/* Theme transition utility class */
+.theme-transition {
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Skeleton shimmer loader */
 .skeleton {
   background: linear-gradient(
     90deg,
-    #1a1a1a 25%,
-    #222 50%,
-    #1a1a1a 75%
+    var(--surface) 25%,
+    var(--surface-hover) 50%,
+    var(--surface) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 4px;
 }
+
