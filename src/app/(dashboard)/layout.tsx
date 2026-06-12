@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/server/auth";
-import Sidebar from "@/components/shared/Sidebar";
+import DashboardLayoutClient from "./_components/DashboardLayoutClient";
 
 /**
- * Valora — Dashboard Layout
- * Wraps all authenticated routes with the sidebar.
- * Protects all child routes — redirects unauthenticated users to /login.
+ * Valora — Dashboard Layout (Server)
+ * Auth guard — redirects unauthenticated users to /login.
+ * Renders the client shell with Sidebar + TopBar + CommandPalette.
  */
 export default async function DashboardLayout({
   children,
@@ -19,17 +19,14 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#080808]">
-      <Sidebar
-        user={{
-          name: session.user.name,
-          email: session.user.email,
-          image: session.user.image,
-        }}
-      />
-      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {children}
-      </main>
-    </div>
+    <DashboardLayoutClient
+      user={{
+        name: session.user.name,
+        email: session.user.email,
+        image: session.user.image,
+      }}
+    >
+      {children}
+    </DashboardLayoutClient>
   );
 }

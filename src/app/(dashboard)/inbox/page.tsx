@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useEmailStore, selectFilteredEmails } from "@/store/emailStore";
+import { useCalendarStore } from "@/store/calendarStore";
+import { useRouter } from "next/navigation";
 import { api } from "@/trpc/react";
 import EmailList from "@/components/inbox/EmailList";
 import EmailThread from "@/components/inbox/EmailThread";
@@ -29,6 +31,9 @@ export default function InboxPage() {
     archiveEmail,
     updateEmail,
   } = useEmailStore();
+
+  const { setPrefillEvent } = useCalendarStore();
+  const router = useRouter();
 
   // Subscribe to store changes to re-render filtered emails
   const [tick, setTick] = useState(0);
@@ -172,6 +177,21 @@ export default function InboxPage() {
     [emails, updateEmail, starMutation],
   );
 
+  // Email-to-Calendar: prefill calendar store and redirect
+  const handleScheduleMeeting = useCallback(
+    (extracted: {
+      title: string;
+      attendees: string[];
+      suggestedTime: string;
+      duration: number;
+      description?: string;
+    }) => {
+      setPrefillEvent(extracted);
+      router.push("/calendar");
+    },
+    [setPrefillEvent, router],
+  );
+
   // Build thread emails from query
   const threadEmails = activeThread
     ? ((threadQuery.data ?? []) as Email[])
@@ -200,6 +220,7 @@ export default function InboxPage() {
             onToggleStar={handleToggleStarThread}
             onReply={handleReply}
             isReplying={sendEmailMutation.isPending}
+            onScheduleMeeting={handleScheduleMeeting}
           />
         ) : (
           /* Empty state — no thread selected */

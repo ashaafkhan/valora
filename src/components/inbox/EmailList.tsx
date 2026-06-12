@@ -34,6 +34,7 @@ export default function EmailList({
     clearSelection,
     bulkArchive,
     bulkMarkRead,
+    bulkDelete,
   } = useEmailStore();
 
   const [searchFocused, setSearchFocused] = useState(false);
@@ -141,6 +142,12 @@ export default function EmailList({
               className="px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 rounded-lg flex items-center gap-1.5 transition"
             >
               <Archive className="w-3 h-3" /> Archive
+            </button>
+            <button
+              onClick={() => bulkDelete()}
+              className="px-2.5 py-1 bg-rose-900/30 hover:bg-rose-900/50 border border-rose-800/30 text-rose-400 rounded-lg flex items-center gap-1.5 transition"
+            >
+              <Trash className="w-3 h-3" /> Delete
             </button>
             <button
               onClick={() => clearSelection()}

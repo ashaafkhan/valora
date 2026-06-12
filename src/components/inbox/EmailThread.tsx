@@ -14,6 +14,7 @@ import {
   Send,
   PlusCircle,
   ExternalLink,
+  MailX,
 } from "lucide-react";
 import { useState } from "react";
 import PriorityBadge from "./PriorityBadge";
@@ -53,6 +54,22 @@ export default function EmailThread({
   const [replyBody, setReplyBody] = useState("");
   const [isDrafting, setIsDrafting] = useState(false);
   const [isExtracting, setIsExtracting] = useState(false);
+  const [isUnsubscribing, setIsUnsubscribing] = useState(false);
+
+  // Detect unsubscribe URL from email body (List-Unsubscribe heuristic)
+  const unsubscribeUrl = (() => {
+    const allBodies = emailsInThread.map((e) => e.body).join(" ");
+    // Match common unsubscribe link patterns
+    const urlMatch = allBodies.match(
+      /href=["'](https?:\/\/[^"']*unsubscrib[^"']*)["']/i
+    );
+    if (urlMatch?.[1]) return urlMatch[1];
+    // Fallback: look for plain URLs with unsubscribe
+    const plainMatch = allBodies.match(
+      /(https?:\/\/\S*unsubscrib\S*)/i
+    );
+    return plainMatch?.[1] ?? null;
+  })();
 
   // tRPC mutations for AI
   const draftMutation = api.gmail.generateDraft.useMutation();
@@ -161,6 +178,20 @@ export default function EmailThread({
 
         {/* Action Buttons */}
         <div className="flex items-center gap-2">
+          {/* Unsubscribe button — only shown if detected */}
+          {unsubscribeUrl && (
+            <a
+              href={unsubscribeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="One-click unsubscribe from this mailing list"
+              className="px-3 py-1.5 bg-rose-900/10 hover:bg-rose-900/25 text-rose-400 border border-rose-800/30 hover:border-rose-700/50 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition"
+            >
+              <MailX className="w-3.5 h-3.5" />
+              Unsubscribe
+            </a>
+          )}
+
           {/* Schedule Meeting button */}
           <button
             onClick={handleExtractMeeting}

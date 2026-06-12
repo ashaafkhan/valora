@@ -19,6 +19,7 @@
     "lint:fix": "next lint --fix",
     "preview": "next build && next start",
     "start": "next start",
+    "setup:webhooks": "tsx scripts/setup-webhooks.ts",
     "test-script": "tsx src/server/test.ts",
     "typecheck": "tsc --noEmit"
   },

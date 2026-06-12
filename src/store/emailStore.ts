@@ -52,6 +52,7 @@ interface EmailState {
   archiveEmail: (id: string) => void;
   bulkArchive: () => void;
   bulkMarkRead: () => void;
+  bulkDelete: () => void;
 }
 
 export const useEmailStore = create<EmailState>()(
@@ -131,6 +132,14 @@ export const useEmailStore = create<EmailState>()(
       const ids = get().selectedEmailIds;
       ids.forEach((id) => get().updateEmail(id, { isRead: true }));
       get().clearSelection();
+    },
+    bulkDelete: () => {
+      const ids = get().selectedEmailIds;
+      set((state) => ({
+        emails: state.emails.filter((e) => !ids.has(e.id)),
+        selectedEmailIds: new Set(),
+        selectedEmailId: ids.has(state.selectedEmailId ?? "") ? null : state.selectedEmailId,
+      }));
     },
   })),
 );

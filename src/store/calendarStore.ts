@@ -27,6 +27,11 @@ interface CalendarState {
   openCreateEvent: () => void;
   closeCreateEvent: () => void;
   setLoading: (loading: boolean) => void;
+
+  // Email-to-Calendar quick action
+  prefillEvent: { title: string; attendees: string[]; suggestedTime: string; duration: number; description?: string } | null;
+  setPrefillEvent: (data: CalendarState["prefillEvent"]) => void;
+  clearPrefillEvent: () => void;
 }
 
 export const useCalendarStore = create<CalendarState>((set, get) => ({
@@ -36,6 +41,7 @@ export const useCalendarStore = create<CalendarState>((set, get) => ({
   selectedEventId: null,
   isCreatingEvent: false,
   isLoading: false,
+  prefillEvent: null,
 
   setEvents: (events) => set({ events }),
   addEvent: (event) =>
@@ -77,4 +83,8 @@ export const useCalendarStore = create<CalendarState>((set, get) => ({
   openCreateEvent: () => set({ isCreatingEvent: true }),
   closeCreateEvent: () => set({ isCreatingEvent: false }),
   setLoading: (isLoading) => set({ isLoading }),
+
+  // Email-to-Calendar
+  setPrefillEvent: (prefillEvent) => set({ prefillEvent, isCreatingEvent: true }),
+  clearPrefillEvent: () => set({ prefillEvent: null }),
 }));

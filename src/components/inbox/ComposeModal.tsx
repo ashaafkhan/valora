@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Send, Sparkles, Loader2, Minimize2, Maximize2 } from "lucide-react";
+import { X, Send, Sparkles, Loader2, Clock, Calendar } from "lucide-react";
 import { useEmailStore } from "@/store/emailStore";
 import { api } from "@/trpc/react";
 
 interface ComposeModalProps {
-  onSend: (payload: { to: string; subject: string; body: string; cc?: string[] }) => Promise<void>;
+  onSend: (payload: { to: string; subject: string; body: string; cc?: string[]; scheduledAt?: Date }) => Promise<void>;
   isSending: boolean;
 }
 
@@ -18,6 +18,8 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [isDrafting, setIsDrafting] = useState(false);
+  const [scheduledAt, setScheduledAt] = useState<string>(""); // ISO string from datetime-local input
+  const [showScheduler, setShowScheduler] = useState(false);
 
   // tRPC mutation for AI smart drafts
   const draftMutation = api.gmail.generateDraft.useMutation();
@@ -64,6 +66,7 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
       subject: subject.trim(),
       body,
       cc: ccArray.length > 0 ? ccArray : undefined,
+      scheduledAt: scheduledAt ? new Date(scheduledAt) : undefined,
     });
 
     // Reset and close
@@ -71,6 +74,8 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
     setCc("");
     setSubject("");
     setBody("");
+    setScheduledAt("");
+    setShowScheduler(false);
     closeCompose();
   };
 
@@ -185,6 +190,31 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
             )}
             AI Smart Draft
           </button>
+
+          {/* Send Later */}
+          <button
+            onClick={() => setShowScheduler(!showScheduler)}
+            title="Schedule send"
+            className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition border ${
+              showScheduler || scheduledAt
+                ? "bg-amber-500/10 border-amber-500/30 text-amber-400"
+                : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700"
+            }`}
+          >
+            <Clock className="w-3.5 h-3.5" />
+            {scheduledAt ? "Scheduled" : "Send Later"}
+          </button>
+
+          {/* Datetime picker for scheduled send */}
+          {showScheduler && (
+            <input
+              type="datetime-local"
+              value={scheduledAt}
+              onChange={(e) => setScheduledAt(e.target.value)}
+              min={new Date().toISOString().slice(0, 16)}
+              className="bg-zinc-900 border border-zinc-700 text-zinc-200 text-xs rounded-xl px-2 py-1.5 focus:ring-1 focus:ring-[#7C3AED] outline-none"
+            />
+          )}
         </div>
 
         <div className="flex items-center gap-3">
@@ -199,10 +229,12 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
           >
             {isSending ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin text-zinc-400" />
+            ) : scheduledAt ? (
+              <Calendar className="w-3.5 h-3.5" />
             ) : (
               <Send className="w-3.5 h-3.5" />
             )}
-            Send Email
+            {scheduledAt ? "Schedule Send" : "Send Email"}
           </button>
         </div>
       </div>
