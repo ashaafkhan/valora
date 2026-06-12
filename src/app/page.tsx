@@ -156,7 +156,7 @@ export default async function Home() {
               Interactive AI Assistant
             </h3>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              Chat directly with your email agent. Ask it to "draft a polite decline to this meeting", "summarize my unread thread with Alex", or "find calendar slots next week". Empowered with category-specific persistent memory.
+              Chat directly with your email agent. Ask it to &quot;draft a polite decline to this meeting&quot;, &quot;summarize my unread thread with Alex&quot;, or &quot;find calendar slots next week&quot;. Empowered with category-specific persistent memory.
             </p>
           </div>
         </div>
