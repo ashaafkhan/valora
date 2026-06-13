@@ -2,6 +2,8 @@ import "@/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 import { TRPCReactProvider } from "@/trpc/react";
 
@@ -65,10 +67,24 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${inter.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+      className={`${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-background font-sans text-text-primary antialiased">
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Toaster
+            theme="dark"
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
+                color: "var(--text-primary)",
+              },
+            }}
+          />
+        </ThemeProvider>
       </body>
     </html>
   );
