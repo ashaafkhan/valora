@@ -1,6 +1,3 @@
-import { redirect } from "next/navigation";
-import { auth } from "@/server/auth";
-import { db } from "@/server/db";
 import { AnimatedBackground } from "@/components/landing/AnimatedBackground";
 import { LandingNav } from "@/components/landing/LandingNav";
 import { Hero } from "@/components/landing/Hero";
@@ -10,21 +7,6 @@ import { Footer } from "@/components/landing/Footer";
 import { LandingClient } from "@/components/landing/LandingClient";
 
 export default async function Home() {
-  const session = await auth();
-
-  if (session?.user?.id) {
-    const user = await db.user.findUnique({
-      where: { id: session.user.id },
-      select: { onboardingDone: true },
-    });
-
-    if (user?.onboardingDone) {
-      redirect("/inbox");
-    } else {
-      redirect("/onboarding");
-    }
-  }
-
   return (
     <main className="min-h-screen bg-background text-text-primary overflow-x-hidden">
       <AnimatedBackground />
