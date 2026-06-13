@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Sidebar from "@/components/shared/Sidebar";
 import TopBar from "@/components/shared/TopBar";
 import CommandPalette from "@/components/shared/CommandPalette";
@@ -71,6 +71,15 @@ export default function DashboardLayoutClient({
     const timer = setTimeout(() => setNavChord(null), 1000);
     return () => clearTimeout(timer);
   }, [navChord]);
+
+  // Tab title with unread count
+  const pathname = usePathname();
+  useEffect(() => {
+    const unread = document.querySelectorAll('.unread-badge').length;
+    document.title = pathname.startsWith('/inbox') && unread > 0
+      ? `(${unread}) Valora — Inbox`
+      : 'Valora — Command your inbox. Own your time.';
+  }, [pathname]);
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-background text-text-primary theme-transition">

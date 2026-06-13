@@ -35,8 +35,8 @@ export default async function OnboardingPage({ searchParams }: PageProps) {
   return (
     <OnboardingWizard
       userId={userId}
-      userName={session.user.name}
-      userImage={session.user.image}
+      userName={session.user.name ?? null}
+      userImage={session.user.image ?? null}
       hasGmail={hasGmail}
       hasCalendar={hasCalendar}
       currentStep={currentStep}
