@@ -327,6 +327,17 @@ export async function sendGmailEmail(params: {
   cc?: string[];
 }): Promise<unknown> {
   const { userId, to, subject, body, cc } = params;
+  const securityScan = scanEmailContent({
+    subject,
+    body,
+    fromEmail: "self@valora.local",
+  });
+
+  if (securityScan.isSensitive) {
+    throw new Error(
+      `Blocked by Security Shield: outgoing email contains ${securityScan.sensitiveTypes.join(", ") || "sensitive"} content.`,
+    );
+  }
 
   // Build raw MIME message
   const mimeParts = [
@@ -373,6 +384,23 @@ export async function archiveEmail(userId: string, gmailId: string): Promise<voi
     });
   } catch (err) {
     console.error("[Gmail] Archive failed:", err);
+    throw err;
+  }
+}
+
+export async function unarchiveEmail(userId: string, gmailId: string): Promise<void> {
+  try {
+    await corsair.withTenant(userId).gmail.api.messages.modify({
+      id: gmailId,
+      addLabelIds: ["INBOX"],
+    });
+
+    await db.email.update({
+      where: { gmailId },
+      data: { isArchived: false, labels: { push: "INBOX" } },
+    });
+  } catch (err) {
+    console.error("[Gmail] Unarchive failed:", err);
     throw err;
   }
 }

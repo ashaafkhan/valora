@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
     const bodyPreview = body.slice(0, 200);
 
     // Parse from header "Name <email>"
-    const fromMatch = fromHeader.match(/^(.*?)\s*<([^>]+)>$/);
+    const fromMatch = /^(.*?)\s*<([^>]+)>$/.exec(fromHeader);
     const fromName = fromMatch?.[1]?.replace(/^["']|["']$/g, "").trim() ?? "";
     const fromEmail = fromMatch?.[2]?.trim() ?? fromHeader.trim();
 
@@ -129,7 +129,9 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      generateEmailEmbedding(gmailId, `${subject} ${body}`).catch(() => {});
+      generateEmailEmbedding(gmailId, `${subject} ${body}`).catch((err) => {
+        console.warn("[Webhook/Gmail] Embedding failed:", err);
+      });
 
       await db.webhookLog.updateMany({
         where: { source: "gmail", processed: false },

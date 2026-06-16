@@ -156,6 +156,9 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3.3.1
         version: 3.3.5
+      '@next/eslint-plugin-next':
+        specifier: ^15.5.19
+        version: 15.5.19
       '@tailwindcss/postcss':
         specifier: ^4.0.15
         version: 4.3.0
@@ -174,6 +177,15 @@ importers:
       eslint-config-next:
         specifier: ^15.2.3
         version: 15.5.19(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)
+      eslint-plugin-jsx-a11y:
+        specifier: ^6.10.2
+        version: 6.10.2(eslint@9.39.4(jiti@2.7.0))
+      eslint-plugin-react:
+        specifier: ^7.37.5
+        version: 7.37.5(eslint@9.39.4(jiti@2.7.0))
+      eslint-plugin-react-hooks:
+        specifier: ^5.2.0
+        version: 5.2.0(eslint@9.39.4(jiti@2.7.0))
       ngrok:
         specifier: 5.0.0-beta.2
         version: 5.0.0-beta.2
