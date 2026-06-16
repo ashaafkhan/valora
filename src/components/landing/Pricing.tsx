@@ -18,7 +18,7 @@ const PLANS = [
       'Keyboard shortcuts',
       'Email search (50ms)',
     ],
-    cta: 'Start Free',
+    cta: 'Try standard edition',
     ctaClass: 'border border-[var(--border)] text-[var(--text-primary)] hover:border-[var(--primary)]/50 hover:bg-[var(--primary)]/5',
     recommended: false,
   },
@@ -38,14 +38,14 @@ const PLANS = [
       'Meeting scheduling',
       'Analytics dashboard',
     ],
-    cta: 'Get Pro',
-    ctaClass: 'btn-shimmer bg-[var(--primary)] text-white shadow-[0_0_30px_rgba(124,58,237,0.4)] hover:shadow-[0_0_50px_rgba(124,58,237,0.6)]',
+    cta: 'Buy pro license',
+    ctaClass: 'btn-shimmer bg-[var(--primary)] text-white shadow-[0_0_30px_rgba(0,102,255,0.4)] hover:shadow-[0_0_50px_rgba(0,102,255,0.6)]',
     recommended: true,
   },
   {
-    name: 'Team',
+    name: 'Enterprise',
     price: { monthly: 499, annual: 299 },
-    badge: 'For Teams',
+    badge: 'For Enterprise',
     badgeColor: 'text-[var(--text-secondary)] bg-[var(--surface-hover)] border-[var(--border)]',
     desc: 'Shared intelligence for your whole team.',
     features: [
@@ -59,7 +59,7 @@ const PLANS = [
       'Dedicated account manager',
       'SSO / SAML',
     ],
-    cta: 'Contact Sales',
+    cta: 'Buy enterprise license',
     ctaClass: 'border border-[var(--border)] text-[var(--text-primary)] hover:border-[var(--primary)]/50 hover:bg-[var(--primary)]/5',
     recommended: false,
   },
@@ -71,7 +71,7 @@ const containerVariants = {
 }
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
 }
 
 export function Pricing() {
@@ -143,7 +143,7 @@ export function Pricing() {
               variants={cardVariants}
               className={`relative rounded-2xl border bg-[var(--surface)] p-7 overflow-hidden
                 ${plan.recommended
-                  ? 'border-[var(--primary)]/40 shadow-[0_0_60px_rgba(124,58,237,0.15)] pricing-recommended md:-mt-4'
+                  ? 'border-[var(--primary)]/40 shadow-[0_0_60px_rgba(0,102,255,0.15)] pricing-recommended md:-mt-4'
                   : 'border-[var(--border)]'
                 }`}
             >
@@ -197,7 +197,7 @@ export function Pricing() {
                         <svg width="8" height="8" viewBox="0 0 24 24" fill="none"
                           stroke={plan.recommended ? 'var(--primary)' : 'var(--text-muted)'}
                           strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M20 6 9 17l-5-5"/>
+                          <path d="M20 6 9 17l-5-5" />
                         </svg>
                       </div>
                       <span className="text-sm text-[var(--text-secondary)]">{f}</span>

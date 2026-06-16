@@ -56,7 +56,7 @@ export default function DayView({
             {format(currentDate, "EEEE")}
           </div>
           <div
-            className={`text-3xl font-bold ${today ? "text-[#A855F7]" : "text-zinc-200"}`}
+            className={`text-3xl font-bold ${today ? "text-[#60a5fa]" : "text-zinc-200"}`}
           >
             {format(currentDate, "d")}
           </div>
@@ -173,8 +173,8 @@ function NowIndicator({
       style={{ top: `${top}px` }}
     >
       <div className="flex items-center">
-        <div className="w-2 h-2 rounded-full bg-[#7C3AED] flex-shrink-0 -ml-1" />
-        <div className="flex-1 h-px bg-[#7C3AED]" />
+        <div className="w-2 h-2 rounded-full bg-[#0066ff] flex-shrink-0 -ml-1" />
+        <div className="flex-1 h-px bg-[#0066ff]" />
       </div>
     </div>
   );

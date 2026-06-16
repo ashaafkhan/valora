@@ -23,7 +23,7 @@ function stringToColor(str: string): string {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
   const colors = [
-    "bg-[#7C3AED]/20 text-[#A855F7] border-[#7C3AED]/30",
+    "bg-[#0066ff]/20 text-[#60a5fa] border-[#0066ff]/30",
     "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
     "bg-blue-500/10 text-blue-400 border-blue-500/20",
     "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
@@ -98,7 +98,7 @@ export default function EmailRow({
     <div
       onClick={onClick}
       className={`group relative px-4 py-3 border-b border-border/80 flex items-center gap-3 cursor-pointer transition-all duration-150 select-none
-        ${isFocused ? "bg-surface-hover/80 border-l-[3px] border-l-primary pl-[13px] shadow-[inset_0_0_20px_rgba(124,58,237,0.04)]" : "bg-transparent"}
+        ${isFocused ? "bg-surface-hover/80 border-l-[3px] border-l-primary pl-[13px] shadow-[inset_0_0_20px_rgba(0,102,255,0.04)]" : "bg-transparent"}
         ${isSelected ? "bg-primary/5" : ""}
         ${!email.isRead ? "font-semibold text-text-primary bg-primary/[0.02]" : "font-normal text-text-secondary"}
         hover:bg-surface-hover/50 hover:border-l-[3px] hover:border-l-primary/40 hover:pl-[13px]`}

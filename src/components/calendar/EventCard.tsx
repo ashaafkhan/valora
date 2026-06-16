@@ -16,7 +16,7 @@ const EVENT_COLORS: Record<string, { bg: string; border: string; text: string }>
   "4": { bg: "bg-rose-500/20", border: "border-rose-500/40", text: "text-rose-300" },
   "5": { bg: "bg-amber-500/20", border: "border-amber-500/40", text: "text-amber-300" },
   "6": { bg: "bg-cyan-500/20", border: "border-cyan-500/40", text: "text-cyan-300" },
-  default: { bg: "bg-[#7C3AED]/20", border: "border-[#7C3AED]/40", text: "text-[#C4B5FD]" },
+  default: { bg: "bg-[#0066ff]/20", border: "border-[#0066ff]/40", text: "text-[#93c5fd]" },
 };
 
 // Derive stable color from event id if no colorId

@@ -6,10 +6,10 @@ function ParticleOrbs() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full
-                      bg-[radial-gradient(ellipse,rgba(124,58,237,0.25)_0%,transparent_65%)]
+                      bg-[radial-gradient(ellipse,rgba(0,102,255,0.25)_0%,transparent_65%)]
                       animate-[orbFloat_14s_ease-in-out_infinite]" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full
-                      bg-[radial-gradient(ellipse,rgba(99,102,241,0.2)_0%,transparent_65%)]
+                      bg-[radial-gradient(ellipse,rgba(59,130,246,0.2)_0%,transparent_65%)]
                       animate-[orbFloat_18s_ease-in-out_infinite_reverse]" />
     </div>
   )
@@ -34,7 +34,7 @@ export function CTASection() {
         >
           <div className="inline-flex items-center gap-2 bg-[var(--primary)]/10 border border-[var(--primary)]/25 rounded-full px-4 py-2">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+              <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
             </svg>
             <span className="text-xs font-semibold text-[var(--primary)] tracking-wider">Start in 30 seconds</span>
           </div>
@@ -74,16 +74,16 @@ export function CTASection() {
             href="/login"
             className="btn-shimmer group flex items-center gap-2.5 bg-[var(--primary)] text-white
                        font-semibold px-10 py-4 rounded-2xl text-base
-                       shadow-[0_0_50px_rgba(124,58,237,0.5)]
-                       hover:shadow-[0_0_80px_rgba(124,58,237,0.7)]
+                       shadow-[0_0_50px_rgba(0,102,255,0.5)]
+                       hover:shadow-[0_0_80px_rgba(0,102,255,0.7)]
                        hover:-translate-y-1 transition-all duration-200"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
+              <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
             </svg>
             Get Started Free — It's Free
             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
         </motion.div>
@@ -103,7 +103,7 @@ export function CTASection() {
           ].map((t, i) => (
             <div key={i} className="flex items-center gap-1.5 text-xs text-[var(--text-muted)]">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d={t.icon}/>
+                <path d={t.icon} />
               </svg>
               {t.text}
             </div>

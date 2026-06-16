@@ -88,11 +88,11 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
       <div
         className={`flex items-center gap-3 px-4 py-3 bg-[#111111] border rounded-2xl transition ${
           parsed
-            ? "border-[#7C3AED]/40"
+            ? "border-[#0066ff]/40"
             : "border-[#222222] hover:border-[#333333]"
         }`}
       >
-        <Sparkles className="w-4 h-4 text-[#A855F7] flex-shrink-0" />
+        <Sparkles className="w-4 h-4 text-[#60a5fa] flex-shrink-0" />
         <input
           ref={inputRef}
           type="text"
@@ -109,7 +109,7 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
         <button
           onClick={handleParse}
           disabled={!input.trim() || isParsing}
-          className="px-3 py-1.5 bg-[#7C3AED]/15 hover:bg-[#7C3AED]/25 border border-[#7C3AED]/30 text-[#A855F7] text-xs font-semibold rounded-xl flex items-center gap-1.5 transition disabled:opacity-50 flex-shrink-0"
+          className="px-3 py-1.5 bg-[#0066ff]/15 hover:bg-[#0066ff]/25 border border-[#0066ff]/30 text-[#60a5fa] text-xs font-semibold rounded-xl flex items-center gap-1.5 transition disabled:opacity-50 flex-shrink-0"
         >
           {isParsing ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -130,7 +130,7 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
 
       {/* Parsed result */}
       {parsed && (
-        <div className="border border-[#7C3AED]/30 bg-[#7C3AED]/5 rounded-2xl p-4 space-y-3">
+        <div className="border border-[#0066ff]/30 bg-[#0066ff]/5 rounded-2xl p-4 space-y-3">
           {/* Conflict warning */}
           {parsed.hasConflict && (
             <div className="flex items-center gap-2 px-3 py-2 bg-amber-900/20 border border-amber-800/30 rounded-xl text-xs text-amber-400">
@@ -146,7 +146,7 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
               {format(new Date(parsed.endISO), "h:mm a")}
             </div>
             {parsed.attendeeEmail && (
-              <div className="text-xs text-[#C4B5FD]">with {parsed.attendeeEmail}</div>
+              <div className="text-xs text-[#93c5fd]">with {parsed.attendeeEmail}</div>
             )}
           </div>
 
@@ -154,7 +154,7 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
             <button
               onClick={handleConfirm}
               disabled={isCreating}
-              className="flex-1 py-2 bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition disabled:opacity-50 shadow-lg shadow-purple-900/20"
+              className="flex-1 py-2 bg-[#0066ff] hover:bg-[#1d4ed8] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition disabled:opacity-50 shadow-lg shadow-blue-900/20"
             >
               {isCreating ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />

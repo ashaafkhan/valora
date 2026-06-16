@@ -188,7 +188,7 @@ export default function EmailList({
           <EmailSkeleton />
         ) : emails.length === 0 ? (
           <motion.div {...fadeIn} className="flex flex-col items-center justify-center h-full text-center p-8 space-y-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center shadow-[0_0_30px_rgba(124,58,237,0.1)]">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center shadow-[0_0_30px_rgba(0,102,255,0.1)]">
               <Inbox className="w-7 h-7 text-primary" />
             </div>
             <div>

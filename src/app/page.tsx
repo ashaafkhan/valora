@@ -1,14 +1,14 @@
-import { LandingNav }      from "@/components/landing/LandingNav";
-import { Hero }             from "@/components/landing/Hero";
-import { Stats }            from "@/components/landing/Stats";
-import { InboxFeature }     from "@/components/landing/InboxFeature";
-import { Features }         from "@/components/landing/Features";
-import { MetricsSection }   from "@/components/landing/MetricsSection";
-import { CalendarFeature }  from "@/components/landing/CalendarFeature";
-import { HowItWorks }       from "@/components/landing/HowItWorks";
-import { Pricing }          from "@/components/landing/Pricing";
-import { CTASection }       from "@/components/landing/CTASection";
-import { Footer }           from "@/components/landing/Footer";
+import { LandingNav } from "@/components/landing/LandingNav";
+import { Hero } from "@/components/landing/Hero";
+import { Stats } from "@/components/landing/Stats";
+import { InboxFeature } from "@/components/landing/InboxFeature";
+import { Features } from "@/components/landing/Features";
+import { MetricsSection } from "@/components/landing/MetricsSection";
+import { CalendarFeature } from "@/components/landing/CalendarFeature";
+import { HowItWorks } from "@/components/landing/HowItWorks";
+import { Pricing } from "@/components/landing/Pricing";
+import { CTASection } from "@/components/landing/CTASection";
+import { Footer } from "@/components/landing/Footer";
 
 export default function HomePage() {
   return (

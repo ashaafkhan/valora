@@ -38,7 +38,7 @@ export function OnboardingWizard({ userId, userName, userImage, hasGmail, hasCal
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-background text-text-primary p-6 relative">
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]
-                      bg-[radial-gradient(ellipse,rgba(124,58,237,0.12)_0%,transparent_70%)] rounded-full blur-[120px] pointer-events-none" />
+                      bg-[radial-gradient(ellipse,rgba(0,102,255,0.12)_0%,transparent_70%)] rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/4 w-[300px] h-[300px]
                       bg-[radial-gradient(ellipse,rgba(99,102,241,0.08)_0%,transparent_70%)] rounded-full blur-[100px] pointer-events-none" />
 
@@ -48,7 +48,7 @@ export function OnboardingWizard({ userId, userName, userImage, hasGmail, hasCal
 
         {/* Step card */}
         <div className="relative valora-glass rounded-2xl p-8 border border-white/[0.06]
-                        shadow-[0_40px_80px_rgba(0,0,0,0.5),0_0_60px_rgba(124,58,237,0.1)] min-h-[380px]">
+                        shadow-[0_40px_80px_rgba(0,0,0,0.5),0_0_60px_rgba(0,102,255,0.1)] min-h-[380px]">
           <div className="absolute top-0 left-0 right-0 h-px
                           bg-gradient-to-r from-transparent via-primary to-transparent rounded-t-2xl" />
 

@@ -81,11 +81,11 @@ export function LandingNav() {
           >
             {theme === 'dark' ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                <circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
               </svg>
             ) : (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
+                <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
               </svg>
             )}
           </button>
@@ -101,8 +101,8 @@ export function LandingNav() {
             href="/login"
             className="btn-shimmer relative text-sm font-semibold bg-[var(--primary)] text-white
                        px-5 py-2.5 rounded-xl
-                       shadow-[0_0_20px_rgba(124,58,237,0.35)]
-                       hover:shadow-[0_0_35px_rgba(124,58,237,0.55)]
+                       shadow-[0_0_20px_rgba(0,102,255,0.35)]
+                       hover:shadow-[0_0_35px_rgba(0,102,255,0.55)]
                        hover:-translate-y-0.5 transition-all duration-200"
           >
             Get Started

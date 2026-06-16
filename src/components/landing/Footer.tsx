@@ -61,7 +61,7 @@ export function Footer() {
                              hover:bg-[var(--primary)]/5 transition-all duration-200"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={s.icon}/>
+                    <path d={s.icon} />
                   </svg>
                 </a>
               ))}

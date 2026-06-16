@@ -255,7 +255,7 @@ export default function CalendarView() {
               setCreateSlotDate(undefined);
               openCreateEvent();
             }}
-            className="w-full py-2 bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition shadow-lg shadow-purple-900/20 mb-2"
+            className="w-full py-2 bg-[#0066ff] hover:bg-[#1d4ed8] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition shadow-lg shadow-blue-900/20 mb-2"
           >
             <Plus className="w-3.5 h-3.5" />
             New Event
@@ -328,7 +328,7 @@ export default function CalendarView() {
                 onClick={() => setViewMode(key)}
                 className={`px-3 py-1 rounded-lg text-xs font-semibold transition ${
                   viewMode === key
-                    ? "bg-[#7C3AED] text-white"
+                    ? "bg-[#0066ff] text-white"
                     : "text-zinc-500 hover:text-zinc-300"
                 }`}
               >
@@ -343,7 +343,7 @@ export default function CalendarView() {
           <div className="flex-1 overflow-hidden">
             {eventsQuery.isLoading && displayedEvents.length === 0 ? (
               <div className="flex items-center justify-center h-full">
-                <Loader2 className="w-8 h-8 text-[#7C3AED] animate-spin" />
+                <Loader2 className="w-8 h-8 text-[#0066ff] animate-spin" />
               </div>
             ) : viewMode === "week" ? (
               <WeekView

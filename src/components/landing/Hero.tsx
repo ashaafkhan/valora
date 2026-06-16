@@ -17,7 +17,7 @@ function ParticleField() {
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
       {/* Purple orb top-right */}
       <div className="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full
-                      bg-[radial-gradient(ellipse,rgba(124,58,237,0.2)_0%,transparent_65%)]
+                      bg-[radial-gradient(ellipse,rgba(0,102,255,0.2)_0%,transparent_65%)]
                       animate-[orbFloat_18s_ease-in-out_infinite]" />
       {/* Indigo orb bottom-left */}
       <div className="absolute -bottom-32 -left-32 w-[600px] h-[600px] rounded-full
@@ -25,7 +25,7 @@ function ParticleField() {
                       animate-[orbFloat_22s_ease-in-out_infinite_reverse]" />
       {/* Center ambient */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px]
-                      bg-[radial-gradient(ellipse,rgba(124,58,237,0.07)_0%,transparent_60%)]" />
+                      bg-[radial-gradient(ellipse,rgba(0,102,255,0.07)_0%,transparent_60%)]" />
       {/* Grid */}
       <div className="absolute inset-0 grid-pattern opacity-60" />
       {/* Stars */}
@@ -52,7 +52,7 @@ function DashboardMockup() {
   const emails = [
     { from: 'Rahul Sharma', initials: 'RS', subject: 'Series A term sheet ready', preview: 'Please review the attached document…', score: 98, priority: 'URGENT', unread: true, color: '#ef4444' },
     { from: 'Priya Mehta', initials: 'PM', subject: 'Design feedback needed', preview: 'Hi, can you check the new flows…', score: 79, priority: 'HIGH', unread: true, color: '#f59e0b' },
-    { from: 'GitHub', initials: 'GH', subject: 'PR merged: feat/ai-composer', preview: 'Your pull request was successfully…', score: 42, priority: 'NORMAL', unread: false, color: '#6d28d9' },
+    { from: 'GitHub', initials: 'GH', subject: 'PR merged: feat/ai-composer', preview: 'Your pull request was successfully…', score: 42, priority: 'NORMAL', unread: false, color: '#1d4ed8' },
     { from: 'Stripe', initials: 'ST', subject: 'Payment received ₹42,000', preview: 'A payment of ₹42,000 has been…', score: 55, priority: 'NORMAL', unread: false, color: '#10b981' },
     { from: 'ProductHunt', initials: 'PH', subject: 'Your product is trending', preview: 'Congratulations! Valora is #3…', score: 30, priority: 'LOW', unread: false, color: '#f59e0b' },
   ]
@@ -74,7 +74,7 @@ function DashboardMockup() {
         </div>
         <div className="flex-1 flex items-center gap-2 bg-white/[0.05] border border-white/[0.06] rounded-md px-3 py-1 max-w-[280px] mx-auto">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-40">
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/>
+            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.34-4.34" />
           </svg>
           <span className="text-[9px] text-white/30 tracking-wide">app.valorahq.in/inbox</span>
         </div>
@@ -86,7 +86,7 @@ function DashboardMockup() {
         {/* Sidebar */}
         <div className="w-[160px] border-r border-white/[0.05] bg-[#030305] p-3 flex flex-col gap-1 flex-shrink-0">
           <div className="flex items-center gap-2 px-2 py-1.5 mb-2">
-            <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#7c3aed] to-[#a855f7] flex items-center justify-center text-[7px] font-bold text-white">V</div>
+            <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#0066ff] to-[#3b82f6] flex items-center justify-center text-[7px] font-bold text-white">V</div>
             <span className="font-semibold text-[10px] text-white/90 tracking-tight">Valora</span>
           </div>
           {[
@@ -96,15 +96,15 @@ function DashboardMockup() {
             { icon: 'M8 2v4M16 2v4M3 10h18M21 20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14z', label: 'Calendar', active: false },
           ].map(item => (
             <div key={item.label} className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg cursor-pointer
-              ${item.active ? 'bg-[#7c3aed]/20 text-[#c4b5fd]' : 'text-white/40 hover:bg-white/[0.04] hover:text-white/70'}`}>
+              ${item.active ? 'bg-[#0066ff]/20 text-[#60a5fa]' : 'text-white/40 hover:bg-white/[0.04] hover:text-white/70'}`}>
               <div className="flex items-center gap-2">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={item.icon}/>
+                  <path d={item.icon} />
                 </svg>
-                <span className={`text-[10px] font-medium ${item.active ? '' : ''}`}>{item.label}</span>
+                <span className={`text-[10px] font-medium`}>{item.label}</span>
               </div>
               {item.badge && (
-                <span className="text-[8px] bg-[#7c3aed]/40 text-[#c4b5fd] px-1.5 py-0.5 rounded-full font-bold">{item.badge}</span>
+                <span className="text-[8px] bg-[#0066ff]/35 text-[#60a5fa] px-1.5 py-0.5 rounded-full font-bold">{item.badge}</span>
               )}
             </div>
           ))}
@@ -120,14 +120,14 @@ function DashboardMockup() {
         <div className="w-[220px] border-r border-white/[0.05] flex flex-col flex-shrink-0">
           <div className="flex items-center justify-between px-3 py-2 border-b border-white/[0.05]">
             <span className="text-[10px] font-semibold text-white/80">Inbox</span>
-            <button className="text-[8px] bg-[#7c3aed] text-white px-2 py-0.5 rounded-md font-medium">Compose</button>
+            <button className="text-[8px] bg-[#0066ff] text-white px-2 py-0.5 rounded-md font-medium">Compose</button>
           </div>
           <div className="flex-1 overflow-hidden">
             {emails.map((email, i) => (
               <div key={i} className={`flex items-start gap-2 px-3 py-2.5 border-b border-white/[0.04] cursor-pointer transition-colors
-                ${i === 0 ? 'bg-[#7c3aed]/10 border-l-2 border-l-[#7c3aed]' : 'hover:bg-white/[0.02]'}`}>
+                ${i === 0 ? 'bg-[#0066ff]/10 border-l-2 border-l-[#0066ff]' : 'hover:bg-white/[0.02]'}`}>
                 <div className="flex items-center gap-1.5 flex-shrink-0 pt-0.5">
-                  {email.unread && <div className="w-1 h-1 rounded-full bg-[#7c3aed] flex-shrink-0" />}
+                  {email.unread && <div className="w-1 h-1 rounded-full bg-[#0066ff] flex-shrink-0" />}
                   {!email.unread && <div className="w-1 h-1 flex-shrink-0" />}
                   <div className="w-5 h-5 rounded-full flex items-center justify-center text-[7px] font-bold text-white flex-shrink-0"
                     style={{ background: `${email.color}40` }}>
@@ -162,7 +162,7 @@ function DashboardMockup() {
             <div className="bg-[#6366f1]/10 border border-[#6366f1]/20 rounded-lg p-2.5 mb-3">
               <div className="flex items-center gap-1.5 mb-1.5">
                 <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2">
-                  <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/>
+                  <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
                 </svg>
                 <span className="text-[8px] font-semibold text-[#818cf8]">Zara's Summary</span>
               </div>
@@ -177,27 +177,27 @@ function DashboardMockup() {
           {/* Zara chat */}
           <div className="flex flex-col h-[140px] bg-[#030305]">
             <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.05]">
-              <div className="w-4 h-4 rounded-full bg-[#6366f1]/20 flex items-center justify-center">
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2">
-                  <path d="M12 8V4H8M4 8h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2zM9 13v2M15 13v2"/>
+              <div className="w-4 h-4 rounded-full bg-[#0066ff]/20 flex items-center justify-center">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2">
+                  <path d="M12 8V4H8M4 8h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2zM9 13v2M15 13v2" />
                 </svg>
               </div>
-              <span className="text-[9px] font-semibold text-[#818cf8]">Zara</span>
+              <span className="text-[9px] font-semibold text-[#60a5fa]">Zara</span>
               <div className="w-1 h-1 rounded-full bg-green-400 animate-pulse ml-auto" />
             </div>
             <div className="flex-1 px-3 py-2 space-y-2 overflow-hidden">
               <div className="flex gap-1.5">
-                <div className="text-[8px] bg-[#6366f1]/15 border border-[#6366f1]/20 text-white/70 px-2 py-1.5 rounded-lg rounded-tl-none max-w-[80%] leading-relaxed">
+                <div className="text-[8px] bg-[#0066ff]/15 border border-[#0066ff]/20 text-white/70 px-2 py-1.5 rounded-lg rounded-tl-none max-w-[80%] leading-relaxed">
                   Found 3 urgent emails. Want me to draft replies?
                 </div>
               </div>
               <div className="flex justify-end">
-                <div className="text-[8px] bg-[#7c3aed]/30 border border-[#7c3aed]/30 text-white/80 px-2 py-1.5 rounded-lg rounded-tr-none max-w-[80%]">
+                <div className="text-[8px] bg-[#0066ff]/30 border border-[#0066ff]/30 text-white/80 px-2 py-1.5 rounded-lg rounded-tr-none max-w-[80%]">
                   Yes, and add standup at 9am
                 </div>
               </div>
               <div className="flex gap-1.5">
-                <div className="text-[8px] bg-[#6366f1]/15 border border-[#6366f1]/20 text-white/70 px-2 py-1.5 rounded-lg rounded-tl-none max-w-[80%] leading-relaxed">
+                <div className="text-[8px] bg-[#0066ff]/15 border border-[#0066ff]/20 text-white/70 px-2 py-1.5 rounded-lg rounded-tl-none max-w-[80%] leading-relaxed">
                   Done! Drafts ready. Standup added. Kuch aur?
                 </div>
               </div>
@@ -220,7 +220,7 @@ export function Hero() {
   }
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
   }
 
   return (
@@ -260,32 +260,28 @@ export function Hero() {
           variants={itemVariants}
           className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Valora reads your inbox, drafts replies, and books meetings —
-          powered by <span className="text-[var(--text-primary)] font-semibold">Zara</span>, your personal AI.
+          Visualise your AI assistant side by side. Calendar, inbox, emails, templates and analytics synced in real time.
         </motion.p>
 
         {/* CTA Buttons */}
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
           <Link
             href="/login"
-            className="btn-shimmer group flex items-center gap-2 bg-[var(--primary)] text-white
+            className="group flex items-center gap-2 bg-[var(--text-primary)] text-[var(--background)]
                        font-semibold px-8 py-4 rounded-2xl text-base
-                       shadow-[0_0_40px_rgba(124,58,237,0.45)]
-                       hover:shadow-[0_0_60px_rgba(124,58,237,0.65)]
+                       shadow-[0_0_30px_rgba(255,255,255,0.15)]
+                       hover:shadow-[0_0_40px_rgba(255,255,255,0.25)]
                        hover:-translate-y-1 transition-all duration-200"
           >
-            Start for free
+            Try standard edition
             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
           <button className="flex items-center gap-2 valora-glass border border-[var(--border-glass)] text-[var(--text-secondary)]
                              hover:text-[var(--text-primary)] font-medium px-8 py-4 rounded-2xl text-base
                              transition-all duration-200 hover:-translate-y-0.5">
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4V8z"/>
-            </svg>
-            Watch Demo
+            Buy pro license
           </button>
         </motion.div>
 
@@ -295,15 +291,60 @@ export function Hero() {
           className="relative mx-auto"
           initial={{ opacity: 0, y: 60, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ delay: 0.7, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: 0.7, duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
         >
+          {/* Floating badges & animated connection lines */}
+          <div className="absolute inset-0 pointer-events-none z-20 overflow-visible hidden lg:block">
+            {/* SVG lines */}
+            <svg className="absolute inset-0 w-full h-full overflow-visible" style={{ filter: 'drop-shadow(0 0 8px rgba(0, 102, 255, 0.35))' }}>
+              <defs>
+                <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.1" />
+                </linearGradient>
+              </defs>
+              <path d="M 80,-40 Q 150,-10 250,40" fill="none" stroke="url(#line-grad)" strokeWidth="1.5" strokeDasharray="6 4" className="animated-dash" />
+              <path d="M 850,-40 Q 780,-10 680,40" fill="none" stroke="url(#line-grad)" strokeWidth="1.5" strokeDasharray="6 4" className="animated-dash" />
+              <path d="M -80,180 Q 20,180 120,160" fill="none" stroke="url(#line-grad)" strokeWidth="1.5" strokeDasharray="6 4" className="animated-dash" />
+              <path d="M 1000,200 Q 900,190 800,160" fill="none" stroke="url(#line-grad)" strokeWidth="1.5" strokeDasharray="6 4" className="animated-dash" />
+              <path d="M -40,360 Q 40,340 140,300" fill="none" stroke="url(#line-grad)" strokeWidth="1.5" strokeDasharray="6 4" className="animated-dash" />
+              <path d="M 960,340 Q 880,330 780,280" fill="none" stroke="url(#line-grad)" strokeWidth="1.5" strokeDasharray="6 4" className="animated-dash" />
+            </svg>
+
+            {/* Badges */}
+            <div className="absolute -top-12 left-[8%] flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-black/60 backdrop-blur-md text-[10px] font-semibold text-white/90 shadow-[0_0_15px_rgba(0,102,255,0.15)] pointer-events-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+              Gmail
+            </div>
+            <div className="absolute -top-12 right-[8%] flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-black/60 backdrop-blur-md text-[10px] font-semibold text-white/90 shadow-[0_0_15px_rgba(0,102,255,0.15)] pointer-events-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+              Outlook
+            </div>
+            <div className="absolute top-[180px] -left-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-black/60 backdrop-blur-md text-[10px] font-semibold text-white/90 shadow-[0_0_15px_rgba(0,102,255,0.15)] pointer-events-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+              Proton
+            </div>
+            <div className="absolute top-[200px] -right-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-black/60 backdrop-blur-md text-[10px] font-semibold text-white/90 shadow-[0_0_15px_rgba(0,102,255,0.15)] pointer-events-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
+              Yandex
+            </div>
+            <div className="absolute bottom-[100px] -left-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-black/60 backdrop-blur-md text-[10px] font-semibold text-white/90 shadow-[0_0_15px_rgba(0,102,255,0.15)] pointer-events-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+              Apple Mail
+            </div>
+            <div className="absolute bottom-[120px] -right-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] bg-black/60 backdrop-blur-md text-[10px] font-semibold text-white/90 shadow-[0_0_15px_rgba(0,102,255,0.15)] pointer-events-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+              Live Mail
+            </div>
+          </div>
+
           {/* Floating cards */}
           <div className="float-card-1 absolute -top-5 -left-8 z-20 hidden md:flex items-center gap-2.5
                            valora-glass border border-[var(--border-glass)] rounded-xl px-3 py-2.5
                            shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
             <div className="w-8 h-8 rounded-lg bg-[var(--primary)]/20 flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
               </svg>
             </div>
             <div className="text-left">
@@ -317,7 +358,7 @@ export function Hero() {
                            shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
             <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M8 2v4M16 2v4M3 10h18M21 20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14z"/>
+                <path d="M8 2v4M16 2v4M3 10h18M21 20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14z" />
               </svg>
             </div>
             <div className="text-left">
@@ -337,7 +378,7 @@ export function Hero() {
           {/* Main mockup container */}
           <div
             className="relative rounded-2xl overflow-hidden border border-white/[0.08]
-                       shadow-[0_60px_160px_rgba(0,0,0,0.7),0_0_80px_rgba(124,58,237,0.15)]"
+                       shadow-[0_60px_160px_rgba(0,0,0,0.7),0_0_80px_rgba(0,102,255,0.15)]"
             style={{ transform: 'perspective(1200px) rotateX(6deg) rotateY(-2deg)', transformOrigin: 'center bottom' }}
           >
             {/* Glow overlay */}
@@ -367,7 +408,7 @@ export function Hero() {
           transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 5v14M5 12l7 7 7-7"/>
+            <path d="M12 5v14M5 12l7 7 7-7" />
           </svg>
         </motion.div>
       </motion.div>

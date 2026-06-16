@@ -2,31 +2,11 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
 
-function AnimatedBar({ height, delay = 0, active = false }: { height: number; delay?: number; active?: boolean }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true })
-  return (
-    <div ref={ref} className="flex items-end justify-center" style={{ height: 80 }}>
-      <motion.div
-        initial={{ height: 0 }}
-        animate={inView ? { height: `${height}%` } : { height: 0 }}
-        transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
-        className={`w-7 rounded-t-lg ${active ? 'bg-[var(--primary)]' : 'bg-[var(--border)]'}`}
-        style={{ minHeight: 4 }}
-      />
-    </div>
-  )
-}
-
-const BARS = [
-  [40, 55, 65, 45, 80, 60, 90], // Mon-Sun email volumes (percentages)
-]
-
 const STATS_DATA = [
-  { value: 127, suffix: '', label: 'Emails / hour', color: 'text-gradient' },
-  { value: 24, suffix: 's', prefix: '2.', label: 'Avg reply time', color: 'text-green-400' },
-  { value: 0, suffix: '', label: 'Missed meetings', color: 'text-gradient' },
-  { value: 12, suffix: '', label: 'Hours saved / wk', color: 'text-gradient' },
+  { value: 177, suffix: '', prefix: '', label: 'Total Emails' },
+  { value: 4, suffix: 'h', prefix: '2.', label: 'Response Time' },
+  { value: 0, suffix: '', prefix: '', label: 'Unread Count' },
+  { value: 12, suffix: '', prefix: '', label: 'Streak' },
 ]
 
 function CountUp({ to, suffix = '', prefix = '' }: { to: number; suffix?: string; prefix?: string }) {
@@ -53,9 +33,10 @@ export function MetricsSection() {
   const priorities = [
     { label: 'URGENT', pct: 12, color: '#ef4444' },
     { label: 'HIGH', pct: 28, color: '#f59e0b' },
-    { label: 'NORMAL', pct: 43, color: '#7c3aed' },
-    { label: 'LOW', pct: 17, color: '#3f3f46' },
+    { label: 'NORMAL', pct: 43, color: '#0066ff' },
+    { label: 'LOW', pct: 17, color: '#52525b' },
   ]
+  const activityHeights = [8, 12, 16, 22, 32, 45, 60, 75, 88, 96, 100, 96, 88, 75, 60, 45, 32, 22, 16, 12, 8]
 
   return (
     <section id="metrics" className="section-y section-x">
@@ -105,91 +86,138 @@ export function MetricsSection() {
           ))}
         </motion.div>
 
-        {/* Charts row */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Bar chart */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6"
-          >
-            <div className="flex items-center justify-between mb-1">
-              <p className="text-sm font-semibold text-[var(--text-primary)]">Email Volume</p>
-              <span className="text-xs text-[var(--text-muted)]">This week</span>
-            </div>
-            <p className="text-xs text-[var(--text-muted)] mb-6">Daily emails processed by Zara</p>
-            {/* Bar chart */}
-            <div className="flex items-end justify-between gap-2 h-24">
-              {volumes.map((v, i) => (
-                <div key={i} className="flex-1 flex flex-col items-center gap-2">
-                  <motion.div
-                    initial={{ height: 0 }}
-                    whileInView={{ height: `${v}%` }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                    className={`w-full rounded-t-md ${i === 4 ? 'bg-[var(--primary)]' : 'bg-[var(--border)]'}`}
-                    style={{ minHeight: 4 }}
-                  />
-                  <span className="text-[9px] text-[var(--text-muted)]">{days[i]}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Priority breakdown */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6"
-          >
-            <p className="text-sm font-semibold text-[var(--text-primary)] mb-1">Priority Breakdown</p>
-            <p className="text-xs text-[var(--text-muted)] mb-6">How Zara categorises your inbox</p>
-            <div className="space-y-4">
-              {priorities.map((p, i) => (
-                <div key={i}>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-medium text-[var(--text-secondary)]">{p.label}</span>
-                    <span className="text-xs font-semibold text-[var(--text-primary)]">{p.pct}%</span>
-                  </div>
-                  <div className="h-2 rounded-full bg-[var(--surface-hover)] overflow-hidden">
+        {/* Charts Column Layout */}
+        <div className="grid md:grid-cols-2 gap-6 items-start">
+          {/* Left Column: Email Volume & Top Senders */}
+          <div className="space-y-6">
+            {/* Email Volume Card */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
+              className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6"
+            >
+              <div className="flex items-center justify-between mb-1">
+                <p className="text-sm font-semibold text-[var(--text-primary)]">Email Volume</p>
+                <span className="text-xs text-[var(--text-muted)]">This week</span>
+              </div>
+              <p className="text-xs text-[var(--text-muted)] mb-6">Daily emails processed by Zara</p>
+              
+              {/* Bar chart */}
+              <div className="flex items-end justify-between gap-2 h-24">
+                {volumes.map((v, i) => (
+                  <div key={i} className="flex-1 flex flex-col items-center gap-2">
                     <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${p.pct}%` }}
+                      initial={{ height: 0 }}
+                      whileInView={{ height: `${v}%` }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.9, delay: 0.2 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                      className="h-full rounded-full"
-                      style={{ background: p.color }}
+                      transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] as const }}
+                      className={`w-full rounded-t-md ${i === 4 ? 'bg-[var(--primary)]' : 'bg-[var(--border)]'}`}
+                      style={{ minHeight: 4 }}
+                    />
+                    <span className="text-[9px] text-[var(--text-muted)]">{days[i]}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Top Senders Card */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] as const }}
+              className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6"
+            >
+              <p className="text-xs font-semibold text-[var(--text-muted)] mb-4 uppercase tracking-wider">Top Senders</p>
+              <div className="space-y-1">
+                {[
+                  { name: 'Rahul Sharma', count: 24, score: 92 },
+                  { name: 'GitHub', count: 18, score: 40 },
+                  { name: 'Stripe', count: 12, score: 55 },
+                ].map((s, i) => (
+                  <div key={i} className="flex items-center gap-3 py-2 border-b border-[var(--border)] last:border-b-0">
+                    <div className="w-6 h-6 rounded-full bg-[var(--primary)]/20 flex items-center justify-center text-[9px] font-bold text-[var(--primary)]">
+                      {s.name[0]}
+                    </div>
+                    <span className="text-xs text-[var(--text-secondary)] flex-1">{s.name}</span>
+                    <span className="text-[10px] text-[var(--text-muted)] mr-2">{s.count} emails</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold
+                      ${s.score > 80 ? 'badge-urgent' : s.score > 50 ? 'badge-high' : 'badge-normal'}`}>
+                      {s.score}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Priority Breakdown & Email Activity Bell Curve */}
+          <div className="space-y-6">
+            {/* Priority Breakdown Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
+              className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6"
+            >
+              <p className="text-sm font-semibold text-[var(--text-primary)] mb-1">Priority Breakdown</p>
+              <p className="text-xs text-[var(--text-muted)] mb-6">How Zara categorises your inbox</p>
+              <div className="space-y-4">
+                {priorities.map((p, i) => (
+                  <div key={i}>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-medium text-[var(--text-secondary)]">{p.label}</span>
+                      <span className="text-xs font-semibold text-[var(--text-primary)]">{p.pct}%</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-[var(--surface-hover)] overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${p.pct}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.9, delay: 0.2 + i * 0.1, ease: [0.22, 1, 0.36, 1] as const }}
+                        className="h-full rounded-full"
+                        style={{ background: p.color }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Email Activity Card (Bell Curve) */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] as const }}
+              className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6"
+            >
+              <div className="flex items-center justify-between mb-1">
+                <p className="text-sm font-semibold text-[var(--text-primary)]">Email Activity</p>
+                <span className="text-xs text-[var(--text-muted)]">Hourly Peak</span>
+              </div>
+              <p className="text-xs text-[var(--text-muted)] mb-6">Zara response distribution pattern</p>
+              
+              {/* Bell Curve Vertical Bars */}
+              <div className="flex items-end justify-between gap-1 h-24">
+                {activityHeights.map((h, i) => (
+                  <div key={i} className="flex-1 flex flex-col items-center">
+                    <motion.div
+                      initial={{ height: 0 }}
+                      whileInView={{ height: `${h}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.7, delay: i * 0.03, ease: [0.22, 1, 0.36, 1] as const }}
+                      className={`w-full rounded-t ${i >= 7 && i <= 13 ? 'bg-[var(--primary)]' : 'bg-[var(--border-strong)] opacity-40'}`}
+                      style={{ minHeight: 2 }}
                     />
                   </div>
-                </div>
-              ))}
-            </div>
-            {/* Top sender table */}
-            <div className="mt-6 pt-5 border-t border-[var(--border)]">
-              <p className="text-xs font-semibold text-[var(--text-muted)] mb-3 uppercase tracking-wider">Top Senders</p>
-              {[
-                { name: 'Rahul Sharma', count: 24, score: 92 },
-                { name: 'GitHub', count: 18, score: 40 },
-                { name: 'Stripe', count: 12, score: 55 },
-              ].map((s, i) => (
-                <div key={i} className="flex items-center gap-3 py-2">
-                  <div className="w-6 h-6 rounded-full bg-[var(--primary)]/20 flex items-center justify-center text-[9px] font-bold text-[var(--primary)]">
-                    {s.name[0]}
-                  </div>
-                  <span className="text-xs text-[var(--text-secondary)] flex-1">{s.name}</span>
-                  <span className="text-[10px] text-[var(--text-muted)]">{s.count} emails</span>
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold
-                    ${s.score > 80 ? 'badge-urgent' : s.score > 50 ? 'badge-high' : 'badge-normal'}`}>
-                    {s.score}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

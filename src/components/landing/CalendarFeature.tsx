@@ -11,7 +11,7 @@ function CalendarMockup() {
     [26, 27, 28, 29, 30, null, null],
   ]
   const events: Record<number, { label: string; color: string }[]> = {
-    9:  [{ label: 'Standup', color: '#7c3aed' }],
+    9: [{ label: 'Standup', color: '#0066ff' }],
     15: [{ label: 'Investor call', color: '#ef4444' }, { label: 'Design review', color: '#6366f1' }],
     17: [{ label: 'Team sync', color: '#10b981' }],
     22: [{ label: 'Demo day', color: '#f59e0b' }],
@@ -27,10 +27,10 @@ function CalendarMockup() {
         </div>
         <div className="flex gap-1.5">
           <button className="w-7 h-7 rounded-lg bg-[var(--surface-hover)] border border-[var(--border)] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6" /></svg>
           </button>
           <button className="w-7 h-7 rounded-lg bg-[var(--surface-hover)] border border-[var(--border)] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg>
           </button>
         </div>
       </div>
@@ -80,7 +80,7 @@ function CalendarMockup() {
         <p className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">Upcoming</p>
         {[
           { title: 'Investor Call', time: 'Jun 15 · 3:00 PM', dot: '#ef4444', fromEmail: true },
-          { title: 'Team Standup', time: 'Daily · 9:00 AM', dot: '#7c3aed', fromEmail: false },
+          { title: 'Team Standup', time: 'Daily · 9:00 AM', dot: '#0066ff', fromEmail: false },
           { title: 'Demo Day', time: 'Jun 22 · 10:00 AM', dot: '#f59e0b', fromEmail: true },
         ].map((e, i) => (
           <div key={i} className="flex items-center gap-3">
@@ -102,7 +102,7 @@ function CalendarMockup() {
       <div className="mx-4 mb-4 flex items-center gap-2.5 rounded-xl border border-[var(--primary)]/25
                       bg-[var(--primary)]/8 px-3 py-2.5">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/>
+          <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
         </svg>
         <p className="text-xs text-[var(--text-secondary)] flex-1">
           <span className="font-semibold text-[var(--primary)]">Zara</span> detected a meeting request in your email
@@ -126,7 +126,7 @@ const containerVariants = {
 }
 const itemVariants = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
 }
 
 export function CalendarFeature() {
@@ -138,7 +138,7 @@ export function CalendarFeature() {
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
         >
           <CalendarMockup />
         </motion.div>
@@ -177,7 +177,7 @@ export function CalendarFeature() {
                                 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
                     stroke="var(--primary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={f.icon}/>
+                    <path d={f.icon} />
                   </svg>
                 </div>
                 <span className="text-sm text-[var(--text-secondary)] leading-relaxed">{f.text}</span>
@@ -189,7 +189,7 @@ export function CalendarFeature() {
             className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--primary)] hover:gap-3 transition-all duration-200">
             See calendar features
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </motion.a>
         </motion.div>

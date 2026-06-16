@@ -312,7 +312,7 @@ export default function InboxPage() {
         onClick={() => openCompose()}
         id="inbox-compose-btn"
         title="Compose new email (C)"
-        className="fixed bottom-6 right-6 w-12 h-12 rounded-2xl bg-[#7C3AED] hover:bg-[#6D28D9] text-white shadow-lg shadow-purple-900/40 flex items-center justify-center transition-all hover:scale-105 active:scale-95 z-40"
+        className="fixed bottom-6 right-6 w-12 h-12 rounded-2xl bg-[#0066ff] hover:bg-[#1d4ed8] text-white shadow-lg shadow-blue-900/40 flex items-center justify-center transition-all hover:scale-105 active:scale-95 z-40"
       >
         <PenSquare className="w-5 h-5" />
       </button>

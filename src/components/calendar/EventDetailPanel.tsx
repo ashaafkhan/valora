@@ -135,12 +135,12 @@ export default function EventDetailPanel({
         {/* Meet Link */}
         {event.videoLink && (
           <div className="flex items-start gap-3">
-            <Video className="w-4 h-4 text-[#A855F7] mt-0.5 flex-shrink-0" />
+            <Video className="w-4 h-4 text-[#60a5fa] mt-0.5 flex-shrink-0" />
             <a
               href={event.videoLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-[#A855F7] hover:underline truncate"
+              className="text-sm text-[#60a5fa] hover:underline truncate"
             >
               Join Google Meet
             </a>

@@ -49,7 +49,7 @@ export default function Sidebar({ user }: SidebarProps) {
     >
       {/* Brand */}
       <div className="flex items-center gap-3 px-4 h-16 border-b border-border/60 flex-shrink-0 overflow-hidden">
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_12px_rgba(124,58,237,0.2)]">
+        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_12px_rgba(0,102,255,0.2)]">
           <Image
             src="/valora_logo.png"
             alt="Valora"
@@ -84,7 +84,7 @@ export default function Sidebar({ user }: SidebarProps) {
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150
                   ${isActive
-                    ? "bg-primary/10 border-l-2 border-primary text-primary shadow-[inset_0_0_20px_rgba(124,58,237,0.06)]"
+                    ? "bg-primary/10 border-l-2 border-primary text-primary shadow-[inset_0_0_20px_rgba(0,102,255,0.06)]"
                     : "text-text-secondary hover:text-text-primary hover:bg-surface-hover border-l-2 border-transparent"
                   }`}
               >
@@ -107,7 +107,7 @@ export default function Sidebar({ user }: SidebarProps) {
                 )}
                 {expanded && item.label === "Inbox" && (
                   <motion.span
-                    className="ml-auto text-[10px] font-bold bg-primary text-white w-5 h-5 rounded-full flex items-center justify-center shadow-[0_0_8px_rgba(124,58,237,0.4)]"
+                    className="ml-auto text-[10px] font-bold bg-primary text-white w-5 h-5 rounded-full flex items-center justify-center shadow-[0_0_8px_rgba(0,102,255,0.4)]"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                   >

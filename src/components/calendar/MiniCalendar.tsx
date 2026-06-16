@@ -90,9 +90,9 @@ export default function MiniCalendar({
               }}
               className={`relative flex flex-col items-center justify-center w-7 h-7 rounded-lg mx-auto text-[11px] font-medium transition ${
                 selected
-                  ? "bg-[#7C3AED] text-white"
+                  ? "bg-[#0066ff] text-white"
                   : today
-                  ? "bg-zinc-800 text-[#A855F7]"
+                  ? "bg-zinc-800 text-[#60a5fa]"
                   : inMonth
                   ? "text-zinc-300 hover:bg-zinc-800"
                   : "text-zinc-700 hover:bg-zinc-900"
@@ -100,7 +100,7 @@ export default function MiniCalendar({
             >
               {format(day, "d")}
               {dotVisible && !selected && (
-                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#7C3AED]" />
+                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#0066ff]" />
               )}
             </button>
           );
@@ -114,7 +114,7 @@ export default function MiniCalendar({
           onSelectDate(today);
           setViewMonth(startOfMonth(today));
         }}
-        className="mt-3 w-full text-center text-[10px] font-semibold text-zinc-500 hover:text-[#A855F7] transition"
+        className="mt-3 w-full text-center text-[10px] font-semibold text-zinc-500 hover:text-[#60a5fa] transition"
       >
         Jump to Today
       </button>

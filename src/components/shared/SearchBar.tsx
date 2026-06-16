@@ -45,13 +45,13 @@ export default function SearchBar({
     <div
       className={`relative flex items-center gap-2 rounded-xl border transition-all duration-200 ${
         isFocused
-          ? "border-[#7C3AED]/50 bg-[#111111] shadow-[0_0_0_3px_rgba(124,58,237,0.1)]"
+          ? "border-[#0066ff]/50 bg-[#111111] shadow-[0_0_0_3px_rgba(0,102,255,0.1)]"
           : "border-[#222222] bg-[#0F0F0F] hover:border-[#333333]"
       } ${className}`}
     >
       <Search
         className={`w-3.5 h-3.5 ml-3 flex-shrink-0 transition-colors ${
-          isFocused ? "text-[#A855F7]" : "text-zinc-600"
+          isFocused ? "text-[#60a5fa]" : "text-zinc-600"
         }`}
       />
       <input

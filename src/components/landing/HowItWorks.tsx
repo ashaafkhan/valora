@@ -7,21 +7,21 @@ const STEPS = [
     icon: 'M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z',
     title: 'Connect in 30 seconds',
     desc: 'Sign in with Google. Valora gets secure OAuth 2.0 access to your Gmail and Google Calendar — no passwords stored, ever.',
-    color: '#7c3aed',
+    color: '#0066ff',
   },
   {
     step: '02',
     icon: 'M12 8V4H8M4 8h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2zM9 13v2M15 13v2',
     title: 'Meet Zara, your AI',
     desc: 'Zara reads your inbox, learns your writing style, and starts prioritising, summarising, and drafting replies immediately.',
-    color: '#6366f1',
+    color: '#3b82f6',
   },
   {
     step: '03',
     icon: 'M13 2 3 14h9l-1 8 10-12h-9l1-8z',
     title: 'Command, don\'t click',
     desc: 'Type naturally. "Reply to Rahul about the term sheet." "Schedule a standup for tomorrow 9AM." Zara does the rest.',
-    color: '#7c3aed',
+    color: '#0066ff',
   },
 ]
 
@@ -31,7 +31,7 @@ const containerVariants = {
 }
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
 }
 
 export function HowItWorks() {
@@ -70,7 +70,7 @@ export function HowItWorks() {
           <div className="hidden md:block absolute top-[52px] left-[calc(33%+24px)] right-[calc(33%+24px)] h-px">
             <svg width="100%" height="2" className="overflow-visible">
               <line x1="0" y1="1" x2="100%" y2="1"
-                stroke="rgba(124,58,237,0.3)" strokeWidth="1"
+                stroke="rgba(0,102,255,0.3)" strokeWidth="1"
                 strokeDasharray="6 4"
                 className="animated-dash"
               />
@@ -86,7 +86,7 @@ export function HowItWorks() {
             >
               {/* Background gradient */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500
-                              bg-[radial-gradient(ellipse_at_50%_0%,rgba(124,58,237,0.07)_0%,transparent_70%)]
+                              bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,102,255,0.07)_0%,transparent_70%)]
                               pointer-events-none" />
 
               <div className="relative z-10">
@@ -96,7 +96,7 @@ export function HowItWorks() {
                     style={{ background: `${s.color}1a`, border: `1px solid ${s.color}30` }}>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
                       stroke={s.color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d={s.icon}/>
+                      <path d={s.icon} />
                     </svg>
                   </div>
                   <span className="font-sora text-4xl font-extrabold text-[var(--border-strong)]">{s.step}</span>
@@ -125,7 +125,7 @@ export function HowItWorks() {
                         <div className="w-3.5 h-3.5 rounded-full flex items-center justify-center"
                           style={{ background: j === 2 ? '#10b981' : `${s.color}20` }}>
                           {j === 2
-                            ? <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="3"><path d="M20 6 9 17l-5-5"/></svg>
+                            ? <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="3"><path d="M20 6 9 17l-5-5" /></svg>
                             : <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-pulse" />
                           }
                         </div>

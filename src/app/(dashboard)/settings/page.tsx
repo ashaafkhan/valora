@@ -480,8 +480,8 @@ export default function SettingsPage() {
                 icon={Sparkles}
                 title="AI Priority Engine"
                 subtitle="Powered by Groq Llama-3.3-70b — ultra-fast inference"
-                iconBg="bg-purple-500/10 border-purple-500/20"
-                iconColor="text-purple-400"
+                iconBg="bg-blue-500/10 border-blue-500/20"
+                iconColor="text-blue-400"
               >
                 <div className="py-2">
                   <ToggleRow
@@ -510,8 +510,8 @@ export default function SettingsPage() {
                 icon={Bot}
                 title="AI Agent"
                 subtitle="Valora Copilot — your executive assistant with memory"
-                iconBg="bg-purple-500/10 border-purple-500/20"
-                iconColor="text-purple-400"
+                iconBg="bg-blue-500/10 border-blue-500/20"
+                iconColor="text-blue-400"
               >
                 <div className="py-5 space-y-4">
                   <div className="p-4 bg-background/50 rounded-xl border border-border/60 text-xs text-text-secondary leading-relaxed space-y-2">
@@ -613,7 +613,7 @@ export default function SettingsPage() {
                     description: "Email prioritization, smart drafts, and agent reasoning",
                     status: "connected",
                     via: "Groq API",
-                    color: "text-purple-400 bg-purple-400/10 border-purple-400/20",
+                    color: "text-blue-400 bg-blue-400/10 border-blue-400/20",
                   },
                   {
                     icon: Bot,

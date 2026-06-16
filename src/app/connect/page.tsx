@@ -41,17 +41,17 @@ export default async function ConnectPage({ searchParams }: PageProps) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center bg-[#0A0A0A] text-white px-4">
         {/* Glow effect */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="w-full max-w-md bg-zinc-900/40 backdrop-blur-xl border border-zinc-800/80 rounded-2xl p-8 text-center shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
           
-          <div className="mx-auto w-16 h-16 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex items-center justify-center mb-6">
-            <Sparkles className="w-8 h-8 text-purple-400" />
+          <div className="mx-auto w-16 h-16 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center mb-6">
+            <Sparkles className="w-8 h-8 text-blue-400" />
           </div>
 
           <h1 className="text-3xl font-extrabold tracking-tight mb-2 font-sans">
-            Welcome to <span className="text-purple-400 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Valora</span>
+            Welcome to <span className="text-blue-400 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Valora</span>
           </h1>
           <p className="text-zinc-400 text-sm mb-8 leading-relaxed">
             The premium Superhuman-style command center. Log in to configure your integrations.
@@ -59,7 +59,7 @@ export default async function ConnectPage({ searchParams }: PageProps) {
 
           <Link
             href="/api/auth/signin?callbackUrl=/connect"
-            className="w-full py-4 px-6 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl font-semibold transition duration-200 flex items-center justify-center gap-2 group shadow-lg shadow-purple-900/20"
+            className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl font-semibold transition duration-200 flex items-center justify-center gap-2 group shadow-lg shadow-blue-900/20"
           >
             <LogIn className="w-5 h-5 text-white transition-transform group-hover:translate-x-[2px]" />
             Sign in with Google
@@ -92,7 +92,7 @@ export default async function ConnectPage({ searchParams }: PageProps) {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-[#0A0A0A] text-white p-6 relative">
       {/* Background glow effects */}
-      <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="w-full max-w-xl">
@@ -100,7 +100,7 @@ export default async function ConnectPage({ searchParams }: PageProps) {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-2xl font-bold font-sans text-zinc-100 flex items-center gap-2">
-              <span className="w-2.5 h-2.5 bg-purple-500 rounded-full animate-pulse" />
+              <span className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse" />
               Valora Integrations
             </h1>
             <p className="text-zinc-400 text-xs mt-1">
@@ -137,23 +137,23 @@ export default async function ConnectPage({ searchParams }: PageProps) {
 
         {/* Agent Initiated Integration (Direct Flow) */}
         {agentConnectInfo ? (
-          <div className="bg-zinc-900/60 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6 shadow-2xl relative overflow-hidden mb-8">
-            <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-purple-500 to-indigo-500" />
+          <div className="bg-zinc-900/60 backdrop-blur-xl border border-blue-500/20 rounded-2xl p-6 shadow-2xl relative overflow-hidden mb-8">
+            <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500" />
             
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-purple-400" />
+              <div className="w-12 h-12 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center">
+                <Sparkles className="w-6 h-6 text-blue-400" />
               </div>
               <div className="flex-1">
                 <h2 className="text-lg font-bold text-zinc-100">Agent Requested Access</h2>
                 <p className="text-zinc-400 text-sm mt-1 leading-relaxed">
-                  Your AI copilot is asking to connect to your <span className="font-semibold text-purple-300">{agentConnectInfo.providerName}</span>. This is required to execute the requested command.
+                  Your AI copilot is asking to connect to your <span className="font-semibold text-blue-300">{agentConnectInfo.providerName}</span>. This is required to execute the requested command.
                 </p>
 
                 <div className="mt-6 flex gap-3">
                   <a
                     href={agentConnectInfo.oauthUrl}
-                    className="py-2.5 px-5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-sm font-semibold rounded-xl transition flex items-center gap-2 shadow-lg shadow-purple-900/10"
+                    className="py-2.5 px-5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-sm font-semibold rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-900/10"
                   >
                     Authorize Integration <ArrowRight className="w-4 h-4" />
                   </a>

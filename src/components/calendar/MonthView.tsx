@@ -91,7 +91,7 @@ export default function MonthView({
                     <span
                       className={`text-xs font-semibold w-6 h-6 flex items-center justify-center rounded-full transition ${
                         today
-                          ? "bg-[#7C3AED] text-white"
+                          ? "bg-[#0066ff] text-white"
                           : inMonth
                           ? "text-zinc-300 group-hover:text-white"
                           : "text-zinc-700"
@@ -119,7 +119,7 @@ export default function MonthView({
                           e.stopPropagation();
                           onClickDay(day);
                         }}
-                        className="text-[10px] text-zinc-500 hover:text-[#A855F7] font-mono px-1 transition"
+                        className="text-[10px] text-zinc-500 hover:text-[#60a5fa] font-mono px-1 transition"
                       >
                         +{overflow} more
                       </button>

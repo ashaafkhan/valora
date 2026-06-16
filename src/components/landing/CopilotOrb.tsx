@@ -53,7 +53,7 @@ export function CopilotOrb({ onOpen }: Props) {
             whileTap={{ scale: 0.9 }}
             onClick={onOpen}
             className="relative w-14 h-14 rounded-full bg-gradient-to-br from-primary to-indigo-600
-                       shadow-[0_0_40px_rgba(124,58,237,0.6)] flex items-center justify-center
+                       shadow-[0_0_40px_rgba(0,102,255,0.6)] flex items-center justify-center
                        cursor-pointer"
           >
             <span className="absolute inset-0 rounded-full bg-primary/40 animate-ping" />

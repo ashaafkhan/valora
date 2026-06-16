@@ -14,9 +14,9 @@ const CalendarView = dynamic(
     loading: () => (
       <div className="flex items-center justify-center h-full">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#7C3AED]/20 border border-[#7C3AED]/30 flex items-center justify-center animate-pulse">
+          <div className="w-10 h-10 rounded-2xl bg-[#0066ff]/20 border border-[#0066ff]/30 flex items-center justify-center animate-pulse">
             <svg
-              className="w-5 h-5 text-[#A855F7]"
+              className="w-5 h-5 text-[#60a5fa]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

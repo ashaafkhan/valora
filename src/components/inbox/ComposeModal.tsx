@@ -121,8 +121,8 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
     <div className="fixed bottom-0 right-0 md:bottom-6 md:right-6 w-full md:w-[600px] h-[550px] md:h-[500px] bg-[#111111] border border-zinc-800 rounded-t-2xl md:rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden animate-slide-up">
       {/* Header Bar */}
       <div className="px-5 py-3.5 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between">
-        <span className="text-xs font-mono uppercase tracking-widest text-[#7C3AED] font-bold flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-[#A855F7]" />
+        <span className="text-xs font-mono uppercase tracking-widest text-[#0066ff] font-bold flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-[#60a5fa]" />
           New Message
         </span>
         <div className="flex items-center gap-3">
@@ -205,7 +205,7 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
           <button
             onClick={handleAIDraft}
             disabled={isDrafting || !to.trim() || !subject.trim()}
-            className="px-3.5 py-2 bg-[#7C3AED]/15 hover:bg-[#7C3AED]/25 text-[#A855F7] border border-[#7C3AED]/30 hover:border-[#7C3AED]/50 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50"
+            className="px-3.5 py-2 bg-[#0066ff]/15 hover:bg-[#0066ff]/25 text-[#60a5fa] border border-[#0066ff]/30 hover:border-[#0066ff]/50 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50"
             title="Automatically draft response based on subject & recipient"
           >
             {isDrafting ? (
@@ -237,7 +237,7 @@ export default function ComposeModal({ onSend, isSending }: ComposeModalProps) {
               value={scheduledAt}
               onChange={(e) => setScheduledAt(e.target.value)}
               min={new Date().toISOString().slice(0, 16)}
-              className="bg-zinc-900 border border-zinc-700 text-zinc-200 text-xs rounded-xl px-2 py-1.5 focus:ring-1 focus:ring-[#7C3AED] outline-none"
+              className="bg-zinc-900 border border-zinc-700 text-zinc-200 text-xs rounded-xl px-2 py-1.5 focus:ring-1 focus:ring-[#0066ff] outline-none"
             />
           )}
         </div>

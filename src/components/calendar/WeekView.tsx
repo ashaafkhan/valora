@@ -79,7 +79,7 @@ export default function WeekView({
               <div
                 className={`text-lg font-bold mt-0.5 w-8 h-8 flex items-center justify-center rounded-full mx-auto transition ${
                   today
-                    ? "bg-[#7C3AED] text-white"
+                    ? "bg-[#0066ff] text-white"
                     : "text-zinc-300 hover:bg-zinc-800"
                 }`}
               >
@@ -233,8 +233,8 @@ function NowIndicator({
       style={{ top: `${top}px` }}
     >
       <div className="flex items-center gap-0">
-        <div className="w-2 h-2 rounded-full bg-[#7C3AED] flex-shrink-0 -ml-1" />
-        <div className="flex-1 h-px bg-[#7C3AED]" />
+        <div className="w-2 h-2 rounded-full bg-[#0066ff] flex-shrink-0 -ml-1" />
+        <div className="flex-1 h-px bg-[#0066ff]" />
       </div>
     </div>
   );
