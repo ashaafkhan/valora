@@ -1,6 +1,5 @@
 import { LandingNav } from "@/components/landing/LandingNav";
 import { Hero } from "@/components/landing/Hero";
-import { Stats } from "@/components/landing/Stats";
 import { InboxFeature } from "@/components/landing/InboxFeature";
 import { Features } from "@/components/landing/Features";
 import { MetricsSection } from "@/components/landing/MetricsSection";
@@ -18,9 +17,6 @@ export default function HomePage() {
 
       {/* 1. Hero — "Gmail. Calendar. One Brain." */}
       <Hero />
-
-      {/* 2. Trust Bar — animated stats */}
-      <Stats />
 
       {/* 3. Inbox Feature — "Your inbox answers back." */}
       <InboxFeature />
