@@ -21,9 +21,9 @@ export default async function LoginPage({ searchParams }: PageProps) {
         {/* Logo + brand */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl
-                          bg-primary/10 border border-primary/20 mb-4 mx-auto
-                          shadow-[0_0_40px_rgba(0,102,255,0.3)]">
-            <Image src="/valora_logo.png" alt="Valora" width={40} height={40} className="object-contain" />
+                          bg-gradient-to-br from-[#0c0f19] to-[#04050a] border border-[#0066ff]/25 mb-4 mx-auto
+                          shadow-[0_8px_32px_rgba(0,102,255,0.25)]">
+            <Image src="/valora_logo.png" alt="Valora" width={38} height={38} className="object-contain" />
           </div>
           <h1 className="font-display text-2xl font-bold text-text-primary">Valora</h1>
           <p className="text-xs text-text-muted font-mono mt-1 tracking-widest uppercase">
@@ -70,38 +70,7 @@ export default async function LoginPage({ searchParams }: PageProps) {
                 </span>
               </button>
             </form>
-
-            <div className="flex items-center gap-3 text-text-muted text-xs">
-              <div className="flex-1 h-px bg-border" />
-              <span>or</span>
-              <div className="flex-1 h-px bg-border" />
-            </div>
-
-            {/* GitHub — SECONDARY */}
-            <form
-              action={async () => {
-                "use server";
-                await signIn("github", { redirectTo: "/onboarding" });
-              }}
-            >
-              <button
-                type="submit"
-                className="w-full py-3.5 px-5 bg-transparent border border-border hover:border-white/20
-                           text-text-secondary hover:text-text-primary rounded-xl font-semibold text-sm
-                           transition-all duration-200 flex items-center gap-3 cursor-pointer"
-              >
-                <GitHubIcon />
-                Continue with GitHub
-                <span className="ml-auto text-xs text-text-muted font-mono">limited access</span>
-              </button>
-            </form>
           </div>
-
-          {/* GitHub note */}
-          <p className="text-xs text-text-muted text-center mt-4 leading-relaxed">
-            GitHub login grants dashboard access only.<br />
-            Gmail and Calendar features require Google sign-in.
-          </p>
         </div>
 
         <p className="text-center text-xs text-text-muted mt-6">
