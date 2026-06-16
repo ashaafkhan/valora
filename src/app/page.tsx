@@ -1,43 +1,50 @@
-import { AnimatedBackground } from "@/components/landing/AnimatedBackground";
-import { LandingNav } from "@/components/landing/LandingNav";
-import { Hero } from "@/components/landing/Hero";
-import { Stats } from "@/components/landing/Stats";
-import { Features } from "@/components/landing/Features";
-import { Footer } from "@/components/landing/Footer";
-import { LandingClient } from "@/components/landing/LandingClient";
+import { LandingNav }      from "@/components/landing/LandingNav";
+import { Hero }             from "@/components/landing/Hero";
+import { Stats }            from "@/components/landing/Stats";
+import { InboxFeature }     from "@/components/landing/InboxFeature";
+import { Features }         from "@/components/landing/Features";
+import { MetricsSection }   from "@/components/landing/MetricsSection";
+import { CalendarFeature }  from "@/components/landing/CalendarFeature";
+import { HowItWorks }       from "@/components/landing/HowItWorks";
+import { Pricing }          from "@/components/landing/Pricing";
+import { CTASection }       from "@/components/landing/CTASection";
+import { Footer }           from "@/components/landing/Footer";
 
-export default async function Home() {
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-background text-text-primary overflow-x-hidden">
-      <AnimatedBackground />
+    <main className="relative min-h-screen bg-[var(--background)] overflow-x-hidden">
+      {/* Sticky Navigation */}
       <LandingNav />
+
+      {/* 1. Hero — "Gmail. Calendar. One Brain." */}
       <Hero />
+
+      {/* 2. Trust Bar — animated stats */}
       <Stats />
+
+      {/* 3. Inbox Feature — "Your inbox answers back." */}
+      <InboxFeature />
+
+      {/* 4. Feature Bento — "Full Gmail control. Zero compromise." */}
       <Features />
 
-      {/* CTA Section */}
-      <section className="py-24 px-6 text-center">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-text-primary mb-4">
-            Ready to take back your inbox?
-          </h2>
-          <p className="text-text-secondary mb-8">
-            Connect in 30 seconds. No credit card required.
-          </p>
-          <a
-            href="/login"
-            className="btn-shimmer inline-flex items-center gap-2 bg-primary text-white font-semibold
-                       px-10 py-4 rounded-2xl text-lg shadow-[0_0_40px_rgba(124,58,237,0.5)]
-                       hover:shadow-[0_0_60px_rgba(124,58,237,0.7)] hover:-translate-y-1
-                       transition-all duration-200"
-          >
-            Get Started Free
-          </a>
-        </div>
-      </section>
+      {/* 5. Metrics — "Every metric at a glance." */}
+      <MetricsSection />
 
+      {/* 6. Calendar — "Your schedule, always in view." */}
+      <CalendarFeature />
+
+      {/* 7. How It Works — "Built for how you actually work." */}
+      <HowItWorks />
+
+      {/* 8. Pricing — "Simple, transparent pricing." */}
+      <Pricing />
+
+      {/* 9. CTA — "Ready to own your inbox?" */}
+      <CTASection />
+
+      {/* 10. Footer */}
       <Footer />
-      <LandingClient />
     </main>
   );
 }
