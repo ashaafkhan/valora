@@ -906,11 +906,11 @@ export function Hero() {
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
-          <button className="flex items-center gap-2 valora-glass border border-[var(--border-glass)] text-[var(--text-secondary)]
+          <a href="#pricing" className="flex items-center gap-2 valora-glass border border-[var(--border-glass)] text-[var(--text-secondary)]
                              hover:text-[var(--text-primary)] font-medium px-8 py-4 rounded-2xl text-base
                              transition-all duration-200 hover:-translate-y-0.5">
             Buy pro license
-          </button>
+          </a>
         </motion.div>
 
         {/* Dashboard Mockup */}
