@@ -176,7 +176,7 @@ export default function Sidebar({ user, onCompose }: SidebarProps) {
     >
       {/* Brand header */}
       <div className="flex items-center gap-2.5 px-3 h-14 border-b border-border/60 flex-shrink-0 overflow-hidden">
-        <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 overflow-hidden p-0.5">
+        <div className="w-10 h-10 flex items-center justify-center flex-shrink-0 overflow-hidden">
           <div className="relative w-full h-full">
             <Image
               src="/valora_logo.png"

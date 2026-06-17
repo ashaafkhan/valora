@@ -8,7 +8,6 @@ import { api } from "@/trpc/react";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboard";
 import EmailList from "@/components/inbox/EmailList";
 import EmailThread from "@/components/inbox/EmailThread";
-import ComposeModal from "@/components/inbox/ComposeModal";
 import { PenSquare, Inbox } from "lucide-react";
 import type { Email } from "@/types";
 
@@ -121,13 +120,6 @@ export default function InboxPage() {
     await syncMutation.mutateAsync({ maxThreads: 25 });
     await emailsQuery.refetch();
   }, [syncMutation, emailsQuery]);
-
-  const handleSendEmail = useCallback(
-    async (payload: { to: string; subject: string; body: string; cc?: string[] }) => {
-      await sendEmailMutation.mutateAsync(payload);
-    },
-    [sendEmailMutation],
-  );
 
   const handleReply = useCallback(
     async (body: string) => {
@@ -311,16 +303,10 @@ export default function InboxPage() {
         onClick={() => openCompose()}
         id="inbox-compose-btn"
         title="Compose new email (C)"
-        className="fixed bottom-6 right-6 w-12 h-12 rounded-2xl bg-[#0066ff] hover:bg-[#1d4ed8] text-white shadow-lg shadow-blue-900/40 flex items-center justify-center transition-all hover:scale-105 active:scale-95 z-40"
+        className="fixed bottom-6 right-6 w-12 h-12 rounded-2xl bg-primary hover:bg-primary-light text-white shadow-lg shadow-primary/40 flex items-center justify-center transition-all hover:scale-105 active:scale-95 z-40"
       >
         <PenSquare className="w-5 h-5" />
       </button>
-
-      {/* ── Compose Modal ─────────────────────────────────────── */}
-      <ComposeModal
-        onSend={handleSendEmail}
-        isSending={sendEmailMutation.isPending}
-      />
     </div>
   );
 }

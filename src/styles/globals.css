@@ -645,17 +645,6 @@ kbd {
   color: #52525b;
 }
 
-/* ── Logo Adaptive (for light mode) ─────────── */
-.logo-adaptive {
-  /* Default: logo works in light mode (dark/colored logo) */
-  filter: none;
-}
-
-.dark .logo-adaptive,
-[data-theme="dark"] .logo-adaptive {
-  /* Dark mode: invert to make logo visible on dark backgrounds */
-  filter: brightness(0) invert(1);
-}
 
 /* ── Zara Avatar ────────────────────────────── */
 .zara-avatar {
@@ -665,6 +654,8 @@ kbd {
   align-items: center;
   justify-content: center;
   color: white;
+  width: 32px;
+  height: 32px;
   font-weight: 700;
   font-size: 18px;
   flex-shrink: 0;

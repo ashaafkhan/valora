@@ -5,7 +5,11 @@ import { useRouter, usePathname } from "next/navigation";
 import Sidebar from "@/components/shared/Sidebar";
 import CommandPalette from "@/components/shared/CommandPalette";
 import ShortcutCheatSheet from "@/components/shared/ShortcutCheatSheet";
+import ComposeModal from "@/components/inbox/ComposeModal";
 import { useCommandPalette } from "@/hooks/useCommandPalette";
+import { useEmailStore } from "@/store/emailStore";
+import { toast } from "sonner";
+import { api } from "@/trpc/react";
 
 /**
  * Valora — Dashboard Layout (Client)
@@ -20,12 +24,16 @@ export default function DashboardLayoutClient({
   children: React.ReactNode;
   user: { name?: string | null; email?: string | null; image?: string | null };
 }) {
-  const { isOpen: paletteOpen, close: closePalette, open: openPalette } = useCommandPalette();
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
-  const [composeOpen, setComposeOpen] = useState(false);
+  const { toggleCommandPalette, closePalette, isOpen: paletteOpen } = useCommandPalette();
+  const { openCompose } = useEmailStore();
   const [navChord, setNavChord] = useState<string | null>(null);
   const router = useRouter();
   const pathname = usePathname();
+
+  const { data: connStatus } = api.gmail.getConnectionStatus.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  });
 
   // ── Default light theme on first load ──────────────────────────
   useEffect(() => {
@@ -83,7 +91,7 @@ export default function DashboardLayoutClient({
       if (e.key.toLowerCase() === "c" && !e.metaKey && !e.ctrlKey && !e.altKey) {
         if (!pathname.startsWith("/calendar") && !pathname.startsWith("/zara")) {
           e.preventDefault();
-          setComposeOpen(true);
+          openCompose();
           return;
         }
       }
@@ -140,77 +148,8 @@ export default function DashboardLayoutClient({
       <CommandPalette isOpen={paletteOpen} onClose={closePalette} />
       <ShortcutCheatSheet isOpen={cheatSheetOpen} onClose={() => setCheatSheetOpen(false)} />
 
-      {/* Global compose modal placeholder — will be triggered by sidebar or keyboard */}
-      {composeOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center"
-          onClick={(e) => { if (e.target === e.currentTarget) setComposeOpen(false); }}
-        >
-          <div className="bg-surface border border-border rounded-2xl shadow-2xl w-full max-w-2xl mx-4 overflow-hidden animate-slide-up">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-              <h2 className="text-sm font-semibold text-text-primary">New Message</h2>
-              <button
-                onClick={() => setComposeOpen(false)}
-                className="w-7 h-7 rounded-lg hover:bg-surface-hover flex items-center justify-center text-text-muted hover:text-text-primary transition-colors"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 6 6 18M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="p-5 space-y-3">
-              {[
-                { label: "To", placeholder: "recipient@example.com", type: "email" },
-                { label: "Subject", placeholder: "Subject", type: "text" },
-              ].map(f => (
-                <div key={f.label} className="flex items-center gap-3 border-b border-border pb-3">
-                  <span className="text-xs text-text-muted w-14 flex-shrink-0">{f.label}</span>
-                  <input
-                    type={f.type}
-                    placeholder={f.placeholder}
-                    className="flex-1 bg-transparent text-sm text-text-primary placeholder-text-muted outline-none"
-                  />
-                </div>
-              ))}
-              <div>
-                <textarea
-                  placeholder="Write your message..."
-                  rows={8}
-                  className="w-full bg-transparent text-sm text-text-primary placeholder-text-muted outline-none resize-none leading-relaxed"
-                />
-              </div>
-              {/* AI Toolbar */}
-              <div className="flex items-center gap-2 pt-2 border-t border-border">
-                <span className="text-[10px] text-text-muted font-mono uppercase tracking-wider">AI:</span>
-                {["Improve Tone", "Fix Grammar", "Make Shorter", "Make Formal"].map(action => (
-                  <button
-                    key={action}
-                    className="text-[11px] px-2.5 py-1 rounded-lg border border-border text-text-secondary hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-colors"
-                  >
-                    {action}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="flex items-center justify-between px-5 py-3 border-t border-border bg-surface-hover/50">
-              <div className="flex items-center gap-2">
-                <button className="text-xs text-text-muted hover:text-text-primary transition-colors">Discard</button>
-              </div>
-              <div className="flex items-center gap-2">
-                <button className="text-xs px-4 py-2 rounded-lg border border-border text-text-secondary hover:bg-surface-hover transition-colors">
-                  Save Draft
-                </button>
-                <button className="text-xs px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors font-medium flex items-center gap-1.5 shadow-sm">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                  </svg>
-                  Send
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Global compose modal */}
+      <ComposeModal />
     </div>
   );
 }
