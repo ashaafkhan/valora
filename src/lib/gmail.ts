@@ -352,13 +352,13 @@ export async function sendGmailEmail(params: {
   // Build raw MIME message
   const mimeParts = [
     `To: ${to}`,
-    cc && cc.length > 0 ? `Cc: ${cc.join(", ")}` : "",
+    cc && cc.length > 0 ? `Cc: ${cc.join(", ")}` : null,
     `Subject: ${subject}`,
-    "Content-Type: text/html; charset=utf-8",
+    "Content-Type: text/plain; charset=utf-8",
     "MIME-Version: 1.0",
     "",
     body,
-  ].filter(Boolean);
+  ].filter((p) => p !== null && p !== undefined);
 
   const rawMime = Buffer.from(mimeParts.join("\r\n"))
     .toString("base64")

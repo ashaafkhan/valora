@@ -86,8 +86,9 @@ export async function POST(req: Request) {
       content: h.content,
     }));
 
-    const systemPrompt = `You are Valora, a premium AI executive assistant for Gmail and Google Calendar.
-A tool call was executed and returned the result below. Complete the response to the user with a brief, professional confirmation message.
+    const systemPrompt = `You are Valora, a premium AI executive assistant.
+A tool call was executed. The results and the *exact parameters* used are provided below. Complete the response to the user with a brief, professional confirmation message.
+If the user modified the parameters (e.g. changed the recipient email or body), make sure you confirm the *actual* parameters executed (from the tool result), NOT their original request.
 If the user cancelled the action, acknowledge it.
 Keep it direct. Never expose password/OTP details.`;
 
@@ -114,7 +115,7 @@ Keep it direct. Never expose password/OTP details.`;
         {
           role: "tool",
           tool_call_id: toolCallId,
-          content: JSON.stringify({ result: toolResultText }),
+          content: JSON.stringify({ result: toolResultText, executedParameters: toolArgs }),
         },
       ],
       temperature: 0.3,
@@ -137,8 +138,8 @@ Keep it direct. Never expose password/OTP details.`;
           data: {
             toolCall: {
               ...(typeof targetCall.toolCall === 'object' && targetCall.toolCall !== null ? targetCall.toolCall : {}),
+              arguments: toolArgs,
               status: wasApproved ? "approved" : "rejected",
-              arguments: toolArgs
             }
           }
         });

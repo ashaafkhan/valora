@@ -457,13 +457,14 @@ export default function ZaraPage() {
     setMessages((prev) =>
       prev.map((msg) => {
         if (msg.id === messageId && msg.toolCall) {
-          return {
-            ...msg,
-            toolCall: {
-              ...msg.toolCall,
-              status: wasApproved ? "approved" : "rejected",
-            },
-          };
+            return {
+              ...msg,
+              toolCall: {
+                ...msg.toolCall,
+                arguments: toolCall.arguments,
+                status: wasApproved ? "approved" : "rejected",
+              },
+            };
         }
         return msg;
       })
