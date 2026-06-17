@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const pluginId = searchParams.get("plugin") || "gmail";
   
-  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"}/api/corsair/callback`;
+  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL ?? "https://valorahq.in"}/api/corsair/callback`;
 
   const result = await generateOAuthUrl(corsair, pluginId, {
     tenantId: session.user.id,
