@@ -6,11 +6,31 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+    ],
+  },
   eslint: {
     // TypeScript already catches real errors via `pnpm typecheck`.
-    // ESLint stylistic rules (no-explicit-any, prefer-optional-chain, etc.)
-    // should not block production builds for a hackathon deployment.
+    // ESLint stylistic rules should not block production builds.
     ignoreDuringBuilds: true,
+  },
+  async redirects() {
+    return [
+      { source: '/agent', destination: '/zara', permanent: true },
+      { source: '/agent/:path*', destination: '/zara/:path*', permanent: true },
+      { source: '/search', destination: '/digest', permanent: true },
+      { source: '/onboarding', destination: '/inbox', permanent: true },
+      { source: '/copilot', destination: '/zara', permanent: true },
+    ];
   },
 };
 

@@ -9,28 +9,29 @@ export const SHORTCUT_DEFINITIONS: Omit<KeyboardShortcut, "action">[] = [
   // Global
   { key: "k", modifier: "meta", description: "Open command palette", scope: "global" },
   { key: "k", modifier: "ctrl", description: "Open command palette", scope: "global" },
-  { key: "/", description: "Focus search", scope: "global" },
   { key: "?", description: "Show keyboard shortcuts", scope: "global" },
+  { key: "g i", description: "Go to Inbox", scope: "global" },
+  { key: "g c", description: "Go to Calendar", scope: "global" },
+  { key: "g a", description: "Go to Zara", scope: "global" },
+  { key: "g d", description: "Go to Digest", scope: "global" },
+  { key: "g s", description: "Go to Settings", scope: "global" },
+  { key: "g b", description: "Go to Billing", scope: "global" },
 
   // Inbox
   { key: "c", description: "Compose new email", scope: "inbox" },
   { key: "e", description: "Archive selected email", scope: "inbox" },
   { key: "r", description: "Mark as read/unread", scope: "inbox" },
   { key: "*", description: "Star/unstar email", scope: "inbox" },
-  { key: "#", description: "Delete email", scope: "inbox" },
-  { key: "l", description: "Apply label", scope: "inbox" },
-  { key: "u", description: "Unsubscribe from sender", scope: "inbox" },
   { key: "j", description: "Next email", scope: "inbox" },
   { key: "k", description: "Previous email", scope: "inbox" },
   { key: "Enter", description: "Open selected email", scope: "inbox" },
   { key: "Escape", description: "Close email / deselect", scope: "inbox" },
-  { key: "x", description: "Select email", scope: "inbox" },
-  { key: "*", modifier: "shift", description: "Select all emails", scope: "inbox" },
+  { key: "x", description: "Select email (checkbox)", scope: "inbox" },
 
   // Compose
   { key: "Enter", modifier: "meta", description: "Send email", scope: "compose" },
   { key: "Enter", modifier: "ctrl", description: "Send email", scope: "compose" },
-  { key: "d", modifier: "meta", description: "Save draft", scope: "compose" },
+  { key: "Tab", description: "Accept autocomplete", scope: "compose" },
   { key: "Escape", description: "Close compose", scope: "compose" },
 
   // Calendar
@@ -41,6 +42,9 @@ export const SHORTCUT_DEFINITIONS: Omit<KeyboardShortcut, "action">[] = [
   { key: "n", description: "New event", scope: "calendar" },
   { key: "ArrowLeft", description: "Previous period", scope: "calendar" },
   { key: "ArrowRight", description: "Next period", scope: "calendar" },
+
+  // Zara
+  { key: "/", modifier: "ctrl", description: "New Zara chat session", scope: "agent" },
 ];
 
 // ── Helper: Format key display ─────────────────────────────────

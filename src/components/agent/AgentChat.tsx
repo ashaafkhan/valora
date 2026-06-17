@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Send, Bot, AlertCircle, Sparkles, Brain, Loader2 } from "lucide-react";
+import { Send, AlertCircle, Sparkles, Loader2 } from "lucide-react";
+
 import { AgentMessage, type ChatMessage, type ToolCallData } from "./AgentMessage";
 
 export function AgentChat() {
@@ -172,21 +173,20 @@ export function AgentChat() {
       {/* Agent Panel Header */}
       <div className="flex items-center justify-between px-8 py-4 border-b border-border/60 bg-surface/30 valora-glass flex-shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center valora-glow">
-            <Bot className="w-5 h-5 text-primary-light" />
+          <div
+            className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white valora-glow"
+            style={{ background: "linear-gradient(135deg, #0066FF 0%, #7C3AED 100%)", fontSize: 16 }}
+          >
+            Z
           </div>
           <div>
-            <h1 className="text-sm font-bold text-text-primary">Valora Copilot</h1>
-            <p className="text-[10px] text-text-muted mt-0.5">Autonomous email & calendar scheduling assistant</p>
+            <h1 className="text-sm font-bold text-text-primary">Zara</h1>
+            <p className="text-[10px] text-text-muted mt-0.5">Your personal AI for email and calendar</p>
           </div>
         </div>
-
-        {/* Memory status */}
-        <div className="flex items-center gap-2 px-3 py-1 rounded-xl bg-primary/5 border border-primary/10">
-          <Brain className="w-3.5 h-3.5 text-primary-light animate-pulse" />
-          <span className="text-[9px] font-semibold text-primary-light uppercase tracking-wider font-mono">
-            Memory Enabled
-          </span>
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
+          <span className="text-xs text-text-muted">Online</span>
         </div>
       </div>
 
@@ -197,9 +197,9 @@ export function AgentChat() {
             <div className="w-12 h-12 rounded-3xl bg-surface border border-border flex items-center justify-center mb-6 valora-glow">
               <Sparkles className="w-6 h-6 text-primary-light" />
             </div>
-            <h2 className="text-sm font-bold text-text-primary mb-2">Welcome to Valora Copilot</h2>
+            <h2 className="text-sm font-bold text-text-primary mb-2">Hi, I'm Zara</h2>
             <p className="text-xs text-text-secondary mb-8 leading-relaxed">
-              I can read and summarize your emails, search your inbox, and schedule meetings directly on your Google Calendar.
+              I can read and summarize your emails, search your inbox, draft replies, and schedule meetings on your Google Calendar.
             </p>
 
             {/* Suggestions cards */}
@@ -236,7 +236,7 @@ export function AgentChat() {
             </div>
             <div className="max-w-[70%]">
               <div className="px-4 py-3 rounded-2xl bg-surface border border-border text-xs text-text-muted rounded-tl-none font-medium flex items-center gap-2 valora-glass">
-                <span>Valora is thinking...</span>
+                <span>Zara is thinking...</span>
               </div>
             </div>
           </div>
@@ -268,7 +268,7 @@ export function AgentChat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isLoading || isActionLoading}
-            placeholder="Ask Valora anything..."
+            placeholder="Ask Zara anything... emails, meetings, calendar"
             className="w-full bg-background border border-border rounded-2xl px-5 py-4 pr-16 text-xs text-text-primary focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 placeholder:text-text-muted transition shadow-inner"
           />
 

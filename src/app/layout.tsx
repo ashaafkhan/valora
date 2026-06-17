@@ -4,16 +4,17 @@ import { type Metadata } from "next";
 import { Inter, JetBrains_Mono, Sora } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
+import { SessionProvider } from "next-auth/react";
 
 import { TRPCReactProvider } from "@/trpc/react";
 
 export const metadata: Metadata = {
   title: {
-    default: "Valora — Command your inbox. Own your time.",
+    default: "Valora",
     template: "%s | Valora",
   },
   description:
-    "The AI-native command center for email and calendar. Powered by Corsair integrations and a production-grade AI agent.",
+    "Command your inbox. Own your time. The AI-first email and calendar command center.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL ?? "https://valorahq.in",
   ),
@@ -78,10 +79,12 @@ export default function RootLayout({
       className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-background font-sans text-text-primary antialiased">
-        <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
-          <TRPCReactProvider>{children}</TRPCReactProvider>
+        <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
+          <SessionProvider>
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+          </SessionProvider>
           <Toaster
-            theme="dark"
+            theme="system"
             position="bottom-right"
             toastOptions={{
               style: {

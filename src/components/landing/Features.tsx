@@ -44,10 +44,10 @@ const FEATURES = [
       <div className="mt-4">
         <div className="rounded-lg bg-[var(--surface-hover)] border border-[var(--border)] p-3">
           <p className="text-[10px] text-[var(--text-muted)] mb-1.5">Your intent:</p>
-          <p className="text-xs text-[var(--text-secondary)] mb-2.5">"Follow up with Priya about the Q3 report"</p>
+          <p className="text-xs text-[var(--text-secondary)] mb-2.5">"Follow up with Ananya about the Q3 report"</p>
           <div className="h-px bg-[var(--border)] mb-2.5" />
           <p className="text-[10px] text-[var(--primary)] mb-1">Zara wrote:</p>
-          <p className="text-[10px] text-[var(--text-muted)] leading-relaxed">Hi Priya, Just following up on the Q3 report — could you share the latest version when you get a chance?…</p>
+          <p className="text-[10px] text-[var(--text-muted)] leading-relaxed">Hi Ananya, Just following up on the Q3 report — could you share the latest version when you get a chance?…</p>
         </div>
       </div>
     ),

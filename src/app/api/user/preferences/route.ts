@@ -13,6 +13,7 @@ const preferencesSchema = z
     emailsPerPage: z.number().int().min(10).max(100).optional(),
     notificationsEnabled: z.boolean().optional(),
     soundEnabled: z.boolean().optional(),
+    theme: z.enum(["light", "dark", "system"]).optional(),
   })
   .partial();
 
@@ -26,7 +27,7 @@ export async function GET() {
 
     return NextResponse.json({
       preferences: user?.preferences ?? {},
-      theme: user?.theme ?? "dark",
+      theme: user?.theme ?? "light",
       onboardingDone: user?.onboardingDone ?? false,
     });
   } catch (error) {
@@ -43,18 +44,25 @@ export async function PATCH(request: Request) {
       select: { preferences: true },
     });
 
+    const { theme, ...prefInput } = input;
+
     const preferences = {
       ...((current?.preferences as Record<string, unknown> | null) ?? {}),
-      ...input,
+      ...prefInput,
     };
+
+    const updateData: any = { preferences };
+    if (theme) {
+      updateData.theme = theme;
+    }
 
     const user = await db.user.update({
       where: { id: userId },
-      data: { preferences },
-      select: { preferences: true },
+      data: updateData,
+      select: { preferences: true, theme: true },
     });
 
-    return NextResponse.json({ preferences: user.preferences });
+    return NextResponse.json({ preferences: user.preferences, theme: user.theme });
   } catch (error) {
     return handleRouteError(error);
   }

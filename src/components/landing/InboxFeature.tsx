@@ -31,7 +31,7 @@ function InboxMockup() {
       <div className="border-b border-[var(--border)]">
         {[
           { from: 'Rahul Sharma', subject: 'Series A term sheet is ready', badge: 'URGENT', badgeClass: 'badge-urgent', unread: true },
-          { from: 'Priya Mehta', subject: 'Design feedback on latest screens', badge: 'HIGH', badgeClass: 'badge-high', unread: true },
+          { from: 'Ananya Singh', subject: 'Design feedback on latest screens', badge: 'HIGH', badgeClass: 'badge-high', unread: true },
           { from: 'GitHub Notifications', subject: 'PR merged: feat/ai-summarizer', badge: 'NORMAL', badgeClass: 'badge-normal', unread: false },
         ].map((e, i) => (
           <div key={i} className={`flex items-center gap-3 px-4 py-3 border-b border-[var(--border)] last:border-b-0

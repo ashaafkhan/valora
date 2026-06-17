@@ -163,6 +163,11 @@ exports.Prisma.UserScalarFieldEnum = {
   onboardingDone: 'onboardingDone',
   preferences: 'preferences',
   theme: 'theme',
+  plan: 'plan',
+  planResetDate: 'planResetDate',
+  aiMessagesUsed: 'aiMessagesUsed',
+  voiceInputUsed: 'voiceInputUsed',
+  emailComposeUsed: 'emailComposeUsed',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -224,9 +229,11 @@ exports.Prisma.CalendarEventScalarFieldEnum = {
 exports.Prisma.AgentChatScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  sessionId: 'sessionId',
   role: 'role',
   content: 'content',
   metadata: 'metadata',
+  toolCall: 'toolCall',
   createdAt: 'createdAt'
 };
 
@@ -257,6 +264,37 @@ exports.Prisma.WebhookLogScalarFieldEnum = {
   processed: 'processed',
   error: 'error',
   receivedAt: 'receivedAt'
+};
+
+exports.Prisma.ChatSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  razorpayOrderId: 'razorpayOrderId',
+  razorpayPaymentId: 'razorpayPaymentId',
+  razorpaySignature: 'razorpaySignature',
+  plan: 'plan',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DailyDigestScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  date: 'date',
+  content: 'content',
+  generated: 'generated',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.CorsairIntegrationScalarFieldEnum = {
@@ -342,6 +380,9 @@ exports.Prisma.ModelName = {
   AgentMemory: 'AgentMemory',
   LabelRule: 'LabelRule',
   WebhookLog: 'WebhookLog',
+  ChatSession: 'ChatSession',
+  Payment: 'Payment',
+  DailyDigest: 'DailyDigest',
   CorsairIntegration: 'CorsairIntegration',
   CorsairAccount: 'CorsairAccount',
   CorsairEntity: 'CorsairEntity',

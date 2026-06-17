@@ -162,7 +162,7 @@ export default function SettingsPage() {
   const { data: session } = useSession();
 
   const [settings, setSettings] = useState<SettingsState>({
-    theme: "dark",
+    theme: "light",
     enableAIPriority: true,
     enableSecurityShield: true,
     enableKeyboardShortcuts: true,
@@ -177,31 +177,67 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [activeSection, setActiveSection] = useState("account");
   const [showDangerConfirm, setShowDangerConfirm] = useState(false);
+  const [userPlan, setUserPlan] = useState<string>("Free");
 
-  // Load settings from localStorage
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("valora-settings");
-      if (stored) {
-        setSettings((prev) => ({ ...prev, ...(JSON.parse(stored) as Partial<SettingsState>) }));
-      }
-      const theme = localStorage.getItem("valora-theme") as ThemeOption | null;
-      if (theme) setSettings((prev) => ({ ...prev, theme: theme ?? "dark" }));
-    } catch { /* ignore */ }
-  }, []);
-
-  // Apply theme
+  // Apply theme helper
   const applyTheme = useCallback((theme: ThemeOption) => {
     const root = document.documentElement;
     if (theme === "dark") {
+      root.setAttribute("data-theme", "dark");
+      root.classList.add("dark");
       root.classList.remove("light");
     } else if (theme === "light") {
+      root.setAttribute("data-theme", "light");
       root.classList.add("light");
+      root.classList.remove("dark");
     } else {
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      root.setAttribute("data-theme", prefersDark ? "dark" : "light");
+      root.classList.toggle("dark", prefersDark);
       root.classList.toggle("light", !prefersDark);
     }
   }, []);
+
+  // Load settings from backend and fallback to localStorage
+  useEffect(() => {
+    async function loadData() {
+      try {
+        // Fetch preferences from DB
+        const prefRes = await fetch("/api/user/preferences");
+        if (prefRes.ok) {
+          const prefData = await prefRes.json();
+          const dbPrefs = prefData.preferences || {};
+          
+          setSettings((prev) => {
+            const merged = {
+              ...prev,
+              ...dbPrefs,
+              // Map DB property notificationsEnabled back to state's enableNotifications
+              enableNotifications: dbPrefs.notificationsEnabled !== undefined ? dbPrefs.notificationsEnabled : prev.enableNotifications,
+              theme: prefData.theme ?? prev.theme,
+            };
+            return merged;
+          });
+
+          if (prefData.theme) {
+            applyTheme(prefData.theme);
+          }
+        }
+
+        // Fetch profile to get plan details
+        const profileRes = await fetch("/api/user/profile");
+        if (profileRes.ok) {
+          const profileData = await profileRes.json();
+          if (profileData.user?.plan) {
+            setUserPlan(profileData.user.plan.charAt(0).toUpperCase() + profileData.user.plan.slice(1));
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load settings from DB:", err);
+      }
+    }
+    void loadData();
+  }, [applyTheme]);
 
   const updateSetting = useCallback(<K extends keyof SettingsState>(key: K, value: SettingsState[K]) => {
     setSettings((prev) => {
@@ -211,6 +247,28 @@ export default function SettingsPage() {
         localStorage.setItem("valora-theme", String(value));
         applyTheme(value as ThemeOption);
       }
+
+      // Sync specific preferences to DB
+      const keyMap: Record<string, string> = {
+        enableAIPriority: "enableAIPriority",
+        enableSecurityShield: "enableSecurityShield",
+        enableKeyboardShortcuts: "enableKeyboardShortcuts",
+        defaultCalendarView: "defaultCalendarView",
+        emailsPerPage: "emailsPerPage",
+        enableNotifications: "notificationsEnabled",
+        soundEnabled: "soundEnabled",
+        theme: "theme",
+      };
+      
+      const dbKey = keyMap[key];
+      if (dbKey) {
+        fetch("/api/user/preferences", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ [dbKey]: value }),
+        }).catch((err) => console.error("Failed to sync preference to DB:", err));
+      }
+
       return next;
     });
     setSaved(false);
@@ -222,9 +280,9 @@ export default function SettingsPage() {
     setTimeout(() => setSaved(false), 2500);
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     const defaults: SettingsState = {
-      theme: "dark",
+      theme: "light",
       enableAIPriority: true,
       enableSecurityShield: true,
       enableKeyboardShortcuts: true,
@@ -237,9 +295,28 @@ export default function SettingsPage() {
     };
     setSettings(defaults);
     localStorage.setItem("valora-settings", JSON.stringify(defaults));
-    applyTheme("dark");
-    localStorage.setItem("valora-theme", "dark");
+    applyTheme("light");
+    localStorage.setItem("valora-theme", "light");
     setSaved(false);
+
+    try {
+      await fetch("/api/user/preferences", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          enableAIPriority: true,
+          enableSecurityShield: true,
+          enableKeyboardShortcuts: true,
+          defaultCalendarView: "week",
+          emailsPerPage: 25,
+          notificationsEnabled: false,
+          soundEnabled: false,
+          theme: "light",
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to reset database preferences:", err);
+    }
   };
 
   const navSections = [
@@ -336,7 +413,7 @@ export default function SettingsPage() {
                   </div>
                   <div className="flex items-center justify-between py-3 border-b border-border/40">
                     <span className="text-text-secondary text-xs">Plan</span>
-                    <span className="text-xs font-bold text-primary-light">Pro (Hackathon)</span>
+                    <span className="text-xs font-bold text-primary-light">{userPlan}</span>
                   </div>
                   <div className="flex items-center justify-between py-3 border-b border-border/40">
                     <span className="text-text-secondary text-xs">Version</span>

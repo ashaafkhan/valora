@@ -1,12 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import { Mail, Calendar, Sparkles, Search, Settings, LogOut, Inbox } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Inbox, Star, Send, FileText, Trash2, Mail,
+  Zap, Calendar, Settings, LogOut, Plus,
+  CreditCard, ChevronLeft, ChevronRight, Sparkles, Rss
+} from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface SidebarProps {
   user: {
@@ -14,156 +18,303 @@ interface SidebarProps {
     email?: string | null;
     image?: string | null;
   };
+  onCompose?: () => void;
 }
 
+// ── Zara Avatar ─────────────────────────────────────────────────
+function ZaraAvatar({ size = 24 }: { size?: number }) {
+  return (
+    <div
+      className="rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white"
+      style={{
+        width: size,
+        height: size,
+        fontSize: size * 0.4,
+        background: "linear-gradient(135deg, #0066FF 0%, #7C3AED 100%)",
+      }}
+    >
+      Z
+    </div>
+  );
+}
+
+// ── Nav Section ──────────────────────────────────────────────────
 interface NavItem {
   label: string;
   href: string;
-  icon: React.ElementType;
+  icon: React.ElementType | (() => React.ReactNode);
   shortcut?: string;
-  badge?: number;
+  badge?: string | number;
+  isNew?: boolean;
+  isCustomIcon?: boolean;
 }
 
-const NAV_ITEMS: NavItem[] = [
+const MAIL_NAV: NavItem[] = [
   { label: "Inbox", href: "/inbox", icon: Inbox, shortcut: "I" },
+  { label: "Starred", href: "/inbox?tab=starred", icon: Star, shortcut: "*" },
+  { label: "Sent", href: "/inbox?tab=sent", icon: Send },
+  { label: "Drafts", href: "/inbox?tab=drafts", icon: FileText },
+  { label: "Trash", href: "/inbox?tab=trash", icon: Trash2 },
+  { label: "Subscriptions", href: "/settings/subscriptions", icon: Rss },
+];
+
+const TOOLS_NAV: NavItem[] = [
+  { label: "Digest", href: "/digest", icon: Zap, shortcut: "D" },
+];
+
+const APP_NAV: NavItem[] = [
   { label: "Calendar", href: "/calendar", icon: Calendar, shortcut: "C" },
-  { label: "CoPilot", href: "/agent", icon: Sparkles, shortcut: "A" },
-  { label: "Search", href: "/search", icon: Search, shortcut: "S" },
+  { label: "Zara", href: "/zara", icon: Sparkles, shortcut: "A", isNew: true },
+];
+
+const ACCOUNT_NAV: NavItem[] = [
+  { label: "Billing", href: "/billing", icon: CreditCard },
   { label: "Settings", href: "/settings", icon: Settings },
 ];
 
-export default function Sidebar({ user }: SidebarProps) {
+export default function Sidebar({ user, onCompose }: SidebarProps) {
   const pathname = usePathname();
-  const [hovered, setHovered] = useState(false);
-  const expanded = hovered;
+  const router = useRouter();
+  const [collapsed, setCollapsed] = useState(false);
+  const [zaraVisited, setZaraVisited] = useState(true);
 
-  const sidebarWidth = expanded ? 240 : 72;
+  useEffect(() => {
+    // Check if Zara has been visited before
+    const visited = localStorage.getItem("valora-zara-visited");
+    setZaraVisited(!!visited);
+    if (pathname === "/zara" && !visited) {
+      localStorage.setItem("valora-zara-visited", "true");
+      setZaraVisited(true);
+    }
+  }, [pathname]);
+
+  const isActive = (href: string) => {
+    if (href === "/inbox") return pathname === "/inbox" || (pathname === "/inbox" && !pathname.includes("?"));
+    return pathname.startsWith(href.split("?")[0]!);
+  };
+
+  const sidebarWidth = collapsed ? 64 : 220;
+
+  function NavLink({ item }: { item: NavItem }) {
+    const active = isActive(item.href);
+    const Icon = item.icon as React.ElementType;
+    const isZara = item.href === "/zara";
+
+    return (
+      <motion.div whileHover={{ x: collapsed ? 0 : 2 }} transition={{ duration: 0.12 }}>
+        <Link
+          href={item.href}
+          title={collapsed ? item.label : undefined}
+          className={`relative flex items-center gap-3 px-2.5 py-2 rounded-xl text-sm font-medium transition-all duration-150 group
+            ${active
+              ? "bg-primary/10 border-l-2 border-primary text-primary shadow-sm"
+              : "text-text-secondary hover:text-text-primary hover:bg-surface-hover border-l-2 border-transparent"
+            }`}
+        >
+          {isZara ? (
+            <ZaraAvatar size={16} />
+          ) : (
+            <Icon className={`flex-shrink-0 ${active ? "text-primary" : ""}`} style={{ width: 16, height: 16 }} />
+          )}
+
+          <AnimatePresence>
+            {!collapsed && (
+              <motion.span
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: "auto" }}
+                exit={{ opacity: 0, width: 0 }}
+                transition={{ duration: 0.15 }}
+                className="text-sm whitespace-nowrap flex-1 overflow-hidden"
+              >
+                {item.label}
+              </motion.span>
+            )}
+          </AnimatePresence>
+
+          {!collapsed && item.isNew && !zaraVisited && (
+            <span className="ml-auto text-[9px] font-bold bg-primary text-white px-1.5 py-0.5 rounded-full">
+              NEW
+            </span>
+          )}
+
+          {!collapsed && item.badge && (
+            <span className="ml-auto text-[10px] font-bold bg-primary text-white min-w-[18px] h-[18px] rounded-full flex items-center justify-center px-1 shadow-sm">
+              {item.badge}
+            </span>
+          )}
+
+          {!collapsed && item.shortcut && !item.badge && !item.isNew && (
+            <kbd className="ml-auto text-[10px] font-mono text-text-muted bg-surface-hover border border-border rounded px-1.5 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+              {item.shortcut}
+            </kbd>
+          )}
+        </Link>
+      </motion.div>
+    );
+  }
+
+  function NavSection({ items, label }: { items: NavItem[]; label?: string }) {
+    return (
+      <div className="space-y-0.5">
+        {label && !collapsed && (
+          <p className="text-[10px] font-semibold text-text-muted uppercase tracking-widest px-3 py-1.5">
+            {label}
+          </p>
+        )}
+        {items.map((item) => (
+          <NavLink key={item.href} item={item} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <motion.aside
       className="h-screen bg-surface border-r border-border flex flex-col flex-shrink-0 select-none overflow-hidden theme-transition relative z-20"
       animate={{ width: sidebarWidth }}
       transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
     >
-      {/* Brand */}
-      <div className="flex items-center gap-3 px-4 h-16 border-b border-border/60 flex-shrink-0 overflow-hidden">
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_12px_rgba(0,102,255,0.2)]">
-          <Image
-            src="/valora_logo.png"
-            alt="Valora"
-            width={20}
-            height={20}
-            className="w-[18px] h-[18px] object-contain"
-          />
+      {/* Brand header */}
+      <div className="flex items-center gap-2.5 px-3 h-14 border-b border-border/60 flex-shrink-0 overflow-hidden">
+        <div className="w-8 h-8 rounded-xl bg-white border border-border/60 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden p-1">
+          <div className="relative w-full h-full">
+            <Image
+              src="/valora_logo.png"
+              alt="Valora"
+              fill
+              className="object-contain logo-adaptive"
+            />
+          </div>
         </div>
-        <motion.div
-          className="flex flex-col min-w-0"
-          animate={{ opacity: expanded ? 1 : 0 }}
-          transition={{ duration: 0.15 }}
+        <AnimatePresence>
+          {!collapsed && (
+            <motion.div
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -8 }}
+              transition={{ duration: 0.15 }}
+              className="flex flex-col min-w-0"
+            >
+              <span className="text-sm font-bold tracking-tight text-text-primary font-sora">Valora</span>
+              <span className="text-[9px] font-mono tracking-widest text-primary uppercase font-bold opacity-70">
+                Command Center
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Collapse toggle */}
+        <button
+          onClick={() => setCollapsed((v) => !v)}
+          className={`ml-auto w-6 h-6 rounded-lg border border-border bg-surface-hover flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-border transition-all flex-shrink-0 ${collapsed ? "mx-auto" : ""}`}
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          <span className="text-sm font-bold tracking-tight text-text-primary">Valora</span>
-          <span className="text-[8px] font-mono tracking-widest text-primary uppercase font-bold">Command Center</span>
-        </motion.div>
+          {collapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
+        </button>
+      </div>
+
+      {/* Compose button */}
+      <div className="px-2.5 pt-3 pb-2 flex-shrink-0">
+        <button
+          onClick={onCompose}
+          title={collapsed ? "Compose (C)" : undefined}
+          className={`w-full flex items-center gap-2.5 bg-primary hover:bg-primary/90 text-white rounded-xl py-2 font-medium transition-all duration-150 shadow-sm hover:shadow-md active:scale-[0.98] ${collapsed ? "justify-center px-2" : "px-3"}`}
+        >
+          <Plus className="w-4 h-4 flex-shrink-0" />
+          <AnimatePresence>
+            {!collapsed && (
+              <motion.span
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: "auto" }}
+                exit={{ opacity: 0, width: 0 }}
+                transition={{ duration: 0.15 }}
+                className="text-sm whitespace-nowrap"
+              >
+                Compose
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </button>
       </div>
 
       {/* Nav items */}
-      <nav className="flex-1 p-3 space-y-1 overflow-hidden">
-        {NAV_ITEMS.map((item) => {
-          const isActive = pathname.startsWith(item.href);
-          const Icon = item.icon;
-
-          return (
-            <motion.div
-              key={item.href}
-              whileHover={{ x: 3 }}
-              transition={{ duration: 0.15 }}
-            >
-              <Link
-                href={item.href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150
-                  ${isActive
-                    ? "bg-primary/10 border-l-2 border-primary text-primary shadow-[inset_0_0_20px_rgba(0,102,255,0.06)]"
-                    : "text-text-secondary hover:text-text-primary hover:bg-surface-hover border-l-2 border-transparent"
-                  }`}
-              >
-                <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? "text-primary" : ""}`} />
-                <motion.span
-                  className="text-sm whitespace-nowrap"
-                  animate={{ opacity: expanded ? 1 : 0, width: expanded ? "auto" : 0 }}
-                  transition={{ duration: 0.15 }}
-                >
-                  {item.label}
-                </motion.span>
-                {expanded && item.shortcut && (
-                  <motion.kbd
-                    className="ml-auto text-[10px] font-mono text-text-muted bg-surface-hover border border-border rounded px-1.5 py-0.5"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    {item.shortcut}
-                  </motion.kbd>
-                )}
-                {expanded && item.label === "Inbox" && (
-                  <motion.span
-                    className="ml-auto text-[10px] font-bold bg-primary text-white w-5 h-5 rounded-full flex items-center justify-center shadow-[0_0_8px_rgba(0,102,255,0.4)]"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                  >
-                    3
-                  </motion.span>
-                )}
-              </Link>
-            </motion.div>
-          );
-        })}
+      <nav className="flex-1 px-2.5 py-1 space-y-4 overflow-y-auto overflow-x-hidden custom-scrollbar">
+        <NavSection items={MAIL_NAV} />
+        <div className="border-t border-border/60 pt-3">
+          <NavSection items={TOOLS_NAV} />
+        </div>
+        <div className="border-t border-border/60 pt-3">
+          <NavSection items={APP_NAV} />
+        </div>
+        <div className="border-t border-border/60 pt-3">
+          <NavSection items={ACCOUNT_NAV} />
+        </div>
       </nav>
 
       {/* User footer */}
-      <div className="border-t border-border/60 p-3 flex-shrink-0">
-        <motion.div
-          className="flex items-center gap-3 p-2 rounded-xl hover:bg-surface-hover transition-colors cursor-pointer"
-          animate={{ justifyContent: expanded ? "flex-start" : "center" }}
+      <div className="border-t border-border/60 p-2.5 flex-shrink-0">
+        <div
+          className={`flex items-center gap-2.5 p-2 rounded-xl hover:bg-surface-hover transition-colors cursor-pointer ${collapsed ? "justify-center" : ""}`}
         >
-          <div className="w-8 h-8 rounded-xl overflow-hidden bg-gradient-to-br from-primary/20 to-indigo-500/20 flex items-center justify-center flex-shrink-0 border border-primary/20">
+          <div className="w-8 h-8 rounded-xl overflow-hidden bg-gradient-to-br from-primary/15 to-indigo-500/15 flex items-center justify-center flex-shrink-0 border border-primary/15">
             {user.image ? (
-              <Image src={user.image} alt={user.name ?? "User"} width={32} height={32} className="w-full h-full object-cover" />
+              <Image
+                src={user.image}
+                alt={user.name ?? "User"}
+                width={32}
+                height={32}
+                className="w-full h-full object-cover"
+              />
             ) : (
-              <span className="text-xs font-bold text-primary">{user.name?.[0] ?? "U"}</span>
+              <span className="text-xs font-bold text-primary">
+                {user.name?.[0]?.toUpperCase() ?? "U"}
+              </span>
             )}
           </div>
-          <motion.div
-            className="min-w-0 flex-1"
-            animate={{ opacity: expanded ? 1 : 0 }}
-            transition={{ duration: 0.15 }}
-          >
-            <div className="text-sm font-medium text-text-primary truncate leading-none">{user.name ?? "User"}</div>
-            <div className="text-[10px] text-text-muted truncate mt-1 leading-none font-mono">{user.email}</div>
-          </motion.div>
-        </motion.div>
+          <AnimatePresence>
+            {!collapsed && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="min-w-0 flex-1"
+              >
+                <div className="text-sm font-medium text-text-primary truncate leading-none">
+                  {user.name ?? "User"}
+                </div>
+                <div className="text-[10px] text-text-muted truncate mt-0.5 leading-none font-mono">
+                  {user.email}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-        <motion.div
-          className="flex items-center gap-2 mt-2"
-          animate={{ justifyContent: expanded ? "space-between" : "center" }}
-        >
+        <AnimatePresence>
+          {!collapsed && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              className="mt-1.5 w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-text-muted hover:text-error hover:bg-error/5 transition-colors text-xs"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Sign out</span>
+            </motion.button>
+          )}
+        </AnimatePresence>
+
+        {collapsed && (
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-text-muted hover:text-error hover:bg-error/5 transition-colors"
+            className="mt-1.5 w-full flex items-center justify-center p-1.5 rounded-lg text-text-muted hover:text-error hover:bg-error/5 transition-colors"
             title="Sign out"
           >
             <LogOut className="w-3.5 h-3.5" />
-            {expanded && (
-              <motion.span
-                className="text-xs"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                Sign out
-              </motion.span>
-            )}
           </button>
-        </motion.div>
+        )}
       </div>
     </motion.aside>
   );

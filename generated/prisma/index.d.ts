@@ -69,6 +69,21 @@ export type LabelRule = $Result.DefaultSelection<Prisma.$LabelRulePayload>
  */
 export type WebhookLog = $Result.DefaultSelection<Prisma.$WebhookLogPayload>
 /**
+ * Model ChatSession
+ * 
+ */
+export type ChatSession = $Result.DefaultSelection<Prisma.$ChatSessionPayload>
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
+/**
+ * Model DailyDigest
+ * 
+ */
+export type DailyDigest = $Result.DefaultSelection<Prisma.$DailyDigestPayload>
+/**
  * Model CorsairIntegration
  * 
  */
@@ -316,6 +331,36 @@ export class PrismaClient<
     * ```
     */
   get webhookLog(): Prisma.WebhookLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.chatSession`: Exposes CRUD operations for the **ChatSession** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChatSessions
+    * const chatSessions = await prisma.chatSession.findMany()
+    * ```
+    */
+  get chatSession(): Prisma.ChatSessionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.payment`: Exposes CRUD operations for the **Payment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Payments
+    * const payments = await prisma.payment.findMany()
+    * ```
+    */
+  get payment(): Prisma.PaymentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dailyDigest`: Exposes CRUD operations for the **DailyDigest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DailyDigests
+    * const dailyDigests = await prisma.dailyDigest.findMany()
+    * ```
+    */
+  get dailyDigest(): Prisma.DailyDigestDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.corsairIntegration`: Exposes CRUD operations for the **CorsairIntegration** model.
@@ -808,6 +853,9 @@ export namespace Prisma {
     AgentMemory: 'AgentMemory',
     LabelRule: 'LabelRule',
     WebhookLog: 'WebhookLog',
+    ChatSession: 'ChatSession',
+    Payment: 'Payment',
+    DailyDigest: 'DailyDigest',
     CorsairIntegration: 'CorsairIntegration',
     CorsairAccount: 'CorsairAccount',
     CorsairEntity: 'CorsairEntity',
@@ -830,7 +878,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "session" | "verificationToken" | "user" | "emailThread" | "email" | "calendarEvent" | "agentChat" | "agentMemory" | "labelRule" | "webhookLog" | "corsairIntegration" | "corsairAccount" | "corsairEntity" | "corsairEvent"
+      modelProps: "account" | "session" | "verificationToken" | "user" | "emailThread" | "email" | "calendarEvent" | "agentChat" | "agentMemory" | "labelRule" | "webhookLog" | "chatSession" | "payment" | "dailyDigest" | "corsairIntegration" | "corsairAccount" | "corsairEntity" | "corsairEvent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1648,6 +1696,228 @@ export namespace Prisma {
           }
         }
       }
+      ChatSession: {
+        payload: Prisma.$ChatSessionPayload<ExtArgs>
+        fields: Prisma.ChatSessionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChatSessionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChatSessionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+          }
+          findFirst: {
+            args: Prisma.ChatSessionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChatSessionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+          }
+          findMany: {
+            args: Prisma.ChatSessionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload>[]
+          }
+          create: {
+            args: Prisma.ChatSessionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+          }
+          createMany: {
+            args: Prisma.ChatSessionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChatSessionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload>[]
+          }
+          delete: {
+            args: Prisma.ChatSessionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+          }
+          update: {
+            args: Prisma.ChatSessionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ChatSessionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChatSessionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ChatSessionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload>[]
+          }
+          upsert: {
+            args: Prisma.ChatSessionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChatSessionPayload>
+          }
+          aggregate: {
+            args: Prisma.ChatSessionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChatSession>
+          }
+          groupBy: {
+            args: Prisma.ChatSessionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChatSessionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChatSessionCountArgs<ExtArgs>
+            result: $Utils.Optional<ChatSessionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Payment: {
+        payload: Prisma.$PaymentPayload<ExtArgs>
+        fields: Prisma.PaymentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PaymentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PaymentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          findFirst: {
+            args: Prisma.PaymentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PaymentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          findMany: {
+            args: Prisma.PaymentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+          }
+          create: {
+            args: Prisma.PaymentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          createMany: {
+            args: Prisma.PaymentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PaymentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+          }
+          delete: {
+            args: Prisma.PaymentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          update: {
+            args: Prisma.PaymentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          deleteMany: {
+            args: Prisma.PaymentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PaymentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PaymentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+          }
+          upsert: {
+            args: Prisma.PaymentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPayload>
+          }
+          aggregate: {
+            args: Prisma.PaymentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePayment>
+          }
+          groupBy: {
+            args: Prisma.PaymentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PaymentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PaymentCountArgs<ExtArgs>
+            result: $Utils.Optional<PaymentCountAggregateOutputType> | number
+          }
+        }
+      }
+      DailyDigest: {
+        payload: Prisma.$DailyDigestPayload<ExtArgs>
+        fields: Prisma.DailyDigestFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DailyDigestFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DailyDigestFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload>
+          }
+          findFirst: {
+            args: Prisma.DailyDigestFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DailyDigestFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload>
+          }
+          findMany: {
+            args: Prisma.DailyDigestFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload>[]
+          }
+          create: {
+            args: Prisma.DailyDigestCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload>
+          }
+          createMany: {
+            args: Prisma.DailyDigestCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DailyDigestCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload>[]
+          }
+          delete: {
+            args: Prisma.DailyDigestDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload>
+          }
+          update: {
+            args: Prisma.DailyDigestUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload>
+          }
+          deleteMany: {
+            args: Prisma.DailyDigestDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DailyDigestUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DailyDigestUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload>[]
+          }
+          upsert: {
+            args: Prisma.DailyDigestUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyDigestPayload>
+          }
+          aggregate: {
+            args: Prisma.DailyDigestAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDailyDigest>
+          }
+          groupBy: {
+            args: Prisma.DailyDigestGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DailyDigestGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DailyDigestCountArgs<ExtArgs>
+            result: $Utils.Optional<DailyDigestCountAggregateOutputType> | number
+          }
+        }
+      }
       CorsairIntegration: {
         payload: Prisma.$CorsairIntegrationPayload<ExtArgs>
         fields: Prisma.CorsairIntegrationFieldRefs
@@ -2051,6 +2321,9 @@ export namespace Prisma {
     agentMemory?: AgentMemoryOmit
     labelRule?: LabelRuleOmit
     webhookLog?: WebhookLogOmit
+    chatSession?: ChatSessionOmit
+    payment?: PaymentOmit
+    dailyDigest?: DailyDigestOmit
     corsairIntegration?: CorsairIntegrationOmit
     corsairAccount?: CorsairAccountOmit
     corsairEntity?: CorsairEntityOmit
@@ -2142,6 +2415,9 @@ export namespace Prisma {
     agentChats: number
     agentMemories: number
     labelRules: number
+    chatSessions: number
+    payments: number
+    dailyDigests: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2152,6 +2428,9 @@ export namespace Prisma {
     agentChats?: boolean | UserCountOutputTypeCountAgentChatsArgs
     agentMemories?: boolean | UserCountOutputTypeCountAgentMemoriesArgs
     labelRules?: boolean | UserCountOutputTypeCountLabelRulesArgs
+    chatSessions?: boolean | UserCountOutputTypeCountChatSessionsArgs
+    payments?: boolean | UserCountOutputTypeCountPaymentsArgs
+    dailyDigests?: boolean | UserCountOutputTypeCountDailyDigestsArgs
   }
 
   // Custom InputTypes
@@ -2214,6 +2493,27 @@ export namespace Prisma {
     where?: LabelRuleWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountChatSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChatSessionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDailyDigestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyDigestWhereInput
+  }
+
 
   /**
    * Count Type EmailThreadCountOutputType
@@ -2243,6 +2543,37 @@ export namespace Prisma {
    */
   export type EmailThreadCountOutputTypeCountEmailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EmailWhereInput
+  }
+
+
+  /**
+   * Count Type ChatSessionCountOutputType
+   */
+
+  export type ChatSessionCountOutputType = {
+    messages: number
+  }
+
+  export type ChatSessionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    messages?: boolean | ChatSessionCountOutputTypeCountMessagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ChatSessionCountOutputType without action
+   */
+  export type ChatSessionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSessionCountOutputType
+     */
+    select?: ChatSessionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ChatSessionCountOutputType without action
+   */
+  export type ChatSessionCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AgentChatWhereInput
   }
 
 
@@ -5541,8 +5872,22 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    aiMessagesUsed: number | null
+    voiceInputUsed: number | null
+    emailComposeUsed: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    aiMessagesUsed: number | null
+    voiceInputUsed: number | null
+    emailComposeUsed: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -5557,6 +5902,11 @@ export namespace Prisma {
     tokenExpiresAt: Date | null
     onboardingDone: boolean | null
     theme: string | null
+    plan: string | null
+    planResetDate: Date | null
+    aiMessagesUsed: number | null
+    voiceInputUsed: number | null
+    emailComposeUsed: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5573,6 +5923,11 @@ export namespace Prisma {
     tokenExpiresAt: Date | null
     onboardingDone: boolean | null
     theme: string | null
+    plan: string | null
+    planResetDate: Date | null
+    aiMessagesUsed: number | null
+    voiceInputUsed: number | null
+    emailComposeUsed: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5590,11 +5945,28 @@ export namespace Prisma {
     onboardingDone: number
     preferences: number
     theme: number
+    plan: number
+    planResetDate: number
+    aiMessagesUsed: number
+    voiceInputUsed: number
+    emailComposeUsed: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
+
+  export type UserAvgAggregateInputType = {
+    aiMessagesUsed?: true
+    voiceInputUsed?: true
+    emailComposeUsed?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    aiMessagesUsed?: true
+    voiceInputUsed?: true
+    emailComposeUsed?: true
+  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -5608,6 +5980,11 @@ export namespace Prisma {
     tokenExpiresAt?: true
     onboardingDone?: true
     theme?: true
+    plan?: true
+    planResetDate?: true
+    aiMessagesUsed?: true
+    voiceInputUsed?: true
+    emailComposeUsed?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5624,6 +6001,11 @@ export namespace Prisma {
     tokenExpiresAt?: true
     onboardingDone?: true
     theme?: true
+    plan?: true
+    planResetDate?: true
+    aiMessagesUsed?: true
+    voiceInputUsed?: true
+    emailComposeUsed?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5641,6 +6023,11 @@ export namespace Prisma {
     onboardingDone?: true
     preferences?: true
     theme?: true
+    plan?: true
+    planResetDate?: true
+    aiMessagesUsed?: true
+    voiceInputUsed?: true
+    emailComposeUsed?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5684,6 +6071,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -5714,6 +6113,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -5731,9 +6132,16 @@ export namespace Prisma {
     onboardingDone: boolean
     preferences: JsonValue
     theme: string
+    plan: string
+    planResetDate: Date
+    aiMessagesUsed: number
+    voiceInputUsed: number
+    emailComposeUsed: number
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -5765,6 +6173,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: boolean
     theme?: boolean
+    plan?: boolean
+    planResetDate?: boolean
+    aiMessagesUsed?: boolean
+    voiceInputUsed?: boolean
+    emailComposeUsed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
@@ -5774,6 +6187,9 @@ export namespace Prisma {
     agentChats?: boolean | User$agentChatsArgs<ExtArgs>
     agentMemories?: boolean | User$agentMemoriesArgs<ExtArgs>
     labelRules?: boolean | User$labelRulesArgs<ExtArgs>
+    chatSessions?: boolean | User$chatSessionsArgs<ExtArgs>
+    payments?: boolean | User$paymentsArgs<ExtArgs>
+    dailyDigests?: boolean | User$dailyDigestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5790,6 +6206,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: boolean
     theme?: boolean
+    plan?: boolean
+    planResetDate?: boolean
+    aiMessagesUsed?: boolean
+    voiceInputUsed?: boolean
+    emailComposeUsed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -5807,6 +6228,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: boolean
     theme?: boolean
+    plan?: boolean
+    planResetDate?: boolean
+    aiMessagesUsed?: boolean
+    voiceInputUsed?: boolean
+    emailComposeUsed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -5824,11 +6250,16 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: boolean
     theme?: boolean
+    plan?: boolean
+    planResetDate?: boolean
+    aiMessagesUsed?: boolean
+    voiceInputUsed?: boolean
+    emailComposeUsed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "image" | "emailVerified" | "provider" | "googleAccessToken" | "googleRefreshToken" | "tokenExpiresAt" | "onboardingDone" | "preferences" | "theme" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "image" | "emailVerified" | "provider" | "googleAccessToken" | "googleRefreshToken" | "tokenExpiresAt" | "onboardingDone" | "preferences" | "theme" | "plan" | "planResetDate" | "aiMessagesUsed" | "voiceInputUsed" | "emailComposeUsed" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
@@ -5837,6 +6268,9 @@ export namespace Prisma {
     agentChats?: boolean | User$agentChatsArgs<ExtArgs>
     agentMemories?: boolean | User$agentMemoriesArgs<ExtArgs>
     labelRules?: boolean | User$labelRulesArgs<ExtArgs>
+    chatSessions?: boolean | User$chatSessionsArgs<ExtArgs>
+    payments?: boolean | User$paymentsArgs<ExtArgs>
+    dailyDigests?: boolean | User$dailyDigestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5852,6 +6286,9 @@ export namespace Prisma {
       agentChats: Prisma.$AgentChatPayload<ExtArgs>[]
       agentMemories: Prisma.$AgentMemoryPayload<ExtArgs>[]
       labelRules: Prisma.$LabelRulePayload<ExtArgs>[]
+      chatSessions: Prisma.$ChatSessionPayload<ExtArgs>[]
+      payments: Prisma.$PaymentPayload<ExtArgs>[]
+      dailyDigests: Prisma.$DailyDigestPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5866,6 +6303,11 @@ export namespace Prisma {
       onboardingDone: boolean
       preferences: Prisma.JsonValue
       theme: string
+      plan: string
+      planResetDate: Date
+      aiMessagesUsed: number
+      voiceInputUsed: number
+      emailComposeUsed: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -6269,6 +6711,9 @@ export namespace Prisma {
     agentChats<T extends User$agentChatsArgs<ExtArgs> = {}>(args?: Subset<T, User$agentChatsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     agentMemories<T extends User$agentMemoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$agentMemoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentMemoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     labelRules<T extends User$labelRulesArgs<ExtArgs> = {}>(args?: Subset<T, User$labelRulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LabelRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    chatSessions<T extends User$chatSessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$chatSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    payments<T extends User$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dailyDigests<T extends User$dailyDigestsArgs<ExtArgs> = {}>(args?: Subset<T, User$dailyDigestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6310,6 +6755,11 @@ export namespace Prisma {
     readonly onboardingDone: FieldRef<"User", 'Boolean'>
     readonly preferences: FieldRef<"User", 'Json'>
     readonly theme: FieldRef<"User", 'String'>
+    readonly plan: FieldRef<"User", 'String'>
+    readonly planResetDate: FieldRef<"User", 'DateTime'>
+    readonly aiMessagesUsed: FieldRef<"User", 'Int'>
+    readonly voiceInputUsed: FieldRef<"User", 'Int'>
+    readonly emailComposeUsed: FieldRef<"User", 'Int'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -6865,6 +7315,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LabelRuleScalarFieldEnum | LabelRuleScalarFieldEnum[]
+  }
+
+  /**
+   * User.chatSessions
+   */
+  export type User$chatSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    where?: ChatSessionWhereInput
+    orderBy?: ChatSessionOrderByWithRelationInput | ChatSessionOrderByWithRelationInput[]
+    cursor?: ChatSessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChatSessionScalarFieldEnum | ChatSessionScalarFieldEnum[]
+  }
+
+  /**
+   * User.payments
+   */
+  export type User$paymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    where?: PaymentWhereInput
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    cursor?: PaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * User.dailyDigests
+   */
+  export type User$dailyDigestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
+    where?: DailyDigestWhereInput
+    orderBy?: DailyDigestOrderByWithRelationInput | DailyDigestOrderByWithRelationInput[]
+    cursor?: DailyDigestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DailyDigestScalarFieldEnum | DailyDigestScalarFieldEnum[]
   }
 
   /**
@@ -10497,6 +11019,7 @@ export namespace Prisma {
   export type AgentChatMinAggregateOutputType = {
     id: string | null
     userId: string | null
+    sessionId: string | null
     role: string | null
     content: string | null
     createdAt: Date | null
@@ -10505,6 +11028,7 @@ export namespace Prisma {
   export type AgentChatMaxAggregateOutputType = {
     id: string | null
     userId: string | null
+    sessionId: string | null
     role: string | null
     content: string | null
     createdAt: Date | null
@@ -10513,9 +11037,11 @@ export namespace Prisma {
   export type AgentChatCountAggregateOutputType = {
     id: number
     userId: number
+    sessionId: number
     role: number
     content: number
     metadata: number
+    toolCall: number
     createdAt: number
     _all: number
   }
@@ -10524,6 +11050,7 @@ export namespace Prisma {
   export type AgentChatMinAggregateInputType = {
     id?: true
     userId?: true
+    sessionId?: true
     role?: true
     content?: true
     createdAt?: true
@@ -10532,6 +11059,7 @@ export namespace Prisma {
   export type AgentChatMaxAggregateInputType = {
     id?: true
     userId?: true
+    sessionId?: true
     role?: true
     content?: true
     createdAt?: true
@@ -10540,9 +11068,11 @@ export namespace Prisma {
   export type AgentChatCountAggregateInputType = {
     id?: true
     userId?: true
+    sessionId?: true
     role?: true
     content?: true
     metadata?: true
+    toolCall?: true
     createdAt?: true
     _all?: true
   }
@@ -10622,9 +11152,11 @@ export namespace Prisma {
   export type AgentChatGroupByOutputType = {
     id: string
     userId: string
+    sessionId: string | null
     role: string
     content: string
     metadata: JsonValue | null
+    toolCall: JsonValue | null
     createdAt: Date
     _count: AgentChatCountAggregateOutputType | null
     _min: AgentChatMinAggregateOutputType | null
@@ -10648,64 +11180,81 @@ export namespace Prisma {
   export type AgentChatSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    sessionId?: boolean
     role?: boolean
     content?: boolean
     metadata?: boolean
+    toolCall?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chatSession?: boolean | AgentChat$chatSessionArgs<ExtArgs>
   }, ExtArgs["result"]["agentChat"]>
 
   export type AgentChatSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    sessionId?: boolean
     role?: boolean
     content?: boolean
     metadata?: boolean
+    toolCall?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chatSession?: boolean | AgentChat$chatSessionArgs<ExtArgs>
   }, ExtArgs["result"]["agentChat"]>
 
   export type AgentChatSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    sessionId?: boolean
     role?: boolean
     content?: boolean
     metadata?: boolean
+    toolCall?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chatSession?: boolean | AgentChat$chatSessionArgs<ExtArgs>
   }, ExtArgs["result"]["agentChat"]>
 
   export type AgentChatSelectScalar = {
     id?: boolean
     userId?: boolean
+    sessionId?: boolean
     role?: boolean
     content?: boolean
     metadata?: boolean
+    toolCall?: boolean
     createdAt?: boolean
   }
 
-  export type AgentChatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "role" | "content" | "metadata" | "createdAt", ExtArgs["result"]["agentChat"]>
+  export type AgentChatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "sessionId" | "role" | "content" | "metadata" | "toolCall" | "createdAt", ExtArgs["result"]["agentChat"]>
   export type AgentChatInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chatSession?: boolean | AgentChat$chatSessionArgs<ExtArgs>
   }
   export type AgentChatIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chatSession?: boolean | AgentChat$chatSessionArgs<ExtArgs>
   }
   export type AgentChatIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    chatSession?: boolean | AgentChat$chatSessionArgs<ExtArgs>
   }
 
   export type $AgentChatPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AgentChat"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      chatSession: Prisma.$ChatSessionPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
+      sessionId: string | null
       role: string
       content: string
       metadata: Prisma.JsonValue | null
+      toolCall: Prisma.JsonValue | null
       createdAt: Date
     }, ExtArgs["result"]["agentChat"]>
     composites: {}
@@ -11102,6 +11651,7 @@ export namespace Prisma {
   export interface Prisma__AgentChatClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    chatSession<T extends AgentChat$chatSessionArgs<ExtArgs> = {}>(args?: Subset<T, AgentChat$chatSessionArgs<ExtArgs>>): Prisma__ChatSessionClient<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11133,9 +11683,11 @@ export namespace Prisma {
   interface AgentChatFieldRefs {
     readonly id: FieldRef<"AgentChat", 'String'>
     readonly userId: FieldRef<"AgentChat", 'String'>
+    readonly sessionId: FieldRef<"AgentChat", 'String'>
     readonly role: FieldRef<"AgentChat", 'String'>
     readonly content: FieldRef<"AgentChat", 'String'>
     readonly metadata: FieldRef<"AgentChat", 'Json'>
+    readonly toolCall: FieldRef<"AgentChat", 'Json'>
     readonly createdAt: FieldRef<"AgentChat", 'DateTime'>
   }
     
@@ -11530,6 +12082,25 @@ export namespace Prisma {
      * Limit how many AgentChats to delete.
      */
     limit?: number
+  }
+
+  /**
+   * AgentChat.chatSession
+   */
+  export type AgentChat$chatSessionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    where?: ChatSessionWhereInput
   }
 
   /**
@@ -14712,6 +15283,3331 @@ export namespace Prisma {
      * Omit specific fields from the WebhookLog
      */
     omit?: WebhookLogOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ChatSession
+   */
+
+  export type AggregateChatSession = {
+    _count: ChatSessionCountAggregateOutputType | null
+    _min: ChatSessionMinAggregateOutputType | null
+    _max: ChatSessionMaxAggregateOutputType | null
+  }
+
+  export type ChatSessionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    title: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChatSessionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    title: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChatSessionCountAggregateOutputType = {
+    id: number
+    userId: number
+    title: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ChatSessionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChatSessionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChatSessionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ChatSessionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChatSession to aggregate.
+     */
+    where?: ChatSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChatSessions to fetch.
+     */
+    orderBy?: ChatSessionOrderByWithRelationInput | ChatSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChatSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChatSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChatSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ChatSessions
+    **/
+    _count?: true | ChatSessionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChatSessionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChatSessionMaxAggregateInputType
+  }
+
+  export type GetChatSessionAggregateType<T extends ChatSessionAggregateArgs> = {
+        [P in keyof T & keyof AggregateChatSession]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChatSession[P]>
+      : GetScalarType<T[P], AggregateChatSession[P]>
+  }
+
+
+
+
+  export type ChatSessionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChatSessionWhereInput
+    orderBy?: ChatSessionOrderByWithAggregationInput | ChatSessionOrderByWithAggregationInput[]
+    by: ChatSessionScalarFieldEnum[] | ChatSessionScalarFieldEnum
+    having?: ChatSessionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChatSessionCountAggregateInputType | true
+    _min?: ChatSessionMinAggregateInputType
+    _max?: ChatSessionMaxAggregateInputType
+  }
+
+  export type ChatSessionGroupByOutputType = {
+    id: string
+    userId: string
+    title: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ChatSessionCountAggregateOutputType | null
+    _min: ChatSessionMinAggregateOutputType | null
+    _max: ChatSessionMaxAggregateOutputType | null
+  }
+
+  type GetChatSessionGroupByPayload<T extends ChatSessionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChatSessionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChatSessionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChatSessionGroupByOutputType[P]>
+            : GetScalarType<T[P], ChatSessionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChatSessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    messages?: boolean | ChatSession$messagesArgs<ExtArgs>
+    _count?: boolean | ChatSessionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["chatSession"]>
+
+  export type ChatSessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["chatSession"]>
+
+  export type ChatSessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["chatSession"]>
+
+  export type ChatSessionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ChatSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "createdAt" | "updatedAt", ExtArgs["result"]["chatSession"]>
+  export type ChatSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    messages?: boolean | ChatSession$messagesArgs<ExtArgs>
+    _count?: boolean | ChatSessionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ChatSessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ChatSessionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ChatSessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ChatSession"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      messages: Prisma.$AgentChatPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      title: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["chatSession"]>
+    composites: {}
+  }
+
+  type ChatSessionGetPayload<S extends boolean | null | undefined | ChatSessionDefaultArgs> = $Result.GetResult<Prisma.$ChatSessionPayload, S>
+
+  type ChatSessionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ChatSessionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ChatSessionCountAggregateInputType | true
+    }
+
+  export interface ChatSessionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ChatSession'], meta: { name: 'ChatSession' } }
+    /**
+     * Find zero or one ChatSession that matches the filter.
+     * @param {ChatSessionFindUniqueArgs} args - Arguments to find a ChatSession
+     * @example
+     * // Get one ChatSession
+     * const chatSession = await prisma.chatSession.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChatSessionFindUniqueArgs>(args: SelectSubset<T, ChatSessionFindUniqueArgs<ExtArgs>>): Prisma__ChatSessionClient<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ChatSession that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ChatSessionFindUniqueOrThrowArgs} args - Arguments to find a ChatSession
+     * @example
+     * // Get one ChatSession
+     * const chatSession = await prisma.chatSession.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChatSessionFindUniqueOrThrowArgs>(args: SelectSubset<T, ChatSessionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChatSessionClient<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChatSession that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatSessionFindFirstArgs} args - Arguments to find a ChatSession
+     * @example
+     * // Get one ChatSession
+     * const chatSession = await prisma.chatSession.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChatSessionFindFirstArgs>(args?: SelectSubset<T, ChatSessionFindFirstArgs<ExtArgs>>): Prisma__ChatSessionClient<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChatSession that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatSessionFindFirstOrThrowArgs} args - Arguments to find a ChatSession
+     * @example
+     * // Get one ChatSession
+     * const chatSession = await prisma.chatSession.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChatSessionFindFirstOrThrowArgs>(args?: SelectSubset<T, ChatSessionFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChatSessionClient<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ChatSessions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatSessionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ChatSessions
+     * const chatSessions = await prisma.chatSession.findMany()
+     * 
+     * // Get first 10 ChatSessions
+     * const chatSessions = await prisma.chatSession.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const chatSessionWithIdOnly = await prisma.chatSession.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChatSessionFindManyArgs>(args?: SelectSubset<T, ChatSessionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ChatSession.
+     * @param {ChatSessionCreateArgs} args - Arguments to create a ChatSession.
+     * @example
+     * // Create one ChatSession
+     * const ChatSession = await prisma.chatSession.create({
+     *   data: {
+     *     // ... data to create a ChatSession
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChatSessionCreateArgs>(args: SelectSubset<T, ChatSessionCreateArgs<ExtArgs>>): Prisma__ChatSessionClient<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ChatSessions.
+     * @param {ChatSessionCreateManyArgs} args - Arguments to create many ChatSessions.
+     * @example
+     * // Create many ChatSessions
+     * const chatSession = await prisma.chatSession.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChatSessionCreateManyArgs>(args?: SelectSubset<T, ChatSessionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ChatSessions and returns the data saved in the database.
+     * @param {ChatSessionCreateManyAndReturnArgs} args - Arguments to create many ChatSessions.
+     * @example
+     * // Create many ChatSessions
+     * const chatSession = await prisma.chatSession.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ChatSessions and only return the `id`
+     * const chatSessionWithIdOnly = await prisma.chatSession.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChatSessionCreateManyAndReturnArgs>(args?: SelectSubset<T, ChatSessionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ChatSession.
+     * @param {ChatSessionDeleteArgs} args - Arguments to delete one ChatSession.
+     * @example
+     * // Delete one ChatSession
+     * const ChatSession = await prisma.chatSession.delete({
+     *   where: {
+     *     // ... filter to delete one ChatSession
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChatSessionDeleteArgs>(args: SelectSubset<T, ChatSessionDeleteArgs<ExtArgs>>): Prisma__ChatSessionClient<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ChatSession.
+     * @param {ChatSessionUpdateArgs} args - Arguments to update one ChatSession.
+     * @example
+     * // Update one ChatSession
+     * const chatSession = await prisma.chatSession.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChatSessionUpdateArgs>(args: SelectSubset<T, ChatSessionUpdateArgs<ExtArgs>>): Prisma__ChatSessionClient<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ChatSessions.
+     * @param {ChatSessionDeleteManyArgs} args - Arguments to filter ChatSessions to delete.
+     * @example
+     * // Delete a few ChatSessions
+     * const { count } = await prisma.chatSession.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChatSessionDeleteManyArgs>(args?: SelectSubset<T, ChatSessionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChatSessions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatSessionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ChatSessions
+     * const chatSession = await prisma.chatSession.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChatSessionUpdateManyArgs>(args: SelectSubset<T, ChatSessionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChatSessions and returns the data updated in the database.
+     * @param {ChatSessionUpdateManyAndReturnArgs} args - Arguments to update many ChatSessions.
+     * @example
+     * // Update many ChatSessions
+     * const chatSession = await prisma.chatSession.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ChatSessions and only return the `id`
+     * const chatSessionWithIdOnly = await prisma.chatSession.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ChatSessionUpdateManyAndReturnArgs>(args: SelectSubset<T, ChatSessionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ChatSession.
+     * @param {ChatSessionUpsertArgs} args - Arguments to update or create a ChatSession.
+     * @example
+     * // Update or create a ChatSession
+     * const chatSession = await prisma.chatSession.upsert({
+     *   create: {
+     *     // ... data to create a ChatSession
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ChatSession we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChatSessionUpsertArgs>(args: SelectSubset<T, ChatSessionUpsertArgs<ExtArgs>>): Prisma__ChatSessionClient<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ChatSessions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatSessionCountArgs} args - Arguments to filter ChatSessions to count.
+     * @example
+     * // Count the number of ChatSessions
+     * const count = await prisma.chatSession.count({
+     *   where: {
+     *     // ... the filter for the ChatSessions we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChatSessionCountArgs>(
+      args?: Subset<T, ChatSessionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChatSessionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ChatSession.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatSessionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChatSessionAggregateArgs>(args: Subset<T, ChatSessionAggregateArgs>): Prisma.PrismaPromise<GetChatSessionAggregateType<T>>
+
+    /**
+     * Group by ChatSession.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChatSessionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChatSessionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChatSessionGroupByArgs['orderBy'] }
+        : { orderBy?: ChatSessionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChatSessionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChatSessionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ChatSession model
+   */
+  readonly fields: ChatSessionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ChatSession.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChatSessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    messages<T extends ChatSession$messagesArgs<ExtArgs> = {}>(args?: Subset<T, ChatSession$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ChatSession model
+   */
+  interface ChatSessionFieldRefs {
+    readonly id: FieldRef<"ChatSession", 'String'>
+    readonly userId: FieldRef<"ChatSession", 'String'>
+    readonly title: FieldRef<"ChatSession", 'String'>
+    readonly createdAt: FieldRef<"ChatSession", 'DateTime'>
+    readonly updatedAt: FieldRef<"ChatSession", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ChatSession findUnique
+   */
+  export type ChatSessionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which ChatSession to fetch.
+     */
+    where: ChatSessionWhereUniqueInput
+  }
+
+  /**
+   * ChatSession findUniqueOrThrow
+   */
+  export type ChatSessionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which ChatSession to fetch.
+     */
+    where: ChatSessionWhereUniqueInput
+  }
+
+  /**
+   * ChatSession findFirst
+   */
+  export type ChatSessionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which ChatSession to fetch.
+     */
+    where?: ChatSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChatSessions to fetch.
+     */
+    orderBy?: ChatSessionOrderByWithRelationInput | ChatSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChatSessions.
+     */
+    cursor?: ChatSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChatSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChatSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChatSessions.
+     */
+    distinct?: ChatSessionScalarFieldEnum | ChatSessionScalarFieldEnum[]
+  }
+
+  /**
+   * ChatSession findFirstOrThrow
+   */
+  export type ChatSessionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which ChatSession to fetch.
+     */
+    where?: ChatSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChatSessions to fetch.
+     */
+    orderBy?: ChatSessionOrderByWithRelationInput | ChatSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChatSessions.
+     */
+    cursor?: ChatSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChatSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChatSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChatSessions.
+     */
+    distinct?: ChatSessionScalarFieldEnum | ChatSessionScalarFieldEnum[]
+  }
+
+  /**
+   * ChatSession findMany
+   */
+  export type ChatSessionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which ChatSessions to fetch.
+     */
+    where?: ChatSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChatSessions to fetch.
+     */
+    orderBy?: ChatSessionOrderByWithRelationInput | ChatSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ChatSessions.
+     */
+    cursor?: ChatSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChatSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChatSessions.
+     */
+    skip?: number
+    distinct?: ChatSessionScalarFieldEnum | ChatSessionScalarFieldEnum[]
+  }
+
+  /**
+   * ChatSession create
+   */
+  export type ChatSessionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ChatSession.
+     */
+    data: XOR<ChatSessionCreateInput, ChatSessionUncheckedCreateInput>
+  }
+
+  /**
+   * ChatSession createMany
+   */
+  export type ChatSessionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ChatSessions.
+     */
+    data: ChatSessionCreateManyInput | ChatSessionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChatSession createManyAndReturn
+   */
+  export type ChatSessionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * The data used to create many ChatSessions.
+     */
+    data: ChatSessionCreateManyInput | ChatSessionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ChatSession update
+   */
+  export type ChatSessionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ChatSession.
+     */
+    data: XOR<ChatSessionUpdateInput, ChatSessionUncheckedUpdateInput>
+    /**
+     * Choose, which ChatSession to update.
+     */
+    where: ChatSessionWhereUniqueInput
+  }
+
+  /**
+   * ChatSession updateMany
+   */
+  export type ChatSessionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ChatSessions.
+     */
+    data: XOR<ChatSessionUpdateManyMutationInput, ChatSessionUncheckedUpdateManyInput>
+    /**
+     * Filter which ChatSessions to update
+     */
+    where?: ChatSessionWhereInput
+    /**
+     * Limit how many ChatSessions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChatSession updateManyAndReturn
+   */
+  export type ChatSessionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * The data used to update ChatSessions.
+     */
+    data: XOR<ChatSessionUpdateManyMutationInput, ChatSessionUncheckedUpdateManyInput>
+    /**
+     * Filter which ChatSessions to update
+     */
+    where?: ChatSessionWhereInput
+    /**
+     * Limit how many ChatSessions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ChatSession upsert
+   */
+  export type ChatSessionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ChatSession to update in case it exists.
+     */
+    where: ChatSessionWhereUniqueInput
+    /**
+     * In case the ChatSession found by the `where` argument doesn't exist, create a new ChatSession with this data.
+     */
+    create: XOR<ChatSessionCreateInput, ChatSessionUncheckedCreateInput>
+    /**
+     * In case the ChatSession was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChatSessionUpdateInput, ChatSessionUncheckedUpdateInput>
+  }
+
+  /**
+   * ChatSession delete
+   */
+  export type ChatSessionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+    /**
+     * Filter which ChatSession to delete.
+     */
+    where: ChatSessionWhereUniqueInput
+  }
+
+  /**
+   * ChatSession deleteMany
+   */
+  export type ChatSessionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChatSessions to delete
+     */
+    where?: ChatSessionWhereInput
+    /**
+     * Limit how many ChatSessions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChatSession.messages
+   */
+  export type ChatSession$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AgentChat
+     */
+    select?: AgentChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AgentChat
+     */
+    omit?: AgentChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AgentChatInclude<ExtArgs> | null
+    where?: AgentChatWhereInput
+    orderBy?: AgentChatOrderByWithRelationInput | AgentChatOrderByWithRelationInput[]
+    cursor?: AgentChatWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AgentChatScalarFieldEnum | AgentChatScalarFieldEnum[]
+  }
+
+  /**
+   * ChatSession without action
+   */
+  export type ChatSessionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChatSession
+     */
+    select?: ChatSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChatSession
+     */
+    omit?: ChatSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChatSessionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Payment
+   */
+
+  export type AggregatePayment = {
+    _count: PaymentCountAggregateOutputType | null
+    _avg: PaymentAvgAggregateOutputType | null
+    _sum: PaymentSumAggregateOutputType | null
+    _min: PaymentMinAggregateOutputType | null
+    _max: PaymentMaxAggregateOutputType | null
+  }
+
+  export type PaymentAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type PaymentSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type PaymentMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    razorpayOrderId: string | null
+    razorpayPaymentId: string | null
+    razorpaySignature: string | null
+    plan: string | null
+    amount: number | null
+    currency: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    razorpayOrderId: string | null
+    razorpayPaymentId: string | null
+    razorpaySignature: string | null
+    plan: string | null
+    amount: number | null
+    currency: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentCountAggregateOutputType = {
+    id: number
+    userId: number
+    razorpayOrderId: number
+    razorpayPaymentId: number
+    razorpaySignature: number
+    plan: number
+    amount: number
+    currency: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PaymentAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type PaymentSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type PaymentMinAggregateInputType = {
+    id?: true
+    userId?: true
+    razorpayOrderId?: true
+    razorpayPaymentId?: true
+    razorpaySignature?: true
+    plan?: true
+    amount?: true
+    currency?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    razorpayOrderId?: true
+    razorpayPaymentId?: true
+    razorpaySignature?: true
+    plan?: true
+    amount?: true
+    currency?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentCountAggregateInputType = {
+    id?: true
+    userId?: true
+    razorpayOrderId?: true
+    razorpayPaymentId?: true
+    razorpaySignature?: true
+    plan?: true
+    amount?: true
+    currency?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PaymentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Payment to aggregate.
+     */
+    where?: PaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Payments to fetch.
+     */
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Payments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Payments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Payments
+    **/
+    _count?: true | PaymentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PaymentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PaymentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PaymentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PaymentMaxAggregateInputType
+  }
+
+  export type GetPaymentAggregateType<T extends PaymentAggregateArgs> = {
+        [P in keyof T & keyof AggregatePayment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePayment[P]>
+      : GetScalarType<T[P], AggregatePayment[P]>
+  }
+
+
+
+
+  export type PaymentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentWhereInput
+    orderBy?: PaymentOrderByWithAggregationInput | PaymentOrderByWithAggregationInput[]
+    by: PaymentScalarFieldEnum[] | PaymentScalarFieldEnum
+    having?: PaymentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PaymentCountAggregateInputType | true
+    _avg?: PaymentAvgAggregateInputType
+    _sum?: PaymentSumAggregateInputType
+    _min?: PaymentMinAggregateInputType
+    _max?: PaymentMaxAggregateInputType
+  }
+
+  export type PaymentGroupByOutputType = {
+    id: string
+    userId: string
+    razorpayOrderId: string
+    razorpayPaymentId: string | null
+    razorpaySignature: string | null
+    plan: string
+    amount: number
+    currency: string
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: PaymentCountAggregateOutputType | null
+    _avg: PaymentAvgAggregateOutputType | null
+    _sum: PaymentSumAggregateOutputType | null
+    _min: PaymentMinAggregateOutputType | null
+    _max: PaymentMaxAggregateOutputType | null
+  }
+
+  type GetPaymentGroupByPayload<T extends PaymentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PaymentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PaymentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PaymentGroupByOutputType[P]>
+            : GetScalarType<T[P], PaymentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PaymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    razorpayOrderId?: boolean
+    razorpayPaymentId?: boolean
+    razorpaySignature?: boolean
+    plan?: boolean
+    amount?: boolean
+    currency?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["payment"]>
+
+  export type PaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    razorpayOrderId?: boolean
+    razorpayPaymentId?: boolean
+    razorpaySignature?: boolean
+    plan?: boolean
+    amount?: boolean
+    currency?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["payment"]>
+
+  export type PaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    razorpayOrderId?: boolean
+    razorpayPaymentId?: boolean
+    razorpaySignature?: boolean
+    plan?: boolean
+    amount?: boolean
+    currency?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["payment"]>
+
+  export type PaymentSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    razorpayOrderId?: boolean
+    razorpayPaymentId?: boolean
+    razorpaySignature?: boolean
+    plan?: boolean
+    amount?: boolean
+    currency?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "razorpayOrderId" | "razorpayPaymentId" | "razorpaySignature" | "plan" | "amount" | "currency" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+  export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PaymentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PaymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Payment"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      razorpayOrderId: string
+      razorpayPaymentId: string | null
+      razorpaySignature: string | null
+      plan: string
+      amount: number
+      currency: string
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["payment"]>
+    composites: {}
+  }
+
+  type PaymentGetPayload<S extends boolean | null | undefined | PaymentDefaultArgs> = $Result.GetResult<Prisma.$PaymentPayload, S>
+
+  type PaymentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PaymentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PaymentCountAggregateInputType | true
+    }
+
+  export interface PaymentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Payment'], meta: { name: 'Payment' } }
+    /**
+     * Find zero or one Payment that matches the filter.
+     * @param {PaymentFindUniqueArgs} args - Arguments to find a Payment
+     * @example
+     * // Get one Payment
+     * const payment = await prisma.payment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PaymentFindUniqueArgs>(args: SelectSubset<T, PaymentFindUniqueArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Payment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PaymentFindUniqueOrThrowArgs} args - Arguments to find a Payment
+     * @example
+     * // Get one Payment
+     * const payment = await prisma.payment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PaymentFindUniqueOrThrowArgs>(args: SelectSubset<T, PaymentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Payment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentFindFirstArgs} args - Arguments to find a Payment
+     * @example
+     * // Get one Payment
+     * const payment = await prisma.payment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PaymentFindFirstArgs>(args?: SelectSubset<T, PaymentFindFirstArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Payment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentFindFirstOrThrowArgs} args - Arguments to find a Payment
+     * @example
+     * // Get one Payment
+     * const payment = await prisma.payment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PaymentFindFirstOrThrowArgs>(args?: SelectSubset<T, PaymentFindFirstOrThrowArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Payments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Payments
+     * const payments = await prisma.payment.findMany()
+     * 
+     * // Get first 10 Payments
+     * const payments = await prisma.payment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const paymentWithIdOnly = await prisma.payment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PaymentFindManyArgs>(args?: SelectSubset<T, PaymentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Payment.
+     * @param {PaymentCreateArgs} args - Arguments to create a Payment.
+     * @example
+     * // Create one Payment
+     * const Payment = await prisma.payment.create({
+     *   data: {
+     *     // ... data to create a Payment
+     *   }
+     * })
+     * 
+     */
+    create<T extends PaymentCreateArgs>(args: SelectSubset<T, PaymentCreateArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Payments.
+     * @param {PaymentCreateManyArgs} args - Arguments to create many Payments.
+     * @example
+     * // Create many Payments
+     * const payment = await prisma.payment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PaymentCreateManyArgs>(args?: SelectSubset<T, PaymentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Payments and returns the data saved in the database.
+     * @param {PaymentCreateManyAndReturnArgs} args - Arguments to create many Payments.
+     * @example
+     * // Create many Payments
+     * const payment = await prisma.payment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Payments and only return the `id`
+     * const paymentWithIdOnly = await prisma.payment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PaymentCreateManyAndReturnArgs>(args?: SelectSubset<T, PaymentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Payment.
+     * @param {PaymentDeleteArgs} args - Arguments to delete one Payment.
+     * @example
+     * // Delete one Payment
+     * const Payment = await prisma.payment.delete({
+     *   where: {
+     *     // ... filter to delete one Payment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PaymentDeleteArgs>(args: SelectSubset<T, PaymentDeleteArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Payment.
+     * @param {PaymentUpdateArgs} args - Arguments to update one Payment.
+     * @example
+     * // Update one Payment
+     * const payment = await prisma.payment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PaymentUpdateArgs>(args: SelectSubset<T, PaymentUpdateArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Payments.
+     * @param {PaymentDeleteManyArgs} args - Arguments to filter Payments to delete.
+     * @example
+     * // Delete a few Payments
+     * const { count } = await prisma.payment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PaymentDeleteManyArgs>(args?: SelectSubset<T, PaymentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Payments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Payments
+     * const payment = await prisma.payment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PaymentUpdateManyArgs>(args: SelectSubset<T, PaymentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Payments and returns the data updated in the database.
+     * @param {PaymentUpdateManyAndReturnArgs} args - Arguments to update many Payments.
+     * @example
+     * // Update many Payments
+     * const payment = await prisma.payment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Payments and only return the `id`
+     * const paymentWithIdOnly = await prisma.payment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PaymentUpdateManyAndReturnArgs>(args: SelectSubset<T, PaymentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Payment.
+     * @param {PaymentUpsertArgs} args - Arguments to update or create a Payment.
+     * @example
+     * // Update or create a Payment
+     * const payment = await prisma.payment.upsert({
+     *   create: {
+     *     // ... data to create a Payment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Payment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PaymentUpsertArgs>(args: SelectSubset<T, PaymentUpsertArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Payments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentCountArgs} args - Arguments to filter Payments to count.
+     * @example
+     * // Count the number of Payments
+     * const count = await prisma.payment.count({
+     *   where: {
+     *     // ... the filter for the Payments we want to count
+     *   }
+     * })
+    **/
+    count<T extends PaymentCountArgs>(
+      args?: Subset<T, PaymentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PaymentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Payment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PaymentAggregateArgs>(args: Subset<T, PaymentAggregateArgs>): Prisma.PrismaPromise<GetPaymentAggregateType<T>>
+
+    /**
+     * Group by Payment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PaymentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PaymentGroupByArgs['orderBy'] }
+        : { orderBy?: PaymentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PaymentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPaymentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Payment model
+   */
+  readonly fields: PaymentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Payment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PaymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Payment model
+   */
+  interface PaymentFieldRefs {
+    readonly id: FieldRef<"Payment", 'String'>
+    readonly userId: FieldRef<"Payment", 'String'>
+    readonly razorpayOrderId: FieldRef<"Payment", 'String'>
+    readonly razorpayPaymentId: FieldRef<"Payment", 'String'>
+    readonly razorpaySignature: FieldRef<"Payment", 'String'>
+    readonly plan: FieldRef<"Payment", 'String'>
+    readonly amount: FieldRef<"Payment", 'Int'>
+    readonly currency: FieldRef<"Payment", 'String'>
+    readonly status: FieldRef<"Payment", 'String'>
+    readonly createdAt: FieldRef<"Payment", 'DateTime'>
+    readonly updatedAt: FieldRef<"Payment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Payment findUnique
+   */
+  export type PaymentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Payment to fetch.
+     */
+    where: PaymentWhereUniqueInput
+  }
+
+  /**
+   * Payment findUniqueOrThrow
+   */
+  export type PaymentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Payment to fetch.
+     */
+    where: PaymentWhereUniqueInput
+  }
+
+  /**
+   * Payment findFirst
+   */
+  export type PaymentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Payment to fetch.
+     */
+    where?: PaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Payments to fetch.
+     */
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Payments.
+     */
+    cursor?: PaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Payments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Payments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Payments.
+     */
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Payment findFirstOrThrow
+   */
+  export type PaymentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Payment to fetch.
+     */
+    where?: PaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Payments to fetch.
+     */
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Payments.
+     */
+    cursor?: PaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Payments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Payments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Payments.
+     */
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Payment findMany
+   */
+  export type PaymentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Payments to fetch.
+     */
+    where?: PaymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Payments to fetch.
+     */
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Payments.
+     */
+    cursor?: PaymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Payments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Payments.
+     */
+    skip?: number
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * Payment create
+   */
+  export type PaymentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Payment.
+     */
+    data: XOR<PaymentCreateInput, PaymentUncheckedCreateInput>
+  }
+
+  /**
+   * Payment createMany
+   */
+  export type PaymentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Payments.
+     */
+    data: PaymentCreateManyInput | PaymentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Payment createManyAndReturn
+   */
+  export type PaymentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * The data used to create many Payments.
+     */
+    data: PaymentCreateManyInput | PaymentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Payment update
+   */
+  export type PaymentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Payment.
+     */
+    data: XOR<PaymentUpdateInput, PaymentUncheckedUpdateInput>
+    /**
+     * Choose, which Payment to update.
+     */
+    where: PaymentWhereUniqueInput
+  }
+
+  /**
+   * Payment updateMany
+   */
+  export type PaymentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Payments.
+     */
+    data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyInput>
+    /**
+     * Filter which Payments to update
+     */
+    where?: PaymentWhereInput
+    /**
+     * Limit how many Payments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Payment updateManyAndReturn
+   */
+  export type PaymentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * The data used to update Payments.
+     */
+    data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyInput>
+    /**
+     * Filter which Payments to update
+     */
+    where?: PaymentWhereInput
+    /**
+     * Limit how many Payments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Payment upsert
+   */
+  export type PaymentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Payment to update in case it exists.
+     */
+    where: PaymentWhereUniqueInput
+    /**
+     * In case the Payment found by the `where` argument doesn't exist, create a new Payment with this data.
+     */
+    create: XOR<PaymentCreateInput, PaymentUncheckedCreateInput>
+    /**
+     * In case the Payment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PaymentUpdateInput, PaymentUncheckedUpdateInput>
+  }
+
+  /**
+   * Payment delete
+   */
+  export type PaymentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    /**
+     * Filter which Payment to delete.
+     */
+    where: PaymentWhereUniqueInput
+  }
+
+  /**
+   * Payment deleteMany
+   */
+  export type PaymentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Payments to delete
+     */
+    where?: PaymentWhereInput
+    /**
+     * Limit how many Payments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Payment without action
+   */
+  export type PaymentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DailyDigest
+   */
+
+  export type AggregateDailyDigest = {
+    _count: DailyDigestCountAggregateOutputType | null
+    _min: DailyDigestMinAggregateOutputType | null
+    _max: DailyDigestMaxAggregateOutputType | null
+  }
+
+  export type DailyDigestMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    date: Date | null
+    generated: boolean | null
+    createdAt: Date | null
+  }
+
+  export type DailyDigestMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    date: Date | null
+    generated: boolean | null
+    createdAt: Date | null
+  }
+
+  export type DailyDigestCountAggregateOutputType = {
+    id: number
+    userId: number
+    date: number
+    content: number
+    generated: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type DailyDigestMinAggregateInputType = {
+    id?: true
+    userId?: true
+    date?: true
+    generated?: true
+    createdAt?: true
+  }
+
+  export type DailyDigestMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    date?: true
+    generated?: true
+    createdAt?: true
+  }
+
+  export type DailyDigestCountAggregateInputType = {
+    id?: true
+    userId?: true
+    date?: true
+    content?: true
+    generated?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type DailyDigestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DailyDigest to aggregate.
+     */
+    where?: DailyDigestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyDigests to fetch.
+     */
+    orderBy?: DailyDigestOrderByWithRelationInput | DailyDigestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DailyDigestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyDigests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyDigests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DailyDigests
+    **/
+    _count?: true | DailyDigestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DailyDigestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DailyDigestMaxAggregateInputType
+  }
+
+  export type GetDailyDigestAggregateType<T extends DailyDigestAggregateArgs> = {
+        [P in keyof T & keyof AggregateDailyDigest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDailyDigest[P]>
+      : GetScalarType<T[P], AggregateDailyDigest[P]>
+  }
+
+
+
+
+  export type DailyDigestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyDigestWhereInput
+    orderBy?: DailyDigestOrderByWithAggregationInput | DailyDigestOrderByWithAggregationInput[]
+    by: DailyDigestScalarFieldEnum[] | DailyDigestScalarFieldEnum
+    having?: DailyDigestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DailyDigestCountAggregateInputType | true
+    _min?: DailyDigestMinAggregateInputType
+    _max?: DailyDigestMaxAggregateInputType
+  }
+
+  export type DailyDigestGroupByOutputType = {
+    id: string
+    userId: string
+    date: Date
+    content: JsonValue
+    generated: boolean
+    createdAt: Date
+    _count: DailyDigestCountAggregateOutputType | null
+    _min: DailyDigestMinAggregateOutputType | null
+    _max: DailyDigestMaxAggregateOutputType | null
+  }
+
+  type GetDailyDigestGroupByPayload<T extends DailyDigestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DailyDigestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DailyDigestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DailyDigestGroupByOutputType[P]>
+            : GetScalarType<T[P], DailyDigestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DailyDigestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    content?: boolean
+    generated?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dailyDigest"]>
+
+  export type DailyDigestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    content?: boolean
+    generated?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dailyDigest"]>
+
+  export type DailyDigestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    content?: boolean
+    generated?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dailyDigest"]>
+
+  export type DailyDigestSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    content?: boolean
+    generated?: boolean
+    createdAt?: boolean
+  }
+
+  export type DailyDigestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "date" | "content" | "generated" | "createdAt", ExtArgs["result"]["dailyDigest"]>
+  export type DailyDigestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type DailyDigestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type DailyDigestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $DailyDigestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DailyDigest"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      date: Date
+      content: Prisma.JsonValue
+      generated: boolean
+      createdAt: Date
+    }, ExtArgs["result"]["dailyDigest"]>
+    composites: {}
+  }
+
+  type DailyDigestGetPayload<S extends boolean | null | undefined | DailyDigestDefaultArgs> = $Result.GetResult<Prisma.$DailyDigestPayload, S>
+
+  type DailyDigestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DailyDigestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DailyDigestCountAggregateInputType | true
+    }
+
+  export interface DailyDigestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DailyDigest'], meta: { name: 'DailyDigest' } }
+    /**
+     * Find zero or one DailyDigest that matches the filter.
+     * @param {DailyDigestFindUniqueArgs} args - Arguments to find a DailyDigest
+     * @example
+     * // Get one DailyDigest
+     * const dailyDigest = await prisma.dailyDigest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DailyDigestFindUniqueArgs>(args: SelectSubset<T, DailyDigestFindUniqueArgs<ExtArgs>>): Prisma__DailyDigestClient<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DailyDigest that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DailyDigestFindUniqueOrThrowArgs} args - Arguments to find a DailyDigest
+     * @example
+     * // Get one DailyDigest
+     * const dailyDigest = await prisma.dailyDigest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DailyDigestFindUniqueOrThrowArgs>(args: SelectSubset<T, DailyDigestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DailyDigestClient<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DailyDigest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyDigestFindFirstArgs} args - Arguments to find a DailyDigest
+     * @example
+     * // Get one DailyDigest
+     * const dailyDigest = await prisma.dailyDigest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DailyDigestFindFirstArgs>(args?: SelectSubset<T, DailyDigestFindFirstArgs<ExtArgs>>): Prisma__DailyDigestClient<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DailyDigest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyDigestFindFirstOrThrowArgs} args - Arguments to find a DailyDigest
+     * @example
+     * // Get one DailyDigest
+     * const dailyDigest = await prisma.dailyDigest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DailyDigestFindFirstOrThrowArgs>(args?: SelectSubset<T, DailyDigestFindFirstOrThrowArgs<ExtArgs>>): Prisma__DailyDigestClient<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DailyDigests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyDigestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DailyDigests
+     * const dailyDigests = await prisma.dailyDigest.findMany()
+     * 
+     * // Get first 10 DailyDigests
+     * const dailyDigests = await prisma.dailyDigest.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dailyDigestWithIdOnly = await prisma.dailyDigest.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DailyDigestFindManyArgs>(args?: SelectSubset<T, DailyDigestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DailyDigest.
+     * @param {DailyDigestCreateArgs} args - Arguments to create a DailyDigest.
+     * @example
+     * // Create one DailyDigest
+     * const DailyDigest = await prisma.dailyDigest.create({
+     *   data: {
+     *     // ... data to create a DailyDigest
+     *   }
+     * })
+     * 
+     */
+    create<T extends DailyDigestCreateArgs>(args: SelectSubset<T, DailyDigestCreateArgs<ExtArgs>>): Prisma__DailyDigestClient<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DailyDigests.
+     * @param {DailyDigestCreateManyArgs} args - Arguments to create many DailyDigests.
+     * @example
+     * // Create many DailyDigests
+     * const dailyDigest = await prisma.dailyDigest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DailyDigestCreateManyArgs>(args?: SelectSubset<T, DailyDigestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DailyDigests and returns the data saved in the database.
+     * @param {DailyDigestCreateManyAndReturnArgs} args - Arguments to create many DailyDigests.
+     * @example
+     * // Create many DailyDigests
+     * const dailyDigest = await prisma.dailyDigest.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DailyDigests and only return the `id`
+     * const dailyDigestWithIdOnly = await prisma.dailyDigest.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DailyDigestCreateManyAndReturnArgs>(args?: SelectSubset<T, DailyDigestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DailyDigest.
+     * @param {DailyDigestDeleteArgs} args - Arguments to delete one DailyDigest.
+     * @example
+     * // Delete one DailyDigest
+     * const DailyDigest = await prisma.dailyDigest.delete({
+     *   where: {
+     *     // ... filter to delete one DailyDigest
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DailyDigestDeleteArgs>(args: SelectSubset<T, DailyDigestDeleteArgs<ExtArgs>>): Prisma__DailyDigestClient<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DailyDigest.
+     * @param {DailyDigestUpdateArgs} args - Arguments to update one DailyDigest.
+     * @example
+     * // Update one DailyDigest
+     * const dailyDigest = await prisma.dailyDigest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DailyDigestUpdateArgs>(args: SelectSubset<T, DailyDigestUpdateArgs<ExtArgs>>): Prisma__DailyDigestClient<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DailyDigests.
+     * @param {DailyDigestDeleteManyArgs} args - Arguments to filter DailyDigests to delete.
+     * @example
+     * // Delete a few DailyDigests
+     * const { count } = await prisma.dailyDigest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DailyDigestDeleteManyArgs>(args?: SelectSubset<T, DailyDigestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DailyDigests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyDigestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DailyDigests
+     * const dailyDigest = await prisma.dailyDigest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DailyDigestUpdateManyArgs>(args: SelectSubset<T, DailyDigestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DailyDigests and returns the data updated in the database.
+     * @param {DailyDigestUpdateManyAndReturnArgs} args - Arguments to update many DailyDigests.
+     * @example
+     * // Update many DailyDigests
+     * const dailyDigest = await prisma.dailyDigest.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DailyDigests and only return the `id`
+     * const dailyDigestWithIdOnly = await prisma.dailyDigest.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DailyDigestUpdateManyAndReturnArgs>(args: SelectSubset<T, DailyDigestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DailyDigest.
+     * @param {DailyDigestUpsertArgs} args - Arguments to update or create a DailyDigest.
+     * @example
+     * // Update or create a DailyDigest
+     * const dailyDigest = await prisma.dailyDigest.upsert({
+     *   create: {
+     *     // ... data to create a DailyDigest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DailyDigest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DailyDigestUpsertArgs>(args: SelectSubset<T, DailyDigestUpsertArgs<ExtArgs>>): Prisma__DailyDigestClient<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DailyDigests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyDigestCountArgs} args - Arguments to filter DailyDigests to count.
+     * @example
+     * // Count the number of DailyDigests
+     * const count = await prisma.dailyDigest.count({
+     *   where: {
+     *     // ... the filter for the DailyDigests we want to count
+     *   }
+     * })
+    **/
+    count<T extends DailyDigestCountArgs>(
+      args?: Subset<T, DailyDigestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DailyDigestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DailyDigest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyDigestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DailyDigestAggregateArgs>(args: Subset<T, DailyDigestAggregateArgs>): Prisma.PrismaPromise<GetDailyDigestAggregateType<T>>
+
+    /**
+     * Group by DailyDigest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyDigestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DailyDigestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DailyDigestGroupByArgs['orderBy'] }
+        : { orderBy?: DailyDigestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DailyDigestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDailyDigestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DailyDigest model
+   */
+  readonly fields: DailyDigestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DailyDigest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DailyDigestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DailyDigest model
+   */
+  interface DailyDigestFieldRefs {
+    readonly id: FieldRef<"DailyDigest", 'String'>
+    readonly userId: FieldRef<"DailyDigest", 'String'>
+    readonly date: FieldRef<"DailyDigest", 'DateTime'>
+    readonly content: FieldRef<"DailyDigest", 'Json'>
+    readonly generated: FieldRef<"DailyDigest", 'Boolean'>
+    readonly createdAt: FieldRef<"DailyDigest", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DailyDigest findUnique
+   */
+  export type DailyDigestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
+    /**
+     * Filter, which DailyDigest to fetch.
+     */
+    where: DailyDigestWhereUniqueInput
+  }
+
+  /**
+   * DailyDigest findUniqueOrThrow
+   */
+  export type DailyDigestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
+    /**
+     * Filter, which DailyDigest to fetch.
+     */
+    where: DailyDigestWhereUniqueInput
+  }
+
+  /**
+   * DailyDigest findFirst
+   */
+  export type DailyDigestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
+    /**
+     * Filter, which DailyDigest to fetch.
+     */
+    where?: DailyDigestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyDigests to fetch.
+     */
+    orderBy?: DailyDigestOrderByWithRelationInput | DailyDigestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DailyDigests.
+     */
+    cursor?: DailyDigestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyDigests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyDigests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DailyDigests.
+     */
+    distinct?: DailyDigestScalarFieldEnum | DailyDigestScalarFieldEnum[]
+  }
+
+  /**
+   * DailyDigest findFirstOrThrow
+   */
+  export type DailyDigestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
+    /**
+     * Filter, which DailyDigest to fetch.
+     */
+    where?: DailyDigestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyDigests to fetch.
+     */
+    orderBy?: DailyDigestOrderByWithRelationInput | DailyDigestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DailyDigests.
+     */
+    cursor?: DailyDigestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyDigests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyDigests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DailyDigests.
+     */
+    distinct?: DailyDigestScalarFieldEnum | DailyDigestScalarFieldEnum[]
+  }
+
+  /**
+   * DailyDigest findMany
+   */
+  export type DailyDigestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
+    /**
+     * Filter, which DailyDigests to fetch.
+     */
+    where?: DailyDigestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyDigests to fetch.
+     */
+    orderBy?: DailyDigestOrderByWithRelationInput | DailyDigestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DailyDigests.
+     */
+    cursor?: DailyDigestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyDigests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyDigests.
+     */
+    skip?: number
+    distinct?: DailyDigestScalarFieldEnum | DailyDigestScalarFieldEnum[]
+  }
+
+  /**
+   * DailyDigest create
+   */
+  export type DailyDigestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DailyDigest.
+     */
+    data: XOR<DailyDigestCreateInput, DailyDigestUncheckedCreateInput>
+  }
+
+  /**
+   * DailyDigest createMany
+   */
+  export type DailyDigestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DailyDigests.
+     */
+    data: DailyDigestCreateManyInput | DailyDigestCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DailyDigest createManyAndReturn
+   */
+  export type DailyDigestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * The data used to create many DailyDigests.
+     */
+    data: DailyDigestCreateManyInput | DailyDigestCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DailyDigest update
+   */
+  export type DailyDigestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DailyDigest.
+     */
+    data: XOR<DailyDigestUpdateInput, DailyDigestUncheckedUpdateInput>
+    /**
+     * Choose, which DailyDigest to update.
+     */
+    where: DailyDigestWhereUniqueInput
+  }
+
+  /**
+   * DailyDigest updateMany
+   */
+  export type DailyDigestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DailyDigests.
+     */
+    data: XOR<DailyDigestUpdateManyMutationInput, DailyDigestUncheckedUpdateManyInput>
+    /**
+     * Filter which DailyDigests to update
+     */
+    where?: DailyDigestWhereInput
+    /**
+     * Limit how many DailyDigests to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DailyDigest updateManyAndReturn
+   */
+  export type DailyDigestUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * The data used to update DailyDigests.
+     */
+    data: XOR<DailyDigestUpdateManyMutationInput, DailyDigestUncheckedUpdateManyInput>
+    /**
+     * Filter which DailyDigests to update
+     */
+    where?: DailyDigestWhereInput
+    /**
+     * Limit how many DailyDigests to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DailyDigest upsert
+   */
+  export type DailyDigestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DailyDigest to update in case it exists.
+     */
+    where: DailyDigestWhereUniqueInput
+    /**
+     * In case the DailyDigest found by the `where` argument doesn't exist, create a new DailyDigest with this data.
+     */
+    create: XOR<DailyDigestCreateInput, DailyDigestUncheckedCreateInput>
+    /**
+     * In case the DailyDigest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DailyDigestUpdateInput, DailyDigestUncheckedUpdateInput>
+  }
+
+  /**
+   * DailyDigest delete
+   */
+  export type DailyDigestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
+    /**
+     * Filter which DailyDigest to delete.
+     */
+    where: DailyDigestWhereUniqueInput
+  }
+
+  /**
+   * DailyDigest deleteMany
+   */
+  export type DailyDigestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DailyDigests to delete
+     */
+    where?: DailyDigestWhereInput
+    /**
+     * Limit how many DailyDigests to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DailyDigest without action
+   */
+  export type DailyDigestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyDigest
+     */
+    select?: DailyDigestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyDigest
+     */
+    omit?: DailyDigestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyDigestInclude<ExtArgs> | null
   }
 
 
@@ -19170,6 +23066,11 @@ export namespace Prisma {
     onboardingDone: 'onboardingDone',
     preferences: 'preferences',
     theme: 'theme',
+    plan: 'plan',
+    planResetDate: 'planResetDate',
+    aiMessagesUsed: 'aiMessagesUsed',
+    voiceInputUsed: 'voiceInputUsed',
+    emailComposeUsed: 'emailComposeUsed',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -19243,9 +23144,11 @@ export namespace Prisma {
   export const AgentChatScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
+    sessionId: 'sessionId',
     role: 'role',
     content: 'content',
     metadata: 'metadata',
+    toolCall: 'toolCall',
     createdAt: 'createdAt'
   };
 
@@ -19288,6 +23191,46 @@ export namespace Prisma {
   };
 
   export type WebhookLogScalarFieldEnum = (typeof WebhookLogScalarFieldEnum)[keyof typeof WebhookLogScalarFieldEnum]
+
+
+  export const ChatSessionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    title: 'title',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ChatSessionScalarFieldEnum = (typeof ChatSessionScalarFieldEnum)[keyof typeof ChatSessionScalarFieldEnum]
+
+
+  export const PaymentScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    razorpayOrderId: 'razorpayOrderId',
+    razorpayPaymentId: 'razorpayPaymentId',
+    razorpaySignature: 'razorpaySignature',
+    plan: 'plan',
+    amount: 'amount',
+    currency: 'currency',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+  export const DailyDigestScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    date: 'date',
+    content: 'content',
+    generated: 'generated',
+    createdAt: 'createdAt'
+  };
+
+  export type DailyDigestScalarFieldEnum = (typeof DailyDigestScalarFieldEnum)[keyof typeof DailyDigestScalarFieldEnum]
 
 
   export const CorsairIntegrationScalarFieldEnum: {
@@ -19682,6 +23625,11 @@ export namespace Prisma {
     onboardingDone?: BoolFilter<"User"> | boolean
     preferences?: JsonFilter<"User">
     theme?: StringFilter<"User"> | string
+    plan?: StringFilter<"User"> | string
+    planResetDate?: DateTimeFilter<"User"> | Date | string
+    aiMessagesUsed?: IntFilter<"User"> | number
+    voiceInputUsed?: IntFilter<"User"> | number
+    emailComposeUsed?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
@@ -19691,6 +23639,9 @@ export namespace Prisma {
     agentChats?: AgentChatListRelationFilter
     agentMemories?: AgentMemoryListRelationFilter
     labelRules?: LabelRuleListRelationFilter
+    chatSessions?: ChatSessionListRelationFilter
+    payments?: PaymentListRelationFilter
+    dailyDigests?: DailyDigestListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -19706,6 +23657,11 @@ export namespace Prisma {
     onboardingDone?: SortOrder
     preferences?: SortOrder
     theme?: SortOrder
+    plan?: SortOrder
+    planResetDate?: SortOrder
+    aiMessagesUsed?: SortOrder
+    voiceInputUsed?: SortOrder
+    emailComposeUsed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
@@ -19715,6 +23671,9 @@ export namespace Prisma {
     agentChats?: AgentChatOrderByRelationAggregateInput
     agentMemories?: AgentMemoryOrderByRelationAggregateInput
     labelRules?: LabelRuleOrderByRelationAggregateInput
+    chatSessions?: ChatSessionOrderByRelationAggregateInput
+    payments?: PaymentOrderByRelationAggregateInput
+    dailyDigests?: DailyDigestOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -19733,6 +23692,11 @@ export namespace Prisma {
     onboardingDone?: BoolFilter<"User"> | boolean
     preferences?: JsonFilter<"User">
     theme?: StringFilter<"User"> | string
+    plan?: StringFilter<"User"> | string
+    planResetDate?: DateTimeFilter<"User"> | Date | string
+    aiMessagesUsed?: IntFilter<"User"> | number
+    voiceInputUsed?: IntFilter<"User"> | number
+    emailComposeUsed?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
@@ -19742,6 +23706,9 @@ export namespace Prisma {
     agentChats?: AgentChatListRelationFilter
     agentMemories?: AgentMemoryListRelationFilter
     labelRules?: LabelRuleListRelationFilter
+    chatSessions?: ChatSessionListRelationFilter
+    payments?: PaymentListRelationFilter
+    dailyDigests?: DailyDigestListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -19757,11 +23724,18 @@ export namespace Prisma {
     onboardingDone?: SortOrder
     preferences?: SortOrder
     theme?: SortOrder
+    plan?: SortOrder
+    planResetDate?: SortOrder
+    aiMessagesUsed?: SortOrder
+    voiceInputUsed?: SortOrder
+    emailComposeUsed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -19780,6 +23754,11 @@ export namespace Prisma {
     onboardingDone?: BoolWithAggregatesFilter<"User"> | boolean
     preferences?: JsonWithAggregatesFilter<"User">
     theme?: StringWithAggregatesFilter<"User"> | string
+    plan?: StringWithAggregatesFilter<"User"> | string
+    planResetDate?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    aiMessagesUsed?: IntWithAggregatesFilter<"User"> | number
+    voiceInputUsed?: IntWithAggregatesFilter<"User"> | number
+    emailComposeUsed?: IntWithAggregatesFilter<"User"> | number
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -20110,21 +24089,27 @@ export namespace Prisma {
     NOT?: AgentChatWhereInput | AgentChatWhereInput[]
     id?: StringFilter<"AgentChat"> | string
     userId?: StringFilter<"AgentChat"> | string
+    sessionId?: StringNullableFilter<"AgentChat"> | string | null
     role?: StringFilter<"AgentChat"> | string
     content?: StringFilter<"AgentChat"> | string
     metadata?: JsonNullableFilter<"AgentChat">
+    toolCall?: JsonNullableFilter<"AgentChat">
     createdAt?: DateTimeFilter<"AgentChat"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    chatSession?: XOR<ChatSessionNullableScalarRelationFilter, ChatSessionWhereInput> | null
   }
 
   export type AgentChatOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
+    sessionId?: SortOrderInput | SortOrder
     role?: SortOrder
     content?: SortOrder
     metadata?: SortOrderInput | SortOrder
+    toolCall?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
+    chatSession?: ChatSessionOrderByWithRelationInput
   }
 
   export type AgentChatWhereUniqueInput = Prisma.AtLeast<{
@@ -20133,19 +24118,24 @@ export namespace Prisma {
     OR?: AgentChatWhereInput[]
     NOT?: AgentChatWhereInput | AgentChatWhereInput[]
     userId?: StringFilter<"AgentChat"> | string
+    sessionId?: StringNullableFilter<"AgentChat"> | string | null
     role?: StringFilter<"AgentChat"> | string
     content?: StringFilter<"AgentChat"> | string
     metadata?: JsonNullableFilter<"AgentChat">
+    toolCall?: JsonNullableFilter<"AgentChat">
     createdAt?: DateTimeFilter<"AgentChat"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    chatSession?: XOR<ChatSessionNullableScalarRelationFilter, ChatSessionWhereInput> | null
   }, "id">
 
   export type AgentChatOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
+    sessionId?: SortOrderInput | SortOrder
     role?: SortOrder
     content?: SortOrder
     metadata?: SortOrderInput | SortOrder
+    toolCall?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: AgentChatCountOrderByAggregateInput
     _max?: AgentChatMaxOrderByAggregateInput
@@ -20158,9 +24148,11 @@ export namespace Prisma {
     NOT?: AgentChatScalarWhereWithAggregatesInput | AgentChatScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"AgentChat"> | string
     userId?: StringWithAggregatesFilter<"AgentChat"> | string
+    sessionId?: StringNullableWithAggregatesFilter<"AgentChat"> | string | null
     role?: StringWithAggregatesFilter<"AgentChat"> | string
     content?: StringWithAggregatesFilter<"AgentChat"> | string
     metadata?: JsonNullableWithAggregatesFilter<"AgentChat">
+    toolCall?: JsonNullableWithAggregatesFilter<"AgentChat">
     createdAt?: DateTimeWithAggregatesFilter<"AgentChat"> | Date | string
   }
 
@@ -20349,6 +24341,212 @@ export namespace Prisma {
     processed?: BoolWithAggregatesFilter<"WebhookLog"> | boolean
     error?: StringNullableWithAggregatesFilter<"WebhookLog"> | string | null
     receivedAt?: DateTimeWithAggregatesFilter<"WebhookLog"> | Date | string
+  }
+
+  export type ChatSessionWhereInput = {
+    AND?: ChatSessionWhereInput | ChatSessionWhereInput[]
+    OR?: ChatSessionWhereInput[]
+    NOT?: ChatSessionWhereInput | ChatSessionWhereInput[]
+    id?: StringFilter<"ChatSession"> | string
+    userId?: StringFilter<"ChatSession"> | string
+    title?: StringFilter<"ChatSession"> | string
+    createdAt?: DateTimeFilter<"ChatSession"> | Date | string
+    updatedAt?: DateTimeFilter<"ChatSession"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    messages?: AgentChatListRelationFilter
+  }
+
+  export type ChatSessionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    messages?: AgentChatOrderByRelationAggregateInput
+  }
+
+  export type ChatSessionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChatSessionWhereInput | ChatSessionWhereInput[]
+    OR?: ChatSessionWhereInput[]
+    NOT?: ChatSessionWhereInput | ChatSessionWhereInput[]
+    userId?: StringFilter<"ChatSession"> | string
+    title?: StringFilter<"ChatSession"> | string
+    createdAt?: DateTimeFilter<"ChatSession"> | Date | string
+    updatedAt?: DateTimeFilter<"ChatSession"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    messages?: AgentChatListRelationFilter
+  }, "id">
+
+  export type ChatSessionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ChatSessionCountOrderByAggregateInput
+    _max?: ChatSessionMaxOrderByAggregateInput
+    _min?: ChatSessionMinOrderByAggregateInput
+  }
+
+  export type ChatSessionScalarWhereWithAggregatesInput = {
+    AND?: ChatSessionScalarWhereWithAggregatesInput | ChatSessionScalarWhereWithAggregatesInput[]
+    OR?: ChatSessionScalarWhereWithAggregatesInput[]
+    NOT?: ChatSessionScalarWhereWithAggregatesInput | ChatSessionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ChatSession"> | string
+    userId?: StringWithAggregatesFilter<"ChatSession"> | string
+    title?: StringWithAggregatesFilter<"ChatSession"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ChatSession"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ChatSession"> | Date | string
+  }
+
+  export type PaymentWhereInput = {
+    AND?: PaymentWhereInput | PaymentWhereInput[]
+    OR?: PaymentWhereInput[]
+    NOT?: PaymentWhereInput | PaymentWhereInput[]
+    id?: StringFilter<"Payment"> | string
+    userId?: StringFilter<"Payment"> | string
+    razorpayOrderId?: StringFilter<"Payment"> | string
+    razorpayPaymentId?: StringNullableFilter<"Payment"> | string | null
+    razorpaySignature?: StringNullableFilter<"Payment"> | string | null
+    plan?: StringFilter<"Payment"> | string
+    amount?: IntFilter<"Payment"> | number
+    currency?: StringFilter<"Payment"> | string
+    status?: StringFilter<"Payment"> | string
+    createdAt?: DateTimeFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeFilter<"Payment"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type PaymentOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    razorpayOrderId?: SortOrder
+    razorpayPaymentId?: SortOrderInput | SortOrder
+    razorpaySignature?: SortOrderInput | SortOrder
+    plan?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type PaymentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    razorpayOrderId?: string
+    AND?: PaymentWhereInput | PaymentWhereInput[]
+    OR?: PaymentWhereInput[]
+    NOT?: PaymentWhereInput | PaymentWhereInput[]
+    userId?: StringFilter<"Payment"> | string
+    razorpayPaymentId?: StringNullableFilter<"Payment"> | string | null
+    razorpaySignature?: StringNullableFilter<"Payment"> | string | null
+    plan?: StringFilter<"Payment"> | string
+    amount?: IntFilter<"Payment"> | number
+    currency?: StringFilter<"Payment"> | string
+    status?: StringFilter<"Payment"> | string
+    createdAt?: DateTimeFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeFilter<"Payment"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "razorpayOrderId">
+
+  export type PaymentOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    razorpayOrderId?: SortOrder
+    razorpayPaymentId?: SortOrderInput | SortOrder
+    razorpaySignature?: SortOrderInput | SortOrder
+    plan?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PaymentCountOrderByAggregateInput
+    _avg?: PaymentAvgOrderByAggregateInput
+    _max?: PaymentMaxOrderByAggregateInput
+    _min?: PaymentMinOrderByAggregateInput
+    _sum?: PaymentSumOrderByAggregateInput
+  }
+
+  export type PaymentScalarWhereWithAggregatesInput = {
+    AND?: PaymentScalarWhereWithAggregatesInput | PaymentScalarWhereWithAggregatesInput[]
+    OR?: PaymentScalarWhereWithAggregatesInput[]
+    NOT?: PaymentScalarWhereWithAggregatesInput | PaymentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Payment"> | string
+    userId?: StringWithAggregatesFilter<"Payment"> | string
+    razorpayOrderId?: StringWithAggregatesFilter<"Payment"> | string
+    razorpayPaymentId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    razorpaySignature?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    plan?: StringWithAggregatesFilter<"Payment"> | string
+    amount?: IntWithAggregatesFilter<"Payment"> | number
+    currency?: StringWithAggregatesFilter<"Payment"> | string
+    status?: StringWithAggregatesFilter<"Payment"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
+  }
+
+  export type DailyDigestWhereInput = {
+    AND?: DailyDigestWhereInput | DailyDigestWhereInput[]
+    OR?: DailyDigestWhereInput[]
+    NOT?: DailyDigestWhereInput | DailyDigestWhereInput[]
+    id?: StringFilter<"DailyDigest"> | string
+    userId?: StringFilter<"DailyDigest"> | string
+    date?: DateTimeFilter<"DailyDigest"> | Date | string
+    content?: JsonFilter<"DailyDigest">
+    generated?: BoolFilter<"DailyDigest"> | boolean
+    createdAt?: DateTimeFilter<"DailyDigest"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type DailyDigestOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    content?: SortOrder
+    generated?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type DailyDigestWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_date?: DailyDigestUserIdDateCompoundUniqueInput
+    AND?: DailyDigestWhereInput | DailyDigestWhereInput[]
+    OR?: DailyDigestWhereInput[]
+    NOT?: DailyDigestWhereInput | DailyDigestWhereInput[]
+    userId?: StringFilter<"DailyDigest"> | string
+    date?: DateTimeFilter<"DailyDigest"> | Date | string
+    content?: JsonFilter<"DailyDigest">
+    generated?: BoolFilter<"DailyDigest"> | boolean
+    createdAt?: DateTimeFilter<"DailyDigest"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_date">
+
+  export type DailyDigestOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    content?: SortOrder
+    generated?: SortOrder
+    createdAt?: SortOrder
+    _count?: DailyDigestCountOrderByAggregateInput
+    _max?: DailyDigestMaxOrderByAggregateInput
+    _min?: DailyDigestMinOrderByAggregateInput
+  }
+
+  export type DailyDigestScalarWhereWithAggregatesInput = {
+    AND?: DailyDigestScalarWhereWithAggregatesInput | DailyDigestScalarWhereWithAggregatesInput[]
+    OR?: DailyDigestScalarWhereWithAggregatesInput[]
+    NOT?: DailyDigestScalarWhereWithAggregatesInput | DailyDigestScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DailyDigest"> | string
+    userId?: StringWithAggregatesFilter<"DailyDigest"> | string
+    date?: DateTimeWithAggregatesFilter<"DailyDigest"> | Date | string
+    content?: JsonWithAggregatesFilter<"DailyDigest">
+    generated?: BoolWithAggregatesFilter<"DailyDigest"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"DailyDigest"> | Date | string
   }
 
   export type CorsairIntegrationWhereInput = {
@@ -20831,6 +25029,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -20840,6 +25043,9 @@ export namespace Prisma {
     agentChats?: AgentChatCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -20855,6 +25061,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -20864,6 +25075,9 @@ export namespace Prisma {
     agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -20879,6 +25093,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -20888,6 +25107,9 @@ export namespace Prisma {
     agentChats?: AgentChatUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -20903,6 +25125,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -20912,6 +25139,9 @@ export namespace Prisma {
     agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -20927,6 +25157,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -20944,6 +25179,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20961,6 +25201,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21349,16 +25594,20 @@ export namespace Prisma {
     role: string
     content: string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutAgentChatsInput
+    chatSession?: ChatSessionCreateNestedOneWithoutMessagesInput
   }
 
   export type AgentChatUncheckedCreateInput = {
     id?: string
     userId: string
+    sessionId?: string | null
     role: string
     content: string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
 
@@ -21367,25 +25616,31 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAgentChatsNestedInput
+    chatSession?: ChatSessionUpdateOneWithoutMessagesNestedInput
   }
 
   export type AgentChatUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AgentChatCreateManyInput = {
     id?: string
     userId: string
+    sessionId?: string | null
     role: string
     content: string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
 
@@ -21394,15 +25649,18 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AgentChatUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21605,6 +25863,224 @@ export namespace Prisma {
     processed?: BoolFieldUpdateOperationsInput | boolean
     error?: NullableStringFieldUpdateOperationsInput | string | null
     receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChatSessionCreateInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutChatSessionsInput
+    messages?: AgentChatCreateNestedManyWithoutChatSessionInput
+  }
+
+  export type ChatSessionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: AgentChatUncheckedCreateNestedManyWithoutChatSessionInput
+  }
+
+  export type ChatSessionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutChatSessionsNestedInput
+    messages?: AgentChatUpdateManyWithoutChatSessionNestedInput
+  }
+
+  export type ChatSessionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: AgentChatUncheckedUpdateManyWithoutChatSessionNestedInput
+  }
+
+  export type ChatSessionCreateManyInput = {
+    id?: string
+    userId: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChatSessionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChatSessionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentCreateInput = {
+    id?: string
+    razorpayOrderId: string
+    razorpayPaymentId?: string | null
+    razorpaySignature?: string | null
+    plan: string
+    amount: number
+    currency?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPaymentsInput
+  }
+
+  export type PaymentUncheckedCreateInput = {
+    id?: string
+    userId: string
+    razorpayOrderId: string
+    razorpayPaymentId?: string | null
+    razorpaySignature?: string | null
+    plan: string
+    amount: number
+    currency?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: StringFieldUpdateOperationsInput | string
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySignature?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPaymentsNestedInput
+  }
+
+  export type PaymentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: StringFieldUpdateOperationsInput | string
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySignature?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentCreateManyInput = {
+    id?: string
+    userId: string
+    razorpayOrderId: string
+    razorpayPaymentId?: string | null
+    razorpaySignature?: string | null
+    plan: string
+    amount: number
+    currency?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: StringFieldUpdateOperationsInput | string
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySignature?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: StringFieldUpdateOperationsInput | string
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySignature?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DailyDigestCreateInput = {
+    id?: string
+    date: Date | string
+    content: JsonNullValueInput | InputJsonValue
+    generated?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutDailyDigestsInput
+  }
+
+  export type DailyDigestUncheckedCreateInput = {
+    id?: string
+    userId: string
+    date: Date | string
+    content: JsonNullValueInput | InputJsonValue
+    generated?: boolean
+    createdAt?: Date | string
+  }
+
+  export type DailyDigestUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: JsonNullValueInput | InputJsonValue
+    generated?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutDailyDigestsNestedInput
+  }
+
+  export type DailyDigestUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: JsonNullValueInput | InputJsonValue
+    generated?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DailyDigestCreateManyInput = {
+    id?: string
+    userId: string
+    date: Date | string
+    content: JsonNullValueInput | InputJsonValue
+    generated?: boolean
+    createdAt?: Date | string
+  }
+
+  export type DailyDigestUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: JsonNullValueInput | InputJsonValue
+    generated?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DailyDigestUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: JsonNullValueInput | InputJsonValue
+    generated?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CorsairIntegrationCreateInput = {
@@ -22170,6 +26646,17 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type AccountListRelationFilter = {
     every?: AccountWhereInput
     some?: AccountWhereInput
@@ -22212,6 +26699,24 @@ export namespace Prisma {
     none?: LabelRuleWhereInput
   }
 
+  export type ChatSessionListRelationFilter = {
+    every?: ChatSessionWhereInput
+    some?: ChatSessionWhereInput
+    none?: ChatSessionWhereInput
+  }
+
+  export type PaymentListRelationFilter = {
+    every?: PaymentWhereInput
+    some?: PaymentWhereInput
+    none?: PaymentWhereInput
+  }
+
+  export type DailyDigestListRelationFilter = {
+    every?: DailyDigestWhereInput
+    some?: DailyDigestWhereInput
+    none?: DailyDigestWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -22240,6 +26745,18 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type ChatSessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PaymentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DailyDigestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
@@ -22253,8 +26770,19 @@ export namespace Prisma {
     onboardingDone?: SortOrder
     preferences?: SortOrder
     theme?: SortOrder
+    plan?: SortOrder
+    planResetDate?: SortOrder
+    aiMessagesUsed?: SortOrder
+    voiceInputUsed?: SortOrder
+    emailComposeUsed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    aiMessagesUsed?: SortOrder
+    voiceInputUsed?: SortOrder
+    emailComposeUsed?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -22269,6 +26797,11 @@ export namespace Prisma {
     tokenExpiresAt?: SortOrder
     onboardingDone?: SortOrder
     theme?: SortOrder
+    plan?: SortOrder
+    planResetDate?: SortOrder
+    aiMessagesUsed?: SortOrder
+    voiceInputUsed?: SortOrder
+    emailComposeUsed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22285,8 +26818,19 @@ export namespace Prisma {
     tokenExpiresAt?: SortOrder
     onboardingDone?: SortOrder
     theme?: SortOrder
+    plan?: SortOrder
+    planResetDate?: SortOrder
+    aiMessagesUsed?: SortOrder
+    voiceInputUsed?: SortOrder
+    emailComposeUsed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    aiMessagesUsed?: SortOrder
+    voiceInputUsed?: SortOrder
+    emailComposeUsed?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -22337,6 +26881,22 @@ export namespace Prisma {
     _max?: NestedJsonFilter<$PrismaModel>
   }
 
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type EmailThreadCountOrderByAggregateInput = {
     id?: SortOrder
     subject?: SortOrder
@@ -22367,17 +26927,6 @@ export namespace Prisma {
     hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
     hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
     isEmpty?: boolean
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type EmailThreadScalarRelationFilter = {
@@ -22463,22 +27012,6 @@ export namespace Prisma {
     priorityScore?: SortOrder
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
   export type CalendarEventCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -22560,18 +27093,26 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type ChatSessionNullableScalarRelationFilter = {
+    is?: ChatSessionWhereInput | null
+    isNot?: ChatSessionWhereInput | null
+  }
+
   export type AgentChatCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    sessionId?: SortOrder
     role?: SortOrder
     content?: SortOrder
     metadata?: SortOrder
+    toolCall?: SortOrder
     createdAt?: SortOrder
   }
 
   export type AgentChatMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    sessionId?: SortOrder
     role?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
@@ -22580,6 +27121,7 @@ export namespace Prisma {
   export type AgentChatMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    sessionId?: SortOrder
     role?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
@@ -22690,6 +27232,110 @@ export namespace Prisma {
     processed?: SortOrder
     error?: SortOrder
     receivedAt?: SortOrder
+  }
+
+  export type ChatSessionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChatSessionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChatSessionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    razorpayOrderId?: SortOrder
+    razorpayPaymentId?: SortOrder
+    razorpaySignature?: SortOrder
+    plan?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type PaymentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    razorpayOrderId?: SortOrder
+    razorpayPaymentId?: SortOrder
+    razorpaySignature?: SortOrder
+    plan?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    razorpayOrderId?: SortOrder
+    razorpayPaymentId?: SortOrder
+    razorpaySignature?: SortOrder
+    plan?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type DailyDigestUserIdDateCompoundUniqueInput = {
+    userId: string
+    date: Date | string
+  }
+
+  export type DailyDigestCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    content?: SortOrder
+    generated?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DailyDigestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    generated?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DailyDigestMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    generated?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type CorsairAccountListRelationFilter = {
@@ -22941,6 +27587,27 @@ export namespace Prisma {
     connect?: LabelRuleWhereUniqueInput | LabelRuleWhereUniqueInput[]
   }
 
+  export type ChatSessionCreateNestedManyWithoutUserInput = {
+    create?: XOR<ChatSessionCreateWithoutUserInput, ChatSessionUncheckedCreateWithoutUserInput> | ChatSessionCreateWithoutUserInput[] | ChatSessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChatSessionCreateOrConnectWithoutUserInput | ChatSessionCreateOrConnectWithoutUserInput[]
+    createMany?: ChatSessionCreateManyUserInputEnvelope
+    connect?: ChatSessionWhereUniqueInput | ChatSessionWhereUniqueInput[]
+  }
+
+  export type PaymentCreateNestedManyWithoutUserInput = {
+    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
+    createMany?: PaymentCreateManyUserInputEnvelope
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type DailyDigestCreateNestedManyWithoutUserInput = {
+    create?: XOR<DailyDigestCreateWithoutUserInput, DailyDigestUncheckedCreateWithoutUserInput> | DailyDigestCreateWithoutUserInput[] | DailyDigestUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyDigestCreateOrConnectWithoutUserInput | DailyDigestCreateOrConnectWithoutUserInput[]
+    createMany?: DailyDigestCreateManyUserInputEnvelope
+    connect?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -22990,12 +27657,41 @@ export namespace Prisma {
     connect?: LabelRuleWhereUniqueInput | LabelRuleWhereUniqueInput[]
   }
 
+  export type ChatSessionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ChatSessionCreateWithoutUserInput, ChatSessionUncheckedCreateWithoutUserInput> | ChatSessionCreateWithoutUserInput[] | ChatSessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChatSessionCreateOrConnectWithoutUserInput | ChatSessionCreateOrConnectWithoutUserInput[]
+    createMany?: ChatSessionCreateManyUserInputEnvelope
+    connect?: ChatSessionWhereUniqueInput | ChatSessionWhereUniqueInput[]
+  }
+
+  export type PaymentUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
+    createMany?: PaymentCreateManyUserInputEnvelope
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type DailyDigestUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<DailyDigestCreateWithoutUserInput, DailyDigestUncheckedCreateWithoutUserInput> | DailyDigestCreateWithoutUserInput[] | DailyDigestUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyDigestCreateOrConnectWithoutUserInput | DailyDigestCreateOrConnectWithoutUserInput[]
+    createMany?: DailyDigestCreateManyUserInputEnvelope
+    connect?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type AccountUpdateManyWithoutUserNestedInput = {
@@ -23096,6 +27792,48 @@ export namespace Prisma {
     deleteMany?: LabelRuleScalarWhereInput | LabelRuleScalarWhereInput[]
   }
 
+  export type ChatSessionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ChatSessionCreateWithoutUserInput, ChatSessionUncheckedCreateWithoutUserInput> | ChatSessionCreateWithoutUserInput[] | ChatSessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChatSessionCreateOrConnectWithoutUserInput | ChatSessionCreateOrConnectWithoutUserInput[]
+    upsert?: ChatSessionUpsertWithWhereUniqueWithoutUserInput | ChatSessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ChatSessionCreateManyUserInputEnvelope
+    set?: ChatSessionWhereUniqueInput | ChatSessionWhereUniqueInput[]
+    disconnect?: ChatSessionWhereUniqueInput | ChatSessionWhereUniqueInput[]
+    delete?: ChatSessionWhereUniqueInput | ChatSessionWhereUniqueInput[]
+    connect?: ChatSessionWhereUniqueInput | ChatSessionWhereUniqueInput[]
+    update?: ChatSessionUpdateWithWhereUniqueWithoutUserInput | ChatSessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ChatSessionUpdateManyWithWhereWithoutUserInput | ChatSessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ChatSessionScalarWhereInput | ChatSessionScalarWhereInput[]
+  }
+
+  export type PaymentUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutUserInput | PaymentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PaymentCreateManyUserInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutUserInput | PaymentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutUserInput | PaymentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  }
+
+  export type DailyDigestUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DailyDigestCreateWithoutUserInput, DailyDigestUncheckedCreateWithoutUserInput> | DailyDigestCreateWithoutUserInput[] | DailyDigestUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyDigestCreateOrConnectWithoutUserInput | DailyDigestCreateOrConnectWithoutUserInput[]
+    upsert?: DailyDigestUpsertWithWhereUniqueWithoutUserInput | DailyDigestUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DailyDigestCreateManyUserInputEnvelope
+    set?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+    disconnect?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+    delete?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+    connect?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+    update?: DailyDigestUpdateWithWhereUniqueWithoutUserInput | DailyDigestUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DailyDigestUpdateManyWithWhereWithoutUserInput | DailyDigestUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DailyDigestScalarWhereInput | DailyDigestScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -23194,6 +27932,48 @@ export namespace Prisma {
     deleteMany?: LabelRuleScalarWhereInput | LabelRuleScalarWhereInput[]
   }
 
+  export type ChatSessionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ChatSessionCreateWithoutUserInput, ChatSessionUncheckedCreateWithoutUserInput> | ChatSessionCreateWithoutUserInput[] | ChatSessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChatSessionCreateOrConnectWithoutUserInput | ChatSessionCreateOrConnectWithoutUserInput[]
+    upsert?: ChatSessionUpsertWithWhereUniqueWithoutUserInput | ChatSessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ChatSessionCreateManyUserInputEnvelope
+    set?: ChatSessionWhereUniqueInput | ChatSessionWhereUniqueInput[]
+    disconnect?: ChatSessionWhereUniqueInput | ChatSessionWhereUniqueInput[]
+    delete?: ChatSessionWhereUniqueInput | ChatSessionWhereUniqueInput[]
+    connect?: ChatSessionWhereUniqueInput | ChatSessionWhereUniqueInput[]
+    update?: ChatSessionUpdateWithWhereUniqueWithoutUserInput | ChatSessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ChatSessionUpdateManyWithWhereWithoutUserInput | ChatSessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ChatSessionScalarWhereInput | ChatSessionScalarWhereInput[]
+  }
+
+  export type PaymentUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutUserInput | PaymentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PaymentCreateManyUserInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutUserInput | PaymentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutUserInput | PaymentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  }
+
+  export type DailyDigestUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DailyDigestCreateWithoutUserInput, DailyDigestUncheckedCreateWithoutUserInput> | DailyDigestCreateWithoutUserInput[] | DailyDigestUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyDigestCreateOrConnectWithoutUserInput | DailyDigestCreateOrConnectWithoutUserInput[]
+    upsert?: DailyDigestUpsertWithWhereUniqueWithoutUserInput | DailyDigestUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DailyDigestCreateManyUserInputEnvelope
+    set?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+    disconnect?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+    delete?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+    connect?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+    update?: DailyDigestUpdateWithWhereUniqueWithoutUserInput | DailyDigestUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DailyDigestUpdateManyWithWhereWithoutUserInput | DailyDigestUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DailyDigestScalarWhereInput | DailyDigestScalarWhereInput[]
+  }
+
   export type EmailCreateNestedManyWithoutThreadInput = {
     create?: XOR<EmailCreateWithoutThreadInput, EmailUncheckedCreateWithoutThreadInput> | EmailCreateWithoutThreadInput[] | EmailUncheckedCreateWithoutThreadInput[]
     connectOrCreate?: EmailCreateOrConnectWithoutThreadInput | EmailCreateOrConnectWithoutThreadInput[]
@@ -23279,14 +28059,6 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type EmailUpdatesensitiveTypesInput = {
     set?: string[]
     push?: string | string[]
@@ -23328,12 +28100,28 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type ChatSessionCreateNestedOneWithoutMessagesInput = {
+    create?: XOR<ChatSessionCreateWithoutMessagesInput, ChatSessionUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: ChatSessionCreateOrConnectWithoutMessagesInput
+    connect?: ChatSessionWhereUniqueInput
+  }
+
   export type UserUpdateOneRequiredWithoutAgentChatsNestedInput = {
     create?: XOR<UserCreateWithoutAgentChatsInput, UserUncheckedCreateWithoutAgentChatsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAgentChatsInput
     upsert?: UserUpsertWithoutAgentChatsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAgentChatsInput, UserUpdateWithoutAgentChatsInput>, UserUncheckedUpdateWithoutAgentChatsInput>
+  }
+
+  export type ChatSessionUpdateOneWithoutMessagesNestedInput = {
+    create?: XOR<ChatSessionCreateWithoutMessagesInput, ChatSessionUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: ChatSessionCreateOrConnectWithoutMessagesInput
+    upsert?: ChatSessionUpsertWithoutMessagesInput
+    disconnect?: ChatSessionWhereInput | boolean
+    delete?: ChatSessionWhereInput | boolean
+    connect?: ChatSessionWhereUniqueInput
+    update?: XOR<XOR<ChatSessionUpdateToOneWithWhereWithoutMessagesInput, ChatSessionUpdateWithoutMessagesInput>, ChatSessionUncheckedUpdateWithoutMessagesInput>
   }
 
   export type UserCreateNestedOneWithoutAgentMemoriesInput = {
@@ -23362,6 +28150,90 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutLabelRulesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLabelRulesInput, UserUpdateWithoutLabelRulesInput>, UserUncheckedUpdateWithoutLabelRulesInput>
+  }
+
+  export type UserCreateNestedOneWithoutChatSessionsInput = {
+    create?: XOR<UserCreateWithoutChatSessionsInput, UserUncheckedCreateWithoutChatSessionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChatSessionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type AgentChatCreateNestedManyWithoutChatSessionInput = {
+    create?: XOR<AgentChatCreateWithoutChatSessionInput, AgentChatUncheckedCreateWithoutChatSessionInput> | AgentChatCreateWithoutChatSessionInput[] | AgentChatUncheckedCreateWithoutChatSessionInput[]
+    connectOrCreate?: AgentChatCreateOrConnectWithoutChatSessionInput | AgentChatCreateOrConnectWithoutChatSessionInput[]
+    createMany?: AgentChatCreateManyChatSessionInputEnvelope
+    connect?: AgentChatWhereUniqueInput | AgentChatWhereUniqueInput[]
+  }
+
+  export type AgentChatUncheckedCreateNestedManyWithoutChatSessionInput = {
+    create?: XOR<AgentChatCreateWithoutChatSessionInput, AgentChatUncheckedCreateWithoutChatSessionInput> | AgentChatCreateWithoutChatSessionInput[] | AgentChatUncheckedCreateWithoutChatSessionInput[]
+    connectOrCreate?: AgentChatCreateOrConnectWithoutChatSessionInput | AgentChatCreateOrConnectWithoutChatSessionInput[]
+    createMany?: AgentChatCreateManyChatSessionInputEnvelope
+    connect?: AgentChatWhereUniqueInput | AgentChatWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutChatSessionsNestedInput = {
+    create?: XOR<UserCreateWithoutChatSessionsInput, UserUncheckedCreateWithoutChatSessionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChatSessionsInput
+    upsert?: UserUpsertWithoutChatSessionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChatSessionsInput, UserUpdateWithoutChatSessionsInput>, UserUncheckedUpdateWithoutChatSessionsInput>
+  }
+
+  export type AgentChatUpdateManyWithoutChatSessionNestedInput = {
+    create?: XOR<AgentChatCreateWithoutChatSessionInput, AgentChatUncheckedCreateWithoutChatSessionInput> | AgentChatCreateWithoutChatSessionInput[] | AgentChatUncheckedCreateWithoutChatSessionInput[]
+    connectOrCreate?: AgentChatCreateOrConnectWithoutChatSessionInput | AgentChatCreateOrConnectWithoutChatSessionInput[]
+    upsert?: AgentChatUpsertWithWhereUniqueWithoutChatSessionInput | AgentChatUpsertWithWhereUniqueWithoutChatSessionInput[]
+    createMany?: AgentChatCreateManyChatSessionInputEnvelope
+    set?: AgentChatWhereUniqueInput | AgentChatWhereUniqueInput[]
+    disconnect?: AgentChatWhereUniqueInput | AgentChatWhereUniqueInput[]
+    delete?: AgentChatWhereUniqueInput | AgentChatWhereUniqueInput[]
+    connect?: AgentChatWhereUniqueInput | AgentChatWhereUniqueInput[]
+    update?: AgentChatUpdateWithWhereUniqueWithoutChatSessionInput | AgentChatUpdateWithWhereUniqueWithoutChatSessionInput[]
+    updateMany?: AgentChatUpdateManyWithWhereWithoutChatSessionInput | AgentChatUpdateManyWithWhereWithoutChatSessionInput[]
+    deleteMany?: AgentChatScalarWhereInput | AgentChatScalarWhereInput[]
+  }
+
+  export type AgentChatUncheckedUpdateManyWithoutChatSessionNestedInput = {
+    create?: XOR<AgentChatCreateWithoutChatSessionInput, AgentChatUncheckedCreateWithoutChatSessionInput> | AgentChatCreateWithoutChatSessionInput[] | AgentChatUncheckedCreateWithoutChatSessionInput[]
+    connectOrCreate?: AgentChatCreateOrConnectWithoutChatSessionInput | AgentChatCreateOrConnectWithoutChatSessionInput[]
+    upsert?: AgentChatUpsertWithWhereUniqueWithoutChatSessionInput | AgentChatUpsertWithWhereUniqueWithoutChatSessionInput[]
+    createMany?: AgentChatCreateManyChatSessionInputEnvelope
+    set?: AgentChatWhereUniqueInput | AgentChatWhereUniqueInput[]
+    disconnect?: AgentChatWhereUniqueInput | AgentChatWhereUniqueInput[]
+    delete?: AgentChatWhereUniqueInput | AgentChatWhereUniqueInput[]
+    connect?: AgentChatWhereUniqueInput | AgentChatWhereUniqueInput[]
+    update?: AgentChatUpdateWithWhereUniqueWithoutChatSessionInput | AgentChatUpdateWithWhereUniqueWithoutChatSessionInput[]
+    updateMany?: AgentChatUpdateManyWithWhereWithoutChatSessionInput | AgentChatUpdateManyWithWhereWithoutChatSessionInput[]
+    deleteMany?: AgentChatScalarWhereInput | AgentChatScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutPaymentsInput = {
+    create?: XOR<UserCreateWithoutPaymentsInput, UserUncheckedCreateWithoutPaymentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPaymentsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
+    create?: XOR<UserCreateWithoutPaymentsInput, UserUncheckedCreateWithoutPaymentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPaymentsInput
+    upsert?: UserUpsertWithoutPaymentsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPaymentsInput, UserUpdateWithoutPaymentsInput>, UserUncheckedUpdateWithoutPaymentsInput>
+  }
+
+  export type UserCreateNestedOneWithoutDailyDigestsInput = {
+    create?: XOR<UserCreateWithoutDailyDigestsInput, UserUncheckedCreateWithoutDailyDigestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDailyDigestsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutDailyDigestsNestedInput = {
+    create?: XOR<UserCreateWithoutDailyDigestsInput, UserUncheckedCreateWithoutDailyDigestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDailyDigestsInput
+    upsert?: UserUpsertWithoutDailyDigestsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDailyDigestsInput, UserUpdateWithoutDailyDigestsInput>, UserUncheckedUpdateWithoutDailyDigestsInput>
   }
 
   export type CorsairAccountCreateNestedManyWithoutIntegrationInput = {
@@ -23792,6 +28664,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
@@ -23800,6 +28677,9 @@ export namespace Prisma {
     agentChats?: AgentChatCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -23815,6 +28695,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -23823,6 +28708,9 @@ export namespace Prisma {
     agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -23854,6 +28742,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
@@ -23862,6 +28755,9 @@ export namespace Prisma {
     agentChats?: AgentChatUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -23877,6 +28773,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -23885,6 +28786,9 @@ export namespace Prisma {
     agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -23900,6 +28804,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -23908,6 +28817,9 @@ export namespace Prisma {
     agentChats?: AgentChatCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -23923,6 +28835,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -23931,6 +28848,9 @@ export namespace Prisma {
     agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -23962,6 +28882,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -23970,6 +28895,9 @@ export namespace Prisma {
     agentChats?: AgentChatUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -23985,6 +28913,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -23993,6 +28926,9 @@ export namespace Prisma {
     agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -24170,14 +29106,18 @@ export namespace Prisma {
     role: string
     content: string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    chatSession?: ChatSessionCreateNestedOneWithoutMessagesInput
   }
 
   export type AgentChatUncheckedCreateWithoutUserInput = {
     id?: string
+    sessionId?: string | null
     role: string
     content: string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
 
@@ -24244,6 +29184,94 @@ export namespace Prisma {
 
   export type LabelRuleCreateManyUserInputEnvelope = {
     data: LabelRuleCreateManyUserInput | LabelRuleCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ChatSessionCreateWithoutUserInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: AgentChatCreateNestedManyWithoutChatSessionInput
+  }
+
+  export type ChatSessionUncheckedCreateWithoutUserInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: AgentChatUncheckedCreateNestedManyWithoutChatSessionInput
+  }
+
+  export type ChatSessionCreateOrConnectWithoutUserInput = {
+    where: ChatSessionWhereUniqueInput
+    create: XOR<ChatSessionCreateWithoutUserInput, ChatSessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type ChatSessionCreateManyUserInputEnvelope = {
+    data: ChatSessionCreateManyUserInput | ChatSessionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PaymentCreateWithoutUserInput = {
+    id?: string
+    razorpayOrderId: string
+    razorpayPaymentId?: string | null
+    razorpaySignature?: string | null
+    plan: string
+    amount: number
+    currency?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentUncheckedCreateWithoutUserInput = {
+    id?: string
+    razorpayOrderId: string
+    razorpayPaymentId?: string | null
+    razorpaySignature?: string | null
+    plan: string
+    amount: number
+    currency?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentCreateOrConnectWithoutUserInput = {
+    where: PaymentWhereUniqueInput
+    create: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput>
+  }
+
+  export type PaymentCreateManyUserInputEnvelope = {
+    data: PaymentCreateManyUserInput | PaymentCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DailyDigestCreateWithoutUserInput = {
+    id?: string
+    date: Date | string
+    content: JsonNullValueInput | InputJsonValue
+    generated?: boolean
+    createdAt?: Date | string
+  }
+
+  export type DailyDigestUncheckedCreateWithoutUserInput = {
+    id?: string
+    date: Date | string
+    content: JsonNullValueInput | InputJsonValue
+    generated?: boolean
+    createdAt?: Date | string
+  }
+
+  export type DailyDigestCreateOrConnectWithoutUserInput = {
+    where: DailyDigestWhereUniqueInput
+    create: XOR<DailyDigestCreateWithoutUserInput, DailyDigestUncheckedCreateWithoutUserInput>
+  }
+
+  export type DailyDigestCreateManyUserInputEnvelope = {
+    data: DailyDigestCreateManyUserInput | DailyDigestCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -24414,9 +29442,11 @@ export namespace Prisma {
     NOT?: AgentChatScalarWhereInput | AgentChatScalarWhereInput[]
     id?: StringFilter<"AgentChat"> | string
     userId?: StringFilter<"AgentChat"> | string
+    sessionId?: StringNullableFilter<"AgentChat"> | string | null
     role?: StringFilter<"AgentChat"> | string
     content?: StringFilter<"AgentChat"> | string
     metadata?: JsonNullableFilter<"AgentChat">
+    toolCall?: JsonNullableFilter<"AgentChat">
     createdAt?: DateTimeFilter<"AgentChat"> | Date | string
   }
 
@@ -24476,6 +29506,94 @@ export namespace Prisma {
     actions?: JsonFilter<"LabelRule">
     isActive?: BoolFilter<"LabelRule"> | boolean
     createdAt?: DateTimeFilter<"LabelRule"> | Date | string
+  }
+
+  export type ChatSessionUpsertWithWhereUniqueWithoutUserInput = {
+    where: ChatSessionWhereUniqueInput
+    update: XOR<ChatSessionUpdateWithoutUserInput, ChatSessionUncheckedUpdateWithoutUserInput>
+    create: XOR<ChatSessionCreateWithoutUserInput, ChatSessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type ChatSessionUpdateWithWhereUniqueWithoutUserInput = {
+    where: ChatSessionWhereUniqueInput
+    data: XOR<ChatSessionUpdateWithoutUserInput, ChatSessionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ChatSessionUpdateManyWithWhereWithoutUserInput = {
+    where: ChatSessionScalarWhereInput
+    data: XOR<ChatSessionUpdateManyMutationInput, ChatSessionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ChatSessionScalarWhereInput = {
+    AND?: ChatSessionScalarWhereInput | ChatSessionScalarWhereInput[]
+    OR?: ChatSessionScalarWhereInput[]
+    NOT?: ChatSessionScalarWhereInput | ChatSessionScalarWhereInput[]
+    id?: StringFilter<"ChatSession"> | string
+    userId?: StringFilter<"ChatSession"> | string
+    title?: StringFilter<"ChatSession"> | string
+    createdAt?: DateTimeFilter<"ChatSession"> | Date | string
+    updatedAt?: DateTimeFilter<"ChatSession"> | Date | string
+  }
+
+  export type PaymentUpsertWithWhereUniqueWithoutUserInput = {
+    where: PaymentWhereUniqueInput
+    update: XOR<PaymentUpdateWithoutUserInput, PaymentUncheckedUpdateWithoutUserInput>
+    create: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput>
+  }
+
+  export type PaymentUpdateWithWhereUniqueWithoutUserInput = {
+    where: PaymentWhereUniqueInput
+    data: XOR<PaymentUpdateWithoutUserInput, PaymentUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PaymentUpdateManyWithWhereWithoutUserInput = {
+    where: PaymentScalarWhereInput
+    data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PaymentScalarWhereInput = {
+    AND?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+    OR?: PaymentScalarWhereInput[]
+    NOT?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+    id?: StringFilter<"Payment"> | string
+    userId?: StringFilter<"Payment"> | string
+    razorpayOrderId?: StringFilter<"Payment"> | string
+    razorpayPaymentId?: StringNullableFilter<"Payment"> | string | null
+    razorpaySignature?: StringNullableFilter<"Payment"> | string | null
+    plan?: StringFilter<"Payment"> | string
+    amount?: IntFilter<"Payment"> | number
+    currency?: StringFilter<"Payment"> | string
+    status?: StringFilter<"Payment"> | string
+    createdAt?: DateTimeFilter<"Payment"> | Date | string
+    updatedAt?: DateTimeFilter<"Payment"> | Date | string
+  }
+
+  export type DailyDigestUpsertWithWhereUniqueWithoutUserInput = {
+    where: DailyDigestWhereUniqueInput
+    update: XOR<DailyDigestUpdateWithoutUserInput, DailyDigestUncheckedUpdateWithoutUserInput>
+    create: XOR<DailyDigestCreateWithoutUserInput, DailyDigestUncheckedCreateWithoutUserInput>
+  }
+
+  export type DailyDigestUpdateWithWhereUniqueWithoutUserInput = {
+    where: DailyDigestWhereUniqueInput
+    data: XOR<DailyDigestUpdateWithoutUserInput, DailyDigestUncheckedUpdateWithoutUserInput>
+  }
+
+  export type DailyDigestUpdateManyWithWhereWithoutUserInput = {
+    where: DailyDigestScalarWhereInput
+    data: XOR<DailyDigestUpdateManyMutationInput, DailyDigestUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type DailyDigestScalarWhereInput = {
+    AND?: DailyDigestScalarWhereInput | DailyDigestScalarWhereInput[]
+    OR?: DailyDigestScalarWhereInput[]
+    NOT?: DailyDigestScalarWhereInput | DailyDigestScalarWhereInput[]
+    id?: StringFilter<"DailyDigest"> | string
+    userId?: StringFilter<"DailyDigest"> | string
+    date?: DateTimeFilter<"DailyDigest"> | Date | string
+    content?: JsonFilter<"DailyDigest">
+    generated?: BoolFilter<"DailyDigest"> | boolean
+    createdAt?: DateTimeFilter<"DailyDigest"> | Date | string
   }
 
   export type EmailCreateWithoutThreadInput = {
@@ -24567,6 +29685,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -24575,6 +29698,9 @@ export namespace Prisma {
     agentChats?: AgentChatCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEmailsInput = {
@@ -24590,6 +29716,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -24598,6 +29729,9 @@ export namespace Prisma {
     agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEmailsInput = {
@@ -24650,6 +29784,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -24658,6 +29797,9 @@ export namespace Prisma {
     agentChats?: AgentChatUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEmailsInput = {
@@ -24673,6 +29815,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -24681,6 +29828,9 @@ export namespace Prisma {
     agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type EmailThreadUpsertWithoutEmailsInput = {
@@ -24723,6 +29873,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -24731,6 +29886,9 @@ export namespace Prisma {
     agentChats?: AgentChatCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCalendarEventsInput = {
@@ -24746,6 +29904,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -24754,6 +29917,9 @@ export namespace Prisma {
     agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCalendarEventsInput = {
@@ -24785,6 +29951,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -24793,6 +29964,9 @@ export namespace Prisma {
     agentChats?: AgentChatUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCalendarEventsInput = {
@@ -24808,6 +29982,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -24816,6 +29995,9 @@ export namespace Prisma {
     agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAgentChatsInput = {
@@ -24831,6 +30013,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -24839,6 +30026,9 @@ export namespace Prisma {
     calendarEvents?: CalendarEventCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAgentChatsInput = {
@@ -24854,6 +30044,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -24862,11 +30057,35 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAgentChatsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutAgentChatsInput, UserUncheckedCreateWithoutAgentChatsInput>
+  }
+
+  export type ChatSessionCreateWithoutMessagesInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutChatSessionsInput
+  }
+
+  export type ChatSessionUncheckedCreateWithoutMessagesInput = {
+    id?: string
+    userId: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChatSessionCreateOrConnectWithoutMessagesInput = {
+    where: ChatSessionWhereUniqueInput
+    create: XOR<ChatSessionCreateWithoutMessagesInput, ChatSessionUncheckedCreateWithoutMessagesInput>
   }
 
   export type UserUpsertWithoutAgentChatsInput = {
@@ -24893,6 +30112,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -24901,6 +30125,9 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAgentChatsInput = {
@@ -24916,6 +30143,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -24924,6 +30156,36 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ChatSessionUpsertWithoutMessagesInput = {
+    update: XOR<ChatSessionUpdateWithoutMessagesInput, ChatSessionUncheckedUpdateWithoutMessagesInput>
+    create: XOR<ChatSessionCreateWithoutMessagesInput, ChatSessionUncheckedCreateWithoutMessagesInput>
+    where?: ChatSessionWhereInput
+  }
+
+  export type ChatSessionUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: ChatSessionWhereInput
+    data: XOR<ChatSessionUpdateWithoutMessagesInput, ChatSessionUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type ChatSessionUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutChatSessionsNestedInput
+  }
+
+  export type ChatSessionUncheckedUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateWithoutAgentMemoriesInput = {
@@ -24939,6 +30201,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -24947,6 +30214,9 @@ export namespace Prisma {
     calendarEvents?: CalendarEventCreateNestedManyWithoutUserInput
     agentChats?: AgentChatCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAgentMemoriesInput = {
@@ -24962,6 +30232,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -24970,6 +30245,9 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutUserInput
     agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
     labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAgentMemoriesInput = {
@@ -25001,6 +30279,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -25009,6 +30292,9 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUpdateManyWithoutUserNestedInput
     agentChats?: AgentChatUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAgentMemoriesInput = {
@@ -25024,6 +30310,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -25032,6 +30323,9 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutUserNestedInput
     agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
     labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutLabelRulesInput = {
@@ -25047,6 +30341,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -25055,6 +30354,9 @@ export namespace Prisma {
     calendarEvents?: CalendarEventCreateNestedManyWithoutUserInput
     agentChats?: AgentChatCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLabelRulesInput = {
@@ -25070,6 +30372,11 @@ export namespace Prisma {
     onboardingDone?: boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -25078,6 +30385,9 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutUserInput
     agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
     agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLabelRulesInput = {
@@ -25109,6 +30419,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -25117,6 +30432,9 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUpdateManyWithoutUserNestedInput
     agentChats?: AgentChatUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLabelRulesInput = {
@@ -25132,6 +30450,11 @@ export namespace Prisma {
     onboardingDone?: BoolFieldUpdateOperationsInput | boolean
     preferences?: JsonNullValueInput | InputJsonValue
     theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -25140,6 +30463,475 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutUserNestedInput
     agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
     agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutChatSessionsInput = {
+    id?: string
+    email?: string | null
+    name?: string | null
+    image?: string | null
+    emailVerified?: Date | string | null
+    provider?: string
+    googleAccessToken?: string | null
+    googleRefreshToken?: string | null
+    tokenExpiresAt?: Date | string | null
+    onboardingDone?: boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    emails?: EmailCreateNestedManyWithoutUserInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutUserInput
+    agentChats?: AgentChatCreateNestedManyWithoutUserInput
+    agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
+    labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutChatSessionsInput = {
+    id?: string
+    email?: string | null
+    name?: string | null
+    image?: string | null
+    emailVerified?: Date | string | null
+    provider?: string
+    googleAccessToken?: string | null
+    googleRefreshToken?: string | null
+    tokenExpiresAt?: Date | string | null
+    onboardingDone?: boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    emails?: EmailUncheckedCreateNestedManyWithoutUserInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutUserInput
+    agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
+    agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
+    labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutChatSessionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutChatSessionsInput, UserUncheckedCreateWithoutChatSessionsInput>
+  }
+
+  export type AgentChatCreateWithoutChatSessionInput = {
+    id?: string
+    role: string
+    content: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutAgentChatsInput
+  }
+
+  export type AgentChatUncheckedCreateWithoutChatSessionInput = {
+    id?: string
+    userId: string
+    role: string
+    content: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AgentChatCreateOrConnectWithoutChatSessionInput = {
+    where: AgentChatWhereUniqueInput
+    create: XOR<AgentChatCreateWithoutChatSessionInput, AgentChatUncheckedCreateWithoutChatSessionInput>
+  }
+
+  export type AgentChatCreateManyChatSessionInputEnvelope = {
+    data: AgentChatCreateManyChatSessionInput | AgentChatCreateManyChatSessionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutChatSessionsInput = {
+    update: XOR<UserUpdateWithoutChatSessionsInput, UserUncheckedUpdateWithoutChatSessionsInput>
+    create: XOR<UserCreateWithoutChatSessionsInput, UserUncheckedCreateWithoutChatSessionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutChatSessionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutChatSessionsInput, UserUncheckedUpdateWithoutChatSessionsInput>
+  }
+
+  export type UserUpdateWithoutChatSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: StringFieldUpdateOperationsInput | string
+    googleAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    googleRefreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingDone?: BoolFieldUpdateOperationsInput | boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    emails?: EmailUpdateManyWithoutUserNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutUserNestedInput
+    agentChats?: AgentChatUpdateManyWithoutUserNestedInput
+    agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
+    labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutChatSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: StringFieldUpdateOperationsInput | string
+    googleAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    googleRefreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingDone?: BoolFieldUpdateOperationsInput | boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    emails?: EmailUncheckedUpdateManyWithoutUserNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutUserNestedInput
+    agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
+    agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
+    labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type AgentChatUpsertWithWhereUniqueWithoutChatSessionInput = {
+    where: AgentChatWhereUniqueInput
+    update: XOR<AgentChatUpdateWithoutChatSessionInput, AgentChatUncheckedUpdateWithoutChatSessionInput>
+    create: XOR<AgentChatCreateWithoutChatSessionInput, AgentChatUncheckedCreateWithoutChatSessionInput>
+  }
+
+  export type AgentChatUpdateWithWhereUniqueWithoutChatSessionInput = {
+    where: AgentChatWhereUniqueInput
+    data: XOR<AgentChatUpdateWithoutChatSessionInput, AgentChatUncheckedUpdateWithoutChatSessionInput>
+  }
+
+  export type AgentChatUpdateManyWithWhereWithoutChatSessionInput = {
+    where: AgentChatScalarWhereInput
+    data: XOR<AgentChatUpdateManyMutationInput, AgentChatUncheckedUpdateManyWithoutChatSessionInput>
+  }
+
+  export type UserCreateWithoutPaymentsInput = {
+    id?: string
+    email?: string | null
+    name?: string | null
+    image?: string | null
+    emailVerified?: Date | string | null
+    provider?: string
+    googleAccessToken?: string | null
+    googleRefreshToken?: string | null
+    tokenExpiresAt?: Date | string | null
+    onboardingDone?: boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    emails?: EmailCreateNestedManyWithoutUserInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutUserInput
+    agentChats?: AgentChatCreateNestedManyWithoutUserInput
+    agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
+    labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPaymentsInput = {
+    id?: string
+    email?: string | null
+    name?: string | null
+    image?: string | null
+    emailVerified?: Date | string | null
+    provider?: string
+    googleAccessToken?: string | null
+    googleRefreshToken?: string | null
+    tokenExpiresAt?: Date | string | null
+    onboardingDone?: boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    emails?: EmailUncheckedCreateNestedManyWithoutUserInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutUserInput
+    agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
+    agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
+    labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPaymentsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPaymentsInput, UserUncheckedCreateWithoutPaymentsInput>
+  }
+
+  export type UserUpsertWithoutPaymentsInput = {
+    update: XOR<UserUpdateWithoutPaymentsInput, UserUncheckedUpdateWithoutPaymentsInput>
+    create: XOR<UserCreateWithoutPaymentsInput, UserUncheckedCreateWithoutPaymentsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPaymentsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPaymentsInput, UserUncheckedUpdateWithoutPaymentsInput>
+  }
+
+  export type UserUpdateWithoutPaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: StringFieldUpdateOperationsInput | string
+    googleAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    googleRefreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingDone?: BoolFieldUpdateOperationsInput | boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    emails?: EmailUpdateManyWithoutUserNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutUserNestedInput
+    agentChats?: AgentChatUpdateManyWithoutUserNestedInput
+    agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
+    labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPaymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: StringFieldUpdateOperationsInput | string
+    googleAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    googleRefreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingDone?: BoolFieldUpdateOperationsInput | boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    emails?: EmailUncheckedUpdateManyWithoutUserNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutUserNestedInput
+    agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
+    agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
+    labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutDailyDigestsInput = {
+    id?: string
+    email?: string | null
+    name?: string | null
+    image?: string | null
+    emailVerified?: Date | string | null
+    provider?: string
+    googleAccessToken?: string | null
+    googleRefreshToken?: string | null
+    tokenExpiresAt?: Date | string | null
+    onboardingDone?: boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    emails?: EmailCreateNestedManyWithoutUserInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutUserInput
+    agentChats?: AgentChatCreateNestedManyWithoutUserInput
+    agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
+    labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutDailyDigestsInput = {
+    id?: string
+    email?: string | null
+    name?: string | null
+    image?: string | null
+    emailVerified?: Date | string | null
+    provider?: string
+    googleAccessToken?: string | null
+    googleRefreshToken?: string | null
+    tokenExpiresAt?: Date | string | null
+    onboardingDone?: boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    emails?: EmailUncheckedCreateNestedManyWithoutUserInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutUserInput
+    agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
+    agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
+    labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutDailyDigestsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDailyDigestsInput, UserUncheckedCreateWithoutDailyDigestsInput>
+  }
+
+  export type UserUpsertWithoutDailyDigestsInput = {
+    update: XOR<UserUpdateWithoutDailyDigestsInput, UserUncheckedUpdateWithoutDailyDigestsInput>
+    create: XOR<UserCreateWithoutDailyDigestsInput, UserUncheckedCreateWithoutDailyDigestsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDailyDigestsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDailyDigestsInput, UserUncheckedUpdateWithoutDailyDigestsInput>
+  }
+
+  export type UserUpdateWithoutDailyDigestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: StringFieldUpdateOperationsInput | string
+    googleAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    googleRefreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingDone?: BoolFieldUpdateOperationsInput | boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    emails?: EmailUpdateManyWithoutUserNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutUserNestedInput
+    agentChats?: AgentChatUpdateManyWithoutUserNestedInput
+    agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
+    labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDailyDigestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: StringFieldUpdateOperationsInput | string
+    googleAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    googleRefreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingDone?: BoolFieldUpdateOperationsInput | boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    emails?: EmailUncheckedUpdateManyWithoutUserNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutUserNestedInput
+    agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
+    agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
+    labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CorsairAccountCreateWithoutIntegrationInput = {
@@ -25559,9 +31351,11 @@ export namespace Prisma {
 
   export type AgentChatCreateManyUserInput = {
     id?: string
+    sessionId?: string | null
     role: string
     content: string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
 
@@ -25580,6 +31374,34 @@ export namespace Prisma {
     conditions: JsonNullValueInput | InputJsonValue
     actions: JsonNullValueInput | InputJsonValue
     isActive?: boolean
+    createdAt?: Date | string
+  }
+
+  export type ChatSessionCreateManyUserInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentCreateManyUserInput = {
+    id?: string
+    razorpayOrderId: string
+    razorpayPaymentId?: string | null
+    razorpaySignature?: string | null
+    plan: string
+    amount: number
+    currency?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DailyDigestCreateManyUserInput = {
+    id?: string
+    date: Date | string
+    content: JsonNullValueInput | InputJsonValue
+    generated?: boolean
     createdAt?: Date | string
   }
 
@@ -25783,22 +31605,28 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chatSession?: ChatSessionUpdateOneWithoutMessagesNestedInput
   }
 
   export type AgentChatUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AgentChatUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -25853,6 +31681,92 @@ export namespace Prisma {
     conditions?: JsonNullValueInput | InputJsonValue
     actions?: JsonNullValueInput | InputJsonValue
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChatSessionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: AgentChatUpdateManyWithoutChatSessionNestedInput
+  }
+
+  export type ChatSessionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: AgentChatUncheckedUpdateManyWithoutChatSessionNestedInput
+  }
+
+  export type ChatSessionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: StringFieldUpdateOperationsInput | string
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySignature?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: StringFieldUpdateOperationsInput | string
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySignature?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: StringFieldUpdateOperationsInput | string
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpaySignature?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DailyDigestUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: JsonNullValueInput | InputJsonValue
+    generated?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DailyDigestUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: JsonNullValueInput | InputJsonValue
+    generated?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DailyDigestUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: JsonNullValueInput | InputJsonValue
+    generated?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -25954,6 +31868,46 @@ export namespace Prisma {
     receivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AgentChatCreateManyChatSessionInput = {
+    id?: string
+    userId: string
+    role: string
+    content: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AgentChatUpdateWithoutChatSessionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAgentChatsNestedInput
+  }
+
+  export type AgentChatUncheckedUpdateWithoutChatSessionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AgentChatUncheckedUpdateManyWithoutChatSessionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    toolCall?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CorsairAccountCreateManyIntegrationInput = {

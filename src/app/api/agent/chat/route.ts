@@ -37,7 +37,7 @@ async function groqChatCompletionWithRetry(params: any, retries = 2) {
   }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     const session = await auth();
     if (!session?.user?.id) {
@@ -45,8 +45,16 @@ export async function GET() {
     }
 
     const userId = session.user.id;
+    const { searchParams } = new URL(req.url);
+    const sessionId = searchParams.get("sessionId");
+
+    if (!sessionId) {
+      // If no session ID is provided, return empty history
+      return NextResponse.json({ history: [] });
+    }
+
     const history = await db.agentChat.findMany({
-      where: { userId },
+      where: { userId, sessionId },
       orderBy: { createdAt: "asc" },
       take: 50,
     });
@@ -66,8 +74,8 @@ export async function POST(req: Request) {
     }
 
     const userId = session.user.id;
-    const body = (await req.json()) as { message: string };
-    const { message } = body;
+    const body = (await req.json()) as { message: string; sessionId?: string };
+    const { message, sessionId } = body;
 
     if (!message) {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
@@ -79,9 +87,9 @@ export async function POST(req: Request) {
       ? memories.map((m) => `- ${m}`).join("\n")
       : "No past context recorded yet.";
 
-    // 2. Fetch past 15 chat messages from DB
+    // 2. Fetch past 15 chat messages from DB for this session
     const dbHistory = await db.agentChat.findMany({
-      where: { userId },
+      where: sessionId ? { userId, sessionId } : { userId },
       orderBy: { createdAt: "asc" },
       take: 15,
     });
@@ -210,6 +218,19 @@ ${memoryContext}`;
 
       // A. Write tools (send_email, create_event) -> Return tool call information to client for UI confirmation card
       if (toolName === "send_email" || toolName === "create_event") {
+        // Create user message in DB first
+        await db.agentChat.create({
+          data: { userId, role: "user", content: message, sessionId },
+        });
+
+        // Update session timestamp
+        if (sessionId) {
+          await db.chatSession.update({
+            where: { id: sessionId },
+            data: { updatedAt: new Date() },
+          });
+        }
+
         return NextResponse.json({
           type: "action_required",
           toolCall: {
@@ -257,10 +278,18 @@ ${memoryContext}`;
       // Save user & assistant messages to DB
       await db.agentChat.createMany({
         data: [
-          { userId, role: "user", content: message },
-          { userId, role: "assistant", content: finalText },
+          { userId, role: "user", content: message, sessionId },
+          { userId, role: "assistant", content: finalText, sessionId },
         ],
       });
+
+      // Update session timestamp
+      if (sessionId) {
+        await db.chatSession.update({
+          where: { id: sessionId },
+          data: { updatedAt: new Date() },
+        });
+      }
 
       // Background save to Mem0
       addMemory(userId, [
@@ -280,10 +309,18 @@ ${memoryContext}`;
     // Save user & assistant messages to DB
     await db.agentChat.createMany({
       data: [
-        { userId, role: "user", content: message },
-        { userId, role: "assistant", content: plainText },
+        { userId, role: "user", content: message, sessionId },
+        { userId, role: "assistant", content: plainText, sessionId },
       ],
     });
+
+    // Update session timestamp
+    if (sessionId) {
+      await db.chatSession.update({
+        where: { id: sessionId },
+        data: { updatedAt: new Date() },
+      });
+    }
 
     // Background save to Mem0
     addMemory(userId, [
