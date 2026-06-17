@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     creator: "@valorahq",
   },
   icons: [
-    { rel: "icon", url: "/favicon.ico" },
+    { rel: "icon", url: "/valora_logo.png" },
     { rel: "apple-touch-icon", url: "/valora_logo.png" },
   ],
   keywords: [
