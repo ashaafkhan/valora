@@ -138,24 +138,6 @@ export default function ComposeModal() {
 
   if (!isComposing) return null;
 
-  return (
-    <div
-      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center"
-      onClick={(e) => { if (e.target === e.currentTarget) closeCompose(); }}
-    >
-      <div className="bg-surface border border-border rounded-2xl shadow-2xl w-full max-w-2xl mx-4 flex flex-col z-50 overflow-hidden animate-slide-up">
-        {/* Header Bar */}
-        <div className="px-5 py-3.5 bg-surface-hover/50 border-b border-border flex items-center justify-between">
-        <span className="text-xs font-mono uppercase tracking-widest text-[#0066ff] font-bold flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-[#60a5fa]" />
-          New Message
-        </span>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={closeCompose}
-            className="p-1 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-hover transition"
-          >
-            <X className="w-4 h-4" />
           </button>
         </div>
       </div>

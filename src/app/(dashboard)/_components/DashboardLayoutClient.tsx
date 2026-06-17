@@ -25,7 +25,7 @@ export default function DashboardLayoutClient({
   user: { name?: string | null; email?: string | null; image?: string | null };
 }) {
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
-  const { toggleCommandPalette, closePalette, isOpen: paletteOpen } = useCommandPalette();
+  const { toggle: toggleCommandPalette, close: closePalette, isOpen: paletteOpen } = useCommandPalette();
   const { openCompose } = useEmailStore();
   const [navChord, setNavChord] = useState<string | null>(null);
   const router = useRouter();
@@ -138,7 +138,7 @@ export default function DashboardLayoutClient({
     <div className="flex h-screen w-screen overflow-hidden bg-background text-text-primary theme-transition">
       <Sidebar
         user={user}
-        onCompose={() => setComposeOpen(true)}
+        onCompose={() => openCompose()}
       />
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <div className="flex-1 overflow-hidden">
