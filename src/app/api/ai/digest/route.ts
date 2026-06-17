@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import { groq } from "@/lib/groq";
+import { groq } from "@/lib/ai";
 
 export async function GET() {
   try {
