@@ -81,10 +81,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
     }
 
-    // 1. Search memory context from Mem0
-    const memories = await searchMemory(userId, message);
-    const memoryContext = memories.length > 0 
-      ? memories.map((m) => `- ${m}`).join("\n")
+    // 1. Fetch user memory context from database
+    const localMemories = await db.agentMemory.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+      take: 20,
+    });
+    const memoryContext = localMemories.length > 0 
+      ? localMemories.map((m) => `- ${m.content}`).join("\n")
       : "No past context recorded yet.";
 
     // 2. Fetch past 15 chat messages from DB for this session
@@ -169,17 +173,32 @@ export async function POST(req: Request) {
           },
         },
       },
+      {
+        type: "function" as const,
+        function: {
+          name: "store_memory",
+          description: "Store a specific preference or fact about the user in long-term memory.",
+          parameters: {
+            type: "object",
+            properties: {
+              content: { type: "string", description: "The fact or preference to remember (e.g. 'User likes apples', 'User's boss is Sarah')" },
+              category: { type: "string", description: "Optional category (e.g. 'preference', 'contact', 'general')" }
+            },
+            required: ["content"],
+          },
+        },
+      },
     ];
 
     const systemPrompt = `You are Valora, a premium AI executive assistant for Gmail and Google Calendar.
 You help busy professionals manage their inbox, compose emails, and organize their schedules.
 
-You have access to tools to help the user.
+You have access to tools to help the user. Use 'store_memory' if the user explicitly asks you to remember something or states a preference.
 Important rules:
 1. ALWAYS confirm with the user before sending emails or creating events. The UI handles the confirmation cards, so you must call the tool, and the system will present a card to the user.
 2. NEVER expose sensitive information (e.g. passwords, OTPs, full bank details).
 3. Be concise and professional — users are busy.
-4. SCOPE GUARDRAIL: You are strictly an executive assistant. Your ONLY capabilities are managing emails and calendar events. If the user asks about ANYTHING outside this scope (e.g., general knowledge, coding, math, writing essays, or unrelated advice), you MUST politely decline. Briefly explain that you are specialized in inbox and calendar management to keep their workflow optimized.
+4. SCOPE GUARDRAIL: You are strictly an executive assistant. Your ONLY capabilities are managing emails and calendar events, and remembering user preferences. If the user asks about ANYTHING outside this scope (e.g., general knowledge, coding, math, writing essays, or unrelated advice), you MUST politely decline. Briefly explain that you are specialized in inbox and calendar management to keep their workflow optimized.
 5. Current time: ${new Date().toISOString()}.
 
 User Preferences/Context:
@@ -258,7 +277,7 @@ ${memoryContext}`;
         });
       }
 
-      // B. Read-only tools (search_emails, get_schedule) -> Execute immediately and continue the chain
+      // B. Read-only tools (search_emails, get_schedule, store_memory) -> Execute immediately and continue the chain
       let toolResultData: unknown;
       if (toolName === "search_emails") {
         const query = String(toolArgs.query ?? "");
@@ -268,6 +287,19 @@ ${memoryContext}`;
         const days = typeof toolArgs.days === "number" ? toolArgs.days : 7;
         const res = await executeGetSchedule({ userId, days });
         toolResultData = res.success ? res.data : { error: res.error };
+      } else if (toolName === "store_memory") {
+        const content = String(toolArgs.content ?? "");
+        const category = toolArgs.category ? String(toolArgs.category) : "preference";
+        
+        await db.agentMemory.create({
+          data: {
+            userId,
+            content,
+            category,
+          }
+        });
+        
+        toolResultData = { success: true, message: "Memory stored successfully." };
       }
 
       // Feed tool result back to Groq for final textual answer (with Retry/Fallback)
