@@ -6,7 +6,7 @@ import { generateOAuthUrl } from "corsair/oauth";
 import { db } from "@/server/db";
 
 export async function getOAuthUrl(pluginId: string, userId: string) {
-  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"}/api/corsair/callback`;
+  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL ?? "https://valorahq.in"}/api/corsair/callback`;
   const result = await generateOAuthUrl(corsair, pluginId, {
     tenantId: userId,
     redirectUri,
