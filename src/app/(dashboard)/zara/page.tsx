@@ -17,18 +17,15 @@ interface ChatSession {
 function ZaraAvatar({ size = 40, thinking = false }: { size?: number; thinking?: boolean }) {
   return (
     <div
-      className={`rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white transition-all ${
-        thinking ? "animate-zara-think" : ""
+      className={`rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white transition-all overflow-hidden bg-surface-hover ${
+        thinking ? "animate-zara-think shadow-[0_0_0_3px_rgba(0,102,255,0.3)]" : "border border-border"
       }`}
       style={{
         width: size,
         height: size,
-        fontSize: size * 0.38,
-        background: "linear-gradient(135deg, #0066FF 0%, #7C3AED 100%)",
-        boxShadow: thinking ? "0 0 0 3px rgba(0, 102, 255, 0.3)" : "none",
       }}
     >
-      Z
+      <img src="/robot.webp" alt="Zara AI" className="w-full h-full object-cover" />
     </div>
   );
 }
@@ -530,7 +527,7 @@ export default function ZaraPage() {
         <div className="flex items-center gap-4 px-6 py-4 border-b border-border bg-surface/50">
           <ZaraAvatar size={44} thinking={isThinking} />
           <div>
-            <h1 className="text-base font-bold text-text-primary">Zara</h1>
+            <h1 className="text-base font-bold text-text-primary">Zara AI</h1>
             <p className="text-xs text-text-muted">Your personal AI for email and calendar</p>
           </div>
         </div>

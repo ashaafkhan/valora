@@ -25,15 +25,13 @@ interface SidebarProps {
 function ZaraAvatar({ size = 24 }: { size?: number }) {
   return (
     <div
-      className="rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white"
+      className="rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white overflow-hidden border border-border"
       style={{
         width: size,
         height: size,
-        fontSize: size * 0.4,
-        background: "linear-gradient(135deg, #0066FF 0%, #7C3AED 100%)",
       }}
     >
-      Z
+      <img src="/robot.webp" alt="Zara AI" className="w-full h-full object-cover" />
     </div>
   );
 }
@@ -63,7 +61,7 @@ const TOOLS_NAV: NavItem[] = [
 
 const APP_NAV: NavItem[] = [
   { label: "Calendar", href: "/calendar", icon: Calendar, shortcut: "C" },
-  { label: "Zara", href: "/zara", icon: Sparkles, shortcut: "A", isNew: true },
+  { label: "Zara AI", href: "/zara", icon: Sparkles, shortcut: "A", isNew: true },
 ];
 
 const ACCOUNT_NAV: NavItem[] = [
