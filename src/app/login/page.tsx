@@ -12,6 +12,7 @@ interface PageProps {
 export default async function LoginPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const error = params.error;
+  const githubEnabled = Boolean(process.env.AUTH_GITHUB_ID && process.env.AUTH_GITHUB_SECRET);
 
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center bg-background px-4">
@@ -70,6 +71,28 @@ export default async function LoginPage({ searchParams }: PageProps) {
                 </span>
               </button>
             </form>
+
+            {githubEnabled && (
+              <form
+                action={async () => {
+                  "use server";
+                  await signIn("github", { redirectTo: "/onboarding" });
+                }}
+              >
+                <button
+                  type="submit"
+                  className="w-full py-3.5 px-5 bg-surface hover:bg-surface-hover text-text-primary rounded-xl
+                             font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5
+                             flex items-center gap-3 border border-border cursor-pointer group"
+                >
+                  <GitHubIcon />
+                  Continue with GitHub
+                  <span className="ml-auto text-xs text-text-muted font-mono bg-white/5 px-2 py-0.5 rounded-full">
+                    optional
+                  </span>
+                </button>
+              </form>
+            )}
           </div>
         </div>
 

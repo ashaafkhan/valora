@@ -24,7 +24,7 @@ Built with Next.js, Postgres, and Corsair. AI-powered with Groq and memory via M
 | Framework | Next.js 15 (App Router) |
 | Styling | Tailwind CSS v4 + Radix UI |
 | Database | PostgreSQL (Neon) + pgvector |
-| Auth | NextAuth.js v5 (Google OAuth) |
+| Auth | NextAuth.js v5 (Google + optional GitHub OAuth) |
 | AI | Groq (llama-3.3-70b) + Mem0 |
 | Email/Calendar | Corsair SDK |
 | ORM | Prisma |
@@ -37,6 +37,7 @@ See [SETUP.md](./SETUP.md) for complete setup instructions.
 
 - [ARCHITECTURE.md](./ARCHITECTURE.md) — System design, tech decisions, data flows
 - [CORSAIR_FEATURES.md](./CORSAIR_FEATURES.md) — All Corsair integrations used
+- [VALORA_COMPLETION.md](./VALORA_COMPLETION.md) — Build status and remaining payment scope
 
 ## Scripts
 

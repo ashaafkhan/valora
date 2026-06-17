@@ -32,8 +32,11 @@ Open `.env` and fill in all values:
 | `AUTH_SECRET` | Yes | `openssl rand -base64 32` |
 | `AUTH_GOOGLE_ID` | Yes | [Google Cloud Console](https://console.cloud.google.com) — create OAuth 2.0 credentials |
 | `AUTH_GOOGLE_SECRET` | Yes | Same as above |
+| `AUTH_GITHUB_ID` | No | [GitHub Developer Settings](https://github.com/settings/developers) — optional secondary login |
+| `AUTH_GITHUB_SECRET` | No | Same as above |
 | `DATABASE_URL` | Yes | [Neon](https://neon.tech) — create project, copy connection string |
 | `CORSAIR_KEK` | Yes | `openssl rand -hex 32` |
+| `CORSAIR_API_KEY` | Local | Use `self_hosted` for the bundled Corsair route, or your hosted Corsair key |
 | `CORSAIR_WEBHOOK_SECRET` | Yes | `openssl rand -hex 32` |
 | `GROQ_API_KEY` | Yes | [Groq Console](https://console.groq.com) |
 | `MEM0_API_KEY` | No | [Mem0](https://app.mem0.ai) — agent memory, optional |
@@ -62,10 +65,10 @@ pnpm db:studio  # (Optional) Open Prisma Studio to inspect data
 ## 4. Corsair Setup
 
 ```bash
-pnpm corsair:setup  # Runs @corsair-dev/cli setup wizard
+pnpm setup:webhooks  # Registers Gmail + Calendar webhook endpoints
 ```
 
-This creates the required Corsair database tables and configures the SDK.
+The app uses the bundled `/api/corsair/*` route for local Corsair connections. Make sure `CORSAIR_KEK`, `NEXT_PUBLIC_APP_URL`, and `CORSAIR_WEBHOOK_SECRET` are set before connecting Gmail or Calendar.
 
 ---
 
