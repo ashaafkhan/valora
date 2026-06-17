@@ -32,8 +32,6 @@ Open `.env` and fill in all values:
 | `AUTH_SECRET` | Yes | `openssl rand -base64 32` |
 | `AUTH_GOOGLE_ID` | Yes | [Google Cloud Console](https://console.cloud.google.com) — create OAuth 2.0 credentials |
 | `AUTH_GOOGLE_SECRET` | Yes | Same as above |
-| `AUTH_GITHUB_ID` | No | [GitHub Developer Settings](https://github.com/settings/developers) — optional secondary login |
-| `AUTH_GITHUB_SECRET` | No | Same as above |
 | `DATABASE_URL` | Yes | [Neon](https://neon.tech) — create project, copy connection string |
 | `CORSAIR_KEK` | Yes | `openssl rand -hex 32` |
 | `CORSAIR_API_KEY` | Local | Use `self_hosted` for the bundled Corsair route, or your hosted Corsair key |

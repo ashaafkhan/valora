@@ -5,7 +5,7 @@ This build implements the PRD scope except Razorpay/payment flows, which are int
 ## Completed
 
 - Next.js dashboard shell with inbox, calendar, search, agent, onboarding, settings, login, privacy, and terms pages.
-- Google OAuth and optional GitHub OAuth through NextAuth.
+- Google OAuth through NextAuth.
 - Corsair-backed Gmail and Google Calendar service layer.
 - Authenticated REST endpoints for Gmail messages, threads, labels, send, draft, archive, read, and star actions.
 - Authenticated REST endpoints for Calendar events, create, update, delete, conflict checks, and natural-language schedule parsing.
