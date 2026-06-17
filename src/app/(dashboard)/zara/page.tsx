@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Plus, Trash2, Send, Mic, Brain, PanelRightClose, PanelRightOpen, Sparkles, Loader2 } from "lucide-react";
+import { Plus, Trash2, Send, Mic, Sparkles, Loader2 } from "lucide-react";
 import { format, isToday, isYesterday, isThisWeek } from "date-fns";
 import { AgentMessage, type ChatMessage, type ToolCallData } from "@/components/agent/AgentMessage";
-import { MemoryContext } from "@/components/agent/MemoryContext";
 
 // ── Types ─────────────────────────────────────────────────────
 interface ChatSession {
@@ -141,7 +140,6 @@ export default function ZaraPage() {
   const [input, setInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
   const [isActionLoading, setIsActionLoading] = useState(false);
-  const [showMemory, setShowMemory] = useState(false);
   const [loadingSessions, setLoadingSessions] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -534,21 +532,6 @@ export default function ZaraPage() {
             <h1 className="text-base font-bold text-text-primary">Zara</h1>
             <p className="text-xs text-text-muted">Your personal AI for email and calendar</p>
           </div>
-          <div className="ml-auto flex items-center gap-4">
-            <div className="flex items-center gap-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-              <span className="text-[10px] font-semibold text-text-muted uppercase">Online</span>
-            </div>
-            
-            {/* Toggle memory sidebar */}
-            <button
-              onClick={() => setShowMemory((v) => !v)}
-              className="p-1.5 rounded-xl border border-border bg-surface hover:bg-surface-hover text-text-secondary hover:text-primary-light transition cursor-pointer"
-              title={showMemory ? "Hide memory panel" : "Show memory panel"}
-            >
-              {showMemory ? <PanelRightClose className="w-4 h-4" /> : <Brain className="w-4 h-4" />}
-            </button>
-          </div>
         </div>
 
         {/* Messages */}
@@ -658,12 +641,6 @@ export default function ZaraPage() {
         </div>
       </div>
 
-      {/* Memory context panel on the right */}
-      {showMemory && (
-        <div className="w-72 border-l border-border bg-surface flex-shrink-0 overflow-hidden h-full">
-          <MemoryContext />
-        </div>
-      )}
     </div>
   );
 }
