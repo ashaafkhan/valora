@@ -204,12 +204,12 @@ export default function EmailList({
                   Valora needs access to your Gmail account to sync emails, score priorities, and assist with smart drafts.
                 </p>
               </div>
-              <Link
+              <a
                 href="/api/auth/connect?plugin=gmail"
                 className="px-5 py-2.5 bg-primary hover:bg-primary/95 text-white text-xs font-semibold rounded-xl transition-all shadow-sm flex items-center gap-1.5 cursor-pointer active:scale-95"
               >
                 Connect Gmail Account
-              </Link>
+              </a>
             </motion.div>
           ) : (
             <motion.div {...fadeIn} className="flex flex-col items-center justify-center h-full text-center p-8 space-y-4">
