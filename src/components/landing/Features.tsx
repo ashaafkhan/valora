@@ -75,7 +75,7 @@ const FEATURES = [
     title: 'Lightning Search',
     desc: 'Full-text vector search across your entire inbox. Find anything in under 50 milliseconds.',
     icon: 'M21 21l-4.34-4.34M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z',
-    wide: true,
+    wide: false,
     demo: (
       <div className="mt-4 space-y-2">
         <div className="flex items-center gap-2 bg-[var(--surface-hover)] border border-[var(--border)] rounded-xl px-3 py-2.5">
