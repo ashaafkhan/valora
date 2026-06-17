@@ -94,44 +94,7 @@ export default function CalendarView() {
     }
   }, [eventsQuery.data, setEvents]);
 
-  if (connectionQuery.isLoading) {
-    return (
-      <div className="flex items-center justify-center h-full bg-[#0A0A0A]">
-        <Loader2 className="w-8 h-8 text-[#0066ff] animate-spin" />
-      </div>
-    );
-  }
 
-  if (!isCalendarConnected) {
-    return (
-      <div className="flex flex-1 h-full items-center justify-center bg-[#0A0A0A] p-8">
-        <div className="flex flex-col items-center text-center max-w-sm">
-          <div className="w-16 h-16 rounded-3xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6 shadow-sm">
-            <svg
-              className="w-8 h-8 text-zinc-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <h2 className="text-xl font-bold text-zinc-200 mb-2 font-display">
-            Google Calendar not connected.
-          </h2>
-          <p className="text-sm text-zinc-500 mb-8 leading-relaxed">
-            Connect your account to view and create events.
-          </p>
-          <Link
-            href="/api/auth/connect?plugin=googlecalendar"
-            className="inline-flex items-center gap-2 bg-[#0066ff] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#1d4ed8] transition-all shadow-lg shadow-blue-900/20 active:scale-95"
-          >
-            Connect Google Calendar <ChevronRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   // ── Calendar Keyboard Shortcuts ─────────────────────────────
   const calendarShortcuts = useMemo(() => [
@@ -279,6 +242,45 @@ export default function CalendarView() {
     { key: "week", label: "Week" },
     { key: "month", label: "Month" },
   ];
+
+  if (connectionQuery.isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full bg-[#0A0A0A]">
+        <Loader2 className="w-8 h-8 text-[#0066ff] animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isCalendarConnected) {
+    return (
+      <div className="flex flex-1 h-full items-center justify-center bg-[#0A0A0A] p-8">
+        <div className="flex flex-col items-center text-center max-w-sm">
+          <div className="w-16 h-16 rounded-3xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6 shadow-sm">
+            <svg
+              className="w-8 h-8 text-zinc-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-bold text-zinc-200 mb-2 font-display">
+            Google Calendar not connected.
+          </h2>
+          <p className="text-sm text-zinc-500 mb-8 leading-relaxed">
+            Connect your account to view and create events.
+          </p>
+          <Link
+            href="/api/auth/connect?plugin=googlecalendar"
+            className="inline-flex items-center gap-2 bg-[#0066ff] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#1d4ed8] transition-all shadow-lg shadow-blue-900/20 active:scale-95"
+          >
+            Connect Google Calendar <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-full overflow-hidden">
