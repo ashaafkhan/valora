@@ -288,17 +288,16 @@ export default function InboxPage() {
             onScheduleMeeting={handleScheduleMeeting}
           />
         ) : (
-          /* Empty state — no thread selected */
-          <div className="flex flex-col items-center justify-center h-full bg-[#070707] text-zinc-600 select-none">
-            <div className="w-16 h-16 rounded-3xl bg-zinc-900/50 border border-zinc-800/60 flex items-center justify-center mb-4">
-              <Inbox className="w-7 h-7 text-zinc-700" />
+          <div className="flex flex-col items-center justify-center h-full bg-background text-text-muted select-none theme-transition">
+            <div className="w-16 h-16 rounded-3xl bg-surface border border-border flex items-center justify-center mb-4">
+              <Inbox className="w-7 h-7 text-text-muted" />
             </div>
-            <p className="text-sm font-semibold text-zinc-400">
+            <p className="text-sm font-semibold text-text-secondary">
               No conversation selected
             </p>
-            <p className="text-xs text-zinc-600 mt-1.5 text-center max-w-[220px] leading-relaxed">
+            <p className="text-xs text-text-muted mt-1.5 text-center max-w-[220px] leading-relaxed">
               Choose an email from the list or press{" "}
-              <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 text-[10px] font-mono">
+              <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border text-text-primary text-[10px] font-mono">
                 C
               </kbd>{" "}
               to compose

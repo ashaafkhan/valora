@@ -95,9 +95,9 @@ export default function EmailList({
   const isLoading = isSyncing && emails.length === 0;
 
   return (
-    <div className="flex flex-col h-full bg-surface border-r border-border w-full md:w-[440px] flex-shrink-0 theme-transition">
+    <div className="flex flex-col h-full bg-background border-r border-border w-full md:w-[440px] flex-shrink-0 theme-transition">
       {/* Search and Top Info bar */}
-      <div className="p-4 border-b border-border/60 bg-background/25 flex items-center justify-between gap-3">
+      <div className="p-4 border-b border-border flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <CheckSquare
             onClick={handleToggleSelectAll}
