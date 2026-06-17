@@ -14,19 +14,25 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://valorahq.in";
+
   try {
-    const redirectUri = `${request.nextUrl.origin}/api/corsair/callback`;
+    const redirectUri = `${appUrl}/api/corsair/callback`;
+    console.log("[CALLBACK DEBUG] redirectUri for token exchange =", redirectUri);
+
     const result = await processOAuthCallback(corsair, {
       code,
       state,
       redirectUri,
     });
 
-    // Redirect to the onboarding page with success status
+    console.log("[CALLBACK DEBUG] OAuth callback success, plugin =", result.plugin);
+
+    // Redirect to inbox after successful connection
     return NextResponse.redirect(
       new URL(
-        `/onboarding?success=true&plugin=${result.plugin}&tenantId=${result.tenantId}`,
-        request.nextUrl.origin
+        `/inbox?success=true&plugin=${result.plugin}`,
+        appUrl
       )
     );
   } catch (error) {
@@ -34,8 +40,8 @@ export async function GET(request: NextRequest) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.redirect(
       new URL(
-        `/onboarding?error=${encodeURIComponent(errorMessage)}`,
-        request.nextUrl.origin
+        `/inbox?error=${encodeURIComponent(errorMessage)}`,
+        appUrl
       )
     );
   }
