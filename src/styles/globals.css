@@ -135,31 +135,31 @@
 
 /* ── Root (Light Mode Default) ──────────────── */
 :root {
-  --background: #fdf7ed;
-  --surface: #fffefa;
-  --surface-hover: #f3f4f6;
-  --border: #e5e7eb;
-  --border-strong: #d1d5db;
+  --background: #fdf8f0;
+  --surface: #f5ede0;
+  --surface-hover: #ede0cd;
+  --border: #e0d0bb;
+  --border-strong: #cdbfa6;
   --bg-grid: rgba(0, 0, 0, 0.04);
 
-  --primary: #0066FF;
-  --primary-light: #3385FF;
-  --primary-foreground: #FFFFFF;
-  --accent: #0052CC;
-  --indigo: #4F46E5;
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-foreground: #ffffff;
+  --accent: #1d4ed8;
+  --indigo: #4f46e5;
 
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-muted: #6B7280;
+  --text-primary: #1a0f0a;
+  --text-secondary: #5c4a35;
+  --text-muted: #9c8570;
 
-  --success: #10B981;
-  --warning: #F59E0B;
-  --error: #EF4444;
+  --success: #059669;
+  --warning: #d97706;
+  --error: #dc2626;
 
-  --urgent: #EF4444;
-  --high: #F59E0B;
-  --normal: #6B7280;
-  --low: #9CA3AF;
+  --urgent: #dc2626;
+  --high: #d97706;
+  --normal: #5c4a35;
+  --low: #9c8570;
 
   --glow-color: rgba(0, 102, 255, 0.08);
   --glow-color-strong: rgba(0, 102, 255, 0.18);
