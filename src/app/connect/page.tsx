@@ -11,10 +11,7 @@ import { headers } from "next/headers";
 // Server Action to generate OAuth link for manual integrations
 async function getOAuthUrl(pluginId: string, userId: string) {
   "use server";
-  const headersList = await headers();
-  const host = headersList.get("x-forwarded-host") || headersList.get("host") || "localhost:3000";
-  const protocol = host.includes("localhost") ? "http" : "https";
-  const redirectUri = `${protocol}://${host}/api/corsair/callback`;
+  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL ?? "https://valorahq.in"}/api/corsair/callback`;
 
   const result = await generateOAuthUrl(corsair, pluginId, {
     tenantId: userId,
