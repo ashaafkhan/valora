@@ -82,7 +82,7 @@ export default function EventCard({
         {event.title}
       </span>
       {!event.isAllDay && (
-        <span className="text-[10px] text-zinc-400 font-mono truncate">
+        <span className="text-[10px] text-text-secondary font-mono truncate">
           {format(start, "h:mm")}–{format(end, "h:mm a")}
         </span>
       )}
@@ -91,7 +91,7 @@ export default function EventCard({
           <Video className={`w-2.5 h-2.5 ${color.text} opacity-70`} />
         )}
         {event.location && (
-          <MapPin className="w-2.5 h-2.5 text-zinc-500 opacity-70" />
+          <MapPin className="w-2.5 h-2.5 text-text-muted opacity-70" />
         )}
       </div>
     </button>

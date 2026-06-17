@@ -89,10 +89,10 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
         className={`flex items-center gap-3 px-4 py-3 bg-[#111111] border rounded-2xl transition ${
           parsed
             ? "border-[#0066ff]/40"
-            : "border-[#222222] hover:border-[#333333]"
+            : "border-border hover:border-border-strong"
         }`}
       >
-        <Sparkles className="w-4 h-4 text-[#60a5fa] flex-shrink-0" />
+        <Sparkles className="w-4 h-4 text-primary-light flex-shrink-0" />
         <input
           ref={inputRef}
           type="text"
@@ -103,13 +103,13 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
           }}
           onKeyDown={(e) => e.key === "Enter" && handleParse()}
           placeholder='e.g. "Schedule 30min with team@co.com next Tuesday at 3pm"'
-          className="flex-1 bg-transparent border-0 outline-none text-sm text-zinc-200 placeholder-zinc-600 focus:ring-0"
+          className="flex-1 bg-transparent border-0 outline-none text-sm text-text-primary placeholder-text-muted focus:ring-0"
           disabled={isParsing}
         />
         <button
           onClick={handleParse}
           disabled={!input.trim() || isParsing}
-          className="px-3 py-1.5 bg-[#0066ff]/15 hover:bg-[#0066ff]/25 border border-[#0066ff]/30 text-[#60a5fa] text-xs font-semibold rounded-xl flex items-center gap-1.5 transition disabled:opacity-50 flex-shrink-0"
+          className="px-3 py-1.5 bg-[#0066ff]/15 hover:bg-[#0066ff]/25 border border-[#0066ff]/30 text-primary-light text-xs font-semibold rounded-xl flex items-center gap-1.5 transition disabled:opacity-50 flex-shrink-0"
         >
           {isParsing ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -140,8 +140,8 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
           )}
 
           <div className="space-y-1.5">
-            <div className="text-sm font-semibold text-zinc-100">{parsed.title}</div>
-            <div className="text-xs text-zinc-400 font-mono">
+            <div className="text-sm font-semibold text-text-primary">{parsed.title}</div>
+            <div className="text-xs text-text-secondary font-mono">
               {format(new Date(parsed.startISO), "EEE, MMM d · h:mm a")} →{" "}
               {format(new Date(parsed.endISO), "h:mm a")}
             </div>
@@ -165,7 +165,7 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
             </button>
             <button
               onClick={handleCancel}
-              className="px-3 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 text-xs rounded-xl transition"
+              className="px-3 py-2 bg-surface-hover hover:bg-border border border-border text-text-secondary text-xs rounded-xl transition"
             >
               <X className="w-3.5 h-3.5" />
             </button>

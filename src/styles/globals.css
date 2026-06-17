@@ -247,7 +247,7 @@
 .logo-adaptive,
 .light .logo-adaptive,
 [data-theme="light"] .logo-adaptive {
-  filter: brightness(0);
+  filter: invert(1);
 }
 
 /* ── Theme tokens ────────────────────────────── */

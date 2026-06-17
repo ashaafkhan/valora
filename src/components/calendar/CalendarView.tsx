@@ -245,19 +245,19 @@ export default function CalendarView() {
 
   if (connectionQuery.isLoading) {
     return (
-      <div className="flex items-center justify-center h-full bg-[#0A0A0A]">
-        <Loader2 className="w-8 h-8 text-[#0066ff] animate-spin" />
+      <div className="flex items-center justify-center h-full bg-surface">
+        <Loader2 className="w-8 h-8 text-primary animate-spin" />
       </div>
     );
   }
 
   if (!isCalendarConnected) {
     return (
-      <div className="flex flex-1 h-full items-center justify-center bg-[#0A0A0A] p-8">
+      <div className="flex flex-1 h-full items-center justify-center bg-surface p-8">
         <div className="flex flex-col items-center text-center max-w-sm">
-          <div className="w-16 h-16 rounded-3xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6 shadow-sm">
+          <div className="w-16 h-16 rounded-3xl bg-surface-hover border border-border-strong flex items-center justify-center mb-6 shadow-sm">
             <svg
-              className="w-8 h-8 text-zinc-500"
+              className="w-8 h-8 text-text-muted"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -265,15 +265,15 @@ export default function CalendarView() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-zinc-200 mb-2 font-display">
+          <h2 className="text-xl font-bold text-text-primary mb-2 font-display">
             Google Calendar not connected.
           </h2>
-          <p className="text-sm text-zinc-500 mb-8 leading-relaxed">
+          <p className="text-sm text-text-muted mb-8 leading-relaxed">
             Connect your account to view and create events.
           </p>
           <Link
             href="/api/auth/connect?plugin=googlecalendar"
-            className="inline-flex items-center gap-2 bg-[#0066ff] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#1d4ed8] transition-all shadow-lg shadow-blue-900/20 active:scale-95"
+            className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-primary-light transition-all shadow-lg shadow-primary/20 active:scale-95"
           >
             Connect Google Calendar <ChevronRight className="w-4 h-4" />
           </Link>
@@ -285,7 +285,7 @@ export default function CalendarView() {
   return (
     <div className="flex h-full overflow-hidden">
       {/* ── Left Sidebar ───────────────────────────────────────── */}
-      <div className="w-[220px] flex-shrink-0 border-r border-[#222222] flex flex-col bg-[#0A0A0A] overflow-y-auto">
+      <div className="w-[220px] flex-shrink-0 border-r border-border flex flex-col bg-surface overflow-y-auto">
         {/* Mini Calendar */}
         <MiniCalendar
           selectedDate={currentDate}
@@ -296,14 +296,14 @@ export default function CalendarView() {
           eventDates={eventDates}
         />
 
-        <div className="px-3 pb-3 border-t border-[#222222] pt-3">
+        <div className="px-3 pb-3 border-t border-border pt-3">
           {/* Quick Add Button */}
           <button
             onClick={() => {
               setCreateSlotDate(undefined);
               openCreateEvent();
             }}
-            className="w-full py-2 bg-[#0066ff] hover:bg-[#1d4ed8] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition shadow-lg shadow-blue-900/20 mb-2"
+            className="w-full py-2 bg-primary hover:bg-primary-light text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition shadow-lg shadow-primary/20 mb-2"
           >
             <Plus className="w-3.5 h-3.5" />
             New Event
@@ -313,7 +313,7 @@ export default function CalendarView() {
           <button
             onClick={() => syncMutation.mutate({ maxResults: 50 })}
             disabled={syncMutation.isPending}
-            className="w-full py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 text-xs font-semibold rounded-xl flex items-center justify-center gap-1.5 transition disabled:opacity-50"
+            className="w-full py-2 bg-surface-hover hover:bg-border border border-border text-text-secondary text-xs font-semibold rounded-xl flex items-center justify-center gap-1.5 transition disabled:opacity-50"
           >
             {syncMutation.isPending ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -325,8 +325,8 @@ export default function CalendarView() {
         </div>
 
         {/* Quick Schedule */}
-        <div className="px-3 pb-4 border-t border-[#222222] pt-3">
-          <div className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+        <div className="px-3 pb-4 border-t border-border pt-3">
+          <div className="text-[10px] font-semibold text-text-muted uppercase tracking-widest mb-2 flex items-center gap-1.5">
             ✨ Quick Schedule
           </div>
           <QuickSchedule
@@ -340,44 +340,44 @@ export default function CalendarView() {
       {/* ── Main Calendar Area ─────────────────────────────────── */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Toolbar */}
-        <div className="h-14 border-b border-[#222222] flex items-center justify-between px-5 gap-4 flex-shrink-0 bg-[#0A0A0A]/60 backdrop-blur">
+        <div className="h-14 border-b border-border flex items-center justify-between px-5 gap-4 flex-shrink-0 bg-surface/80 backdrop-blur">
           {/* Navigation */}
           <div className="flex items-center gap-2">
             <button
               onClick={goToPrevious}
-              className="p-1.5 rounded-xl text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition"
+              className="p-1.5 rounded-xl text-text-muted hover:text-text-primary hover:bg-surface-hover transition"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={goToToday}
-              className="px-3 py-1 text-xs font-semibold text-zinc-400 hover:text-zinc-200 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition"
+              className="px-3 py-1 text-xs font-semibold text-text-secondary hover:text-text-primary bg-surface-hover hover:bg-border border border-border rounded-xl transition"
             >
               Today
             </button>
             <button
               onClick={goToNext}
-              className="p-1.5 rounded-xl text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition"
+              className="p-1.5 rounded-xl text-text-muted hover:text-text-primary hover:bg-surface-hover transition"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
 
           {/* Current range label */}
-          <h2 className="text-sm font-bold text-zinc-200 flex-1 text-center truncate">
+          <h2 className="text-sm font-bold text-text-primary flex-1 text-center truncate">
             {getViewLabel(currentDate, viewMode)}
           </h2>
 
           {/* View Mode Switcher */}
-          <div className="flex items-center bg-zinc-900 border border-zinc-800 rounded-xl p-0.5 gap-0.5">
+          <div className="flex items-center bg-surface-hover border border-border rounded-xl p-0.5 gap-0.5">
             {VIEW_MODES.map(({ key, label }) => (
               <button
                 key={key}
                 onClick={() => setViewMode(key)}
                 className={`px-3 py-1 rounded-lg text-xs font-semibold transition ${
                   viewMode === key
-                    ? "bg-[#0066ff] text-white"
-                    : "text-zinc-500 hover:text-zinc-300"
+                    ? "bg-primary text-white"
+                    : "text-text-muted hover:text-text-primary"
                 }`}
               >
                 {label}
@@ -391,7 +391,7 @@ export default function CalendarView() {
           <div className="flex-1 overflow-hidden">
             {eventsQuery.isLoading && displayedEvents.length === 0 ? (
               <div className="flex items-center justify-center h-full">
-                <Loader2 className="w-8 h-8 text-[#0066ff] animate-spin" />
+                <Loader2 className="w-8 h-8 text-primary animate-spin" />
               </div>
             ) : viewMode === "week" ? (
               <WeekView

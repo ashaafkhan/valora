@@ -49,16 +49,16 @@ export default function MiniCalendar({
       <div className="flex items-center justify-between mb-3">
         <button
           onClick={() => setViewMonth(subMonths(viewMonth, 1))}
-          className="p-1 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition"
+          className="p-1 rounded-lg text-text-muted hover:text-text-primary hover:bg-border transition"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
         </button>
-        <span className="text-xs font-semibold text-zinc-300">
+        <span className="text-xs font-semibold text-text-primary">
           {format(viewMonth, "MMMM yyyy")}
         </span>
         <button
           onClick={() => setViewMonth(addMonths(viewMonth, 1))}
-          className="p-1 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition"
+          className="p-1 rounded-lg text-text-muted hover:text-text-primary hover:bg-border transition"
         >
           <ChevronRight className="w-3.5 h-3.5" />
         </button>
@@ -67,7 +67,7 @@ export default function MiniCalendar({
       {/* Day-of-week headers */}
       <div className="grid grid-cols-7 mb-1">
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
-          <div key={i} className="text-center text-[10px] font-semibold text-zinc-600">
+          <div key={i} className="text-center text-[10px] font-semibold text-text-muted">
             {d}
           </div>
         ))}
@@ -92,10 +92,10 @@ export default function MiniCalendar({
                 selected
                   ? "bg-[#0066ff] text-white"
                   : today
-                  ? "bg-zinc-800 text-[#60a5fa]"
+                  ? "bg-border text-primary-light"
                   : inMonth
-                  ? "text-zinc-300 hover:bg-zinc-800"
-                  : "text-zinc-700 hover:bg-zinc-900"
+                  ? "text-text-primary hover:bg-border"
+                  : "text-text-muted hover:bg-surface-hover"
               }`}
             >
               {format(day, "d")}
@@ -114,7 +114,7 @@ export default function MiniCalendar({
           onSelectDate(today);
           setViewMonth(startOfMonth(today));
         }}
-        className="mt-3 w-full text-center text-[10px] font-semibold text-zinc-500 hover:text-[#60a5fa] transition"
+        className="mt-3 w-full text-center text-[10px] font-semibold text-text-muted hover:text-primary-light transition"
       >
         Jump to Today
       </button>

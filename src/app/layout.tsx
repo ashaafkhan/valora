@@ -35,10 +35,10 @@ export const metadata: Metadata = {
     images: ["/valora_logo.png"],
     creator: "@valorahq",
   },
-  icons: [
-    { rel: "icon", url: "/valora_logo.png" },
-    { rel: "apple-touch-icon", url: "/valora_logo.png" },
-  ],
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/valora_logo.png",
+  },
   keywords: [
     "email client",
     "AI email",

@@ -211,14 +211,14 @@ export default function CreateEventModal({
       {/* Modal */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[520px] bg-[#111111] border border-[#2A2A2A] rounded-2xl shadow-2xl z-50 overflow-hidden animate-fade-in-scale">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#222222] flex items-center justify-between bg-zinc-950">
-          <span className="text-sm font-bold text-zinc-100 flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-[#60a5fa]" />
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-zinc-950">
+          <span className="text-sm font-bold text-text-primary flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-primary-light" />
             {isEditing ? "Edit Event" : "New Event"}
           </span>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900 transition"
+            className="p-1.5 rounded-xl text-text-muted hover:text-text-primary hover:bg-surface-hover transition"
           >
             <X className="w-4 h-4" />
           </button>
@@ -233,7 +233,7 @@ export default function CreateEventModal({
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Event title"
             autoFocus
-            className="w-full bg-transparent border-0 border-b border-[#333333] focus:border-[#0066ff] outline-none text-lg font-semibold text-zinc-100 placeholder-zinc-600 pb-2 transition"
+            className="w-full bg-transparent border-0 border-b border-[#333333] focus:border-[#0066ff] outline-none text-lg font-semibold text-text-primary placeholder-text-muted pb-2 transition"
           />
 
           {/* Conflict warning */}
@@ -247,7 +247,7 @@ export default function CreateEventModal({
           {/* Date & Time */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-[10px] text-zinc-600 font-semibold uppercase tracking-widest flex items-center gap-1">
+              <label className="text-[10px] text-text-muted font-semibold uppercase tracking-widest flex items-center gap-1">
                 <Clock className="w-3 h-3" /> Start
               </label>
               <input
@@ -261,31 +261,31 @@ export default function CreateEventModal({
                     setEndTime(dateToInputValue(newEnd));
                   }
                 }}
-                className="w-full bg-zinc-900/50 border border-[#2A2A2A] focus:border-[#0066ff] rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none transition"
+                className="w-full bg-surface-hover/50 border border-[#2A2A2A] focus:border-[#0066ff] rounded-xl px-3 py-2 text-xs text-text-primary outline-none transition"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] text-zinc-600 font-semibold uppercase tracking-widest flex items-center gap-1">
+              <label className="text-[10px] text-text-muted font-semibold uppercase tracking-widest flex items-center gap-1">
                 <Clock className="w-3 h-3" /> End
               </label>
               <input
                 type="datetime-local"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
-                className="w-full bg-zinc-900/50 border border-[#2A2A2A] focus:border-[#0066ff] rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none transition"
+                className="w-full bg-surface-hover/50 border border-[#2A2A2A] focus:border-[#0066ff] rounded-xl px-3 py-2 text-xs text-text-primary outline-none transition"
               />
             </div>
           </div>
 
           {/* Location */}
-          <div className="flex items-center gap-3 px-3 py-2 bg-zinc-900/30 border border-[#222222] rounded-xl">
-            <MapPin className="w-3.5 h-3.5 text-zinc-600 flex-shrink-0" />
+          <div className="flex items-center gap-3 px-3 py-2 bg-surface-hover/30 border border-border rounded-xl">
+            <MapPin className="w-3.5 h-3.5 text-text-muted flex-shrink-0" />
             <input
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Location (optional)"
-              className="flex-1 bg-transparent border-0 outline-none text-sm text-zinc-200 placeholder-zinc-600 focus:ring-0"
+              className="flex-1 bg-transparent border-0 outline-none text-sm text-text-primary placeholder-text-muted focus:ring-0"
             />
           </div>
 
@@ -295,12 +295,12 @@ export default function CreateEventModal({
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description (optional)"
             rows={2}
-            className="w-full bg-zinc-900/30 border border-[#222222] focus:border-[#0066ff] rounded-xl px-3 py-2 text-sm text-zinc-200 placeholder-zinc-600 outline-none resize-none transition"
+            className="w-full bg-surface-hover/30 border border-border focus:border-[#0066ff] rounded-xl px-3 py-2 text-sm text-text-primary placeholder-text-muted outline-none resize-none transition"
           />
 
           {/* Attendees */}
           <div className="space-y-2">
-            <label className="text-[10px] text-zinc-600 font-semibold uppercase tracking-widest flex items-center gap-1">
+            <label className="text-[10px] text-text-muted font-semibold uppercase tracking-widest flex items-center gap-1">
               <Users className="w-3 h-3" /> Attendees
             </label>
             <div className="relative">
@@ -311,11 +311,11 @@ export default function CreateEventModal({
                   onChange={(e) => setAttendeeInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addAttendee()}
                   placeholder="attendee@email.com"
-                  className="flex-1 bg-zinc-900/50 border border-[#2A2A2A] focus:border-[#0066ff] rounded-xl px-3 py-2 text-xs text-zinc-200 placeholder-zinc-600 outline-none transition"
+                  className="flex-1 bg-surface-hover/50 border border-[#2A2A2A] focus:border-[#0066ff] rounded-xl px-3 py-2 text-xs text-text-primary placeholder-text-muted outline-none transition"
                 />
                 <button
                   onClick={addAttendee}
-                  className="px-3 py-2 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-300 rounded-xl transition"
+                  className="px-3 py-2 bg-border hover:bg-zinc-700 border border-zinc-700 text-text-primary rounded-xl transition"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
@@ -331,12 +331,12 @@ export default function CreateEventModal({
                         setAttendees([...attendees, contact.email]);
                         setAttendeeInput("");
                       }}
-                      className="w-full text-left px-3 py-2 hover:bg-[#0066ff]/10 text-xs text-zinc-300 flex flex-col gap-0.5 transition border-b border-[#222222]/50 last:border-0"
+                      className="w-full text-left px-3 py-2 hover:bg-[#0066ff]/10 text-xs text-text-primary flex flex-col gap-0.5 transition border-b border-border/50 last:border-0"
                     >
                       {contact.name && (
-                        <span className="font-semibold text-zinc-200">{contact.name}</span>
+                        <span className="font-semibold text-text-primary">{contact.name}</span>
                       )}
-                      <span className="text-[10px] text-zinc-500 font-mono">{contact.email}</span>
+                      <span className="text-[10px] text-text-muted font-mono">{contact.email}</span>
                     </button>
                   ))}
                 </div>
@@ -352,7 +352,7 @@ export default function CreateEventModal({
                     {email}
                     <button
                       onClick={() => removeAttendee(email)}
-                      className="text-[#60a5fa] hover:text-rose-400 transition ml-0.5"
+                      className="text-primary-light hover:text-rose-400 transition ml-0.5"
                     >
                       <X className="w-3 h-3" />
                     </button>
@@ -369,7 +369,7 @@ export default function CreateEventModal({
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl border transition text-sm font-medium ${
                 addMeet
                   ? "bg-[#0066ff]/10 border-[#0066ff]/30 text-[#93c5fd]"
-                  : "bg-zinc-900/30 border-[#222222] text-zinc-500 hover:border-zinc-700 hover:text-zinc-300"
+                  : "bg-surface-hover/30 border-border text-text-muted hover:border-zinc-700 hover:text-text-primary"
               }`}
             >
               <Video className="w-4 h-4" />
@@ -379,17 +379,17 @@ export default function CreateEventModal({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-[#222222] bg-zinc-950 flex items-center justify-between">
+        <div className="px-6 py-4 border-t border-border bg-zinc-950 flex items-center justify-between">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-sm text-zinc-500 hover:text-zinc-300 transition"
+            className="px-4 py-2 text-sm text-text-muted hover:text-text-primary transition"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
             disabled={isPending || !title.trim()}
-            className="px-5 py-2 bg-[#0066ff] hover:bg-[#1d4ed8] disabled:bg-zinc-800 disabled:text-zinc-600 text-white text-sm font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-blue-900/20"
+            className="px-5 py-2 bg-[#0066ff] hover:bg-[#1d4ed8] disabled:bg-border disabled:text-text-muted text-white text-sm font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-blue-900/20"
           >
             {isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />

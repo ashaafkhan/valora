@@ -50,25 +50,25 @@ export default function DayView({
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="border-b border-[#222222] px-6 py-3 flex-shrink-0 flex items-center gap-4">
+      <div className="border-b border-border px-6 py-3 flex-shrink-0 flex items-center gap-4">
         <div>
-          <div className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest">
+          <div className="text-[10px] font-semibold text-text-muted uppercase tracking-widest">
             {format(currentDate, "EEEE")}
           </div>
           <div
-            className={`text-3xl font-bold ${today ? "text-[#60a5fa]" : "text-zinc-200"}`}
+            className={`text-3xl font-bold ${today ? "text-primary-light" : "text-text-primary"}`}
           >
             {format(currentDate, "d")}
           </div>
         </div>
-        <div className="text-sm text-zinc-500">
+        <div className="text-sm text-text-muted">
           {format(currentDate, "MMMM yyyy")}
         </div>
       </div>
 
       {/* All-day */}
       {allDayEvents.length > 0 && (
-        <div className="border-b border-[#222222] px-6 py-2 flex-shrink-0 flex gap-2 flex-wrap">
+        <div className="border-b border-border px-6 py-2 flex-shrink-0 flex gap-2 flex-wrap">
           {allDayEvents.map((ev) => (
             <EventCard key={ev.id} event={ev} onClick={onClickEvent} compact />
           ))}
@@ -116,7 +116,7 @@ export default function DayView({
               className="absolute left-0 right-0"
               style={{ top: `${(hour - DAY_START_HOUR) * HOUR_HEIGHT}px` }}
             >
-              <div className="absolute -left-16 text-[9px] text-zinc-600 font-mono -translate-y-2 w-14 text-right pr-2">
+              <div className="absolute -left-16 text-[9px] text-text-muted font-mono -translate-y-2 w-14 text-right pr-2">
                 {format(addMinutes(startOfDay(currentDate), hour * 60), "h a")}
               </div>
               <div className="border-t border-[#1A1A1A] w-full" />

@@ -72,11 +72,11 @@ export default function EventDetailPanel({
   };
 
   return (
-    <div className="w-80 flex-shrink-0 border-l border-[#222222] bg-[#0A0A0A] flex flex-col h-full animate-slide-in-right">
+    <div className="w-80 flex-shrink-0 border-l border-border bg-surface flex flex-col h-full animate-slide-in-right">
       {/* Header */}
-      <div className="px-5 py-4 border-b border-[#222222] flex items-start justify-between gap-3">
+      <div className="px-5 py-4 border-b border-border flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <h2 className="text-base font-bold text-zinc-100 leading-tight">
+          <h2 className="text-base font-bold text-text-primary leading-tight">
             {event.title}
           </h2>
           <div className="flex items-center gap-1.5 mt-1">
@@ -95,7 +95,7 @@ export default function EventDetailPanel({
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 rounded-xl text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900 transition flex-shrink-0"
+          className="p-1.5 rounded-xl text-text-muted hover:text-text-primary hover:bg-surface-hover transition flex-shrink-0"
         >
           <X className="w-4 h-4" />
         </button>
@@ -105,21 +105,21 @@ export default function EventDetailPanel({
       <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4 scrollbar-thin">
         {/* Date & Time */}
         <div className="flex items-start gap-3">
-          <Calendar className="w-4 h-4 text-zinc-500 mt-0.5 flex-shrink-0" />
-          <div className="text-sm text-zinc-300">
+          <Calendar className="w-4 h-4 text-text-muted mt-0.5 flex-shrink-0" />
+          <div className="text-sm text-text-primary">
             <div className="font-semibold">
               {event.isAllDay
                 ? format(start, "EEEE, MMMM d, yyyy")
                 : format(start, "EEEE, MMMM d, yyyy")}
             </div>
             {!event.isAllDay && (
-              <div className="text-xs text-zinc-500 mt-0.5">
+              <div className="text-xs text-text-muted mt-0.5">
                 {format(start, "h:mm a")} – {format(end, "h:mm a")} ·{" "}
                 {formatDuration(start, end)}
               </div>
             )}
             {event.isAllDay && (
-              <div className="text-xs text-zinc-500 mt-0.5">All day</div>
+              <div className="text-xs text-text-muted mt-0.5">All day</div>
             )}
           </div>
         </div>
@@ -127,20 +127,20 @@ export default function EventDetailPanel({
         {/* Location */}
         {event.location && (
           <div className="flex items-start gap-3">
-            <MapPin className="w-4 h-4 text-zinc-500 mt-0.5 flex-shrink-0" />
-            <span className="text-sm text-zinc-300">{event.location}</span>
+            <MapPin className="w-4 h-4 text-text-muted mt-0.5 flex-shrink-0" />
+            <span className="text-sm text-text-primary">{event.location}</span>
           </div>
         )}
 
         {/* Meet Link */}
         {event.videoLink && (
           <div className="flex items-start gap-3">
-            <Video className="w-4 h-4 text-[#60a5fa] mt-0.5 flex-shrink-0" />
+            <Video className="w-4 h-4 text-primary-light mt-0.5 flex-shrink-0" />
             <a
               href={event.videoLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-[#60a5fa] hover:underline truncate"
+              className="text-sm text-primary-light hover:underline truncate"
             >
               Join Google Meet
             </a>
@@ -149,7 +149,7 @@ export default function EventDetailPanel({
 
         {/* Description */}
         {event.description && (
-          <div className="text-sm text-zinc-400 leading-relaxed bg-zinc-900/40 rounded-xl p-3 border border-[#222222]">
+          <div className="text-sm text-text-secondary leading-relaxed bg-surface-hover/40 rounded-xl p-3 border border-border">
             {event.description}
           </div>
         )}
@@ -157,7 +157,7 @@ export default function EventDetailPanel({
         {/* Attendees */}
         {attendees.length > 0 && (
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-xs font-semibold text-text-muted uppercase tracking-widest">
               <Users className="w-3.5 h-3.5" />
               Attendees ({attendees.length})
             </div>
@@ -165,15 +165,15 @@ export default function EventDetailPanel({
               {attendees.map((a: any, i: number) => (
                 <div key={i} className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-6 h-6 rounded-lg bg-zinc-800 flex items-center justify-center text-[10px] font-bold text-zinc-400 flex-shrink-0">
+                    <div className="w-6 h-6 rounded-lg bg-border flex items-center justify-center text-[10px] font-bold text-text-secondary flex-shrink-0">
                       {((a.name ?? a.email) ?? "?")[0]?.toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <div className="text-xs text-zinc-300 truncate">
+                      <div className="text-xs text-text-primary truncate">
                         {a.name ?? a.email}
                       </div>
                       {a.name && (
-                        <div className="text-[10px] text-zinc-600 truncate">{a.email}</div>
+                        <div className="text-[10px] text-text-muted truncate">{a.email}</div>
                       )}
                     </div>
                   </div>
@@ -183,7 +183,7 @@ export default function EventDetailPanel({
                         ? "bg-emerald-900/30 text-emerald-400"
                         : a.status === "declined"
                         ? "bg-rose-900/30 text-rose-400"
-                        : "bg-zinc-800 text-zinc-500"
+                        : "bg-border text-text-muted"
                     }`}
                   >
                     {a.status === "accepted"
@@ -201,7 +201,7 @@ export default function EventDetailPanel({
               <button
                 onClick={() => onSendInvite(attendees[0]!.email)}
                 disabled={sendInviteMutation.isPending}
-                className="w-full mt-2 px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 text-xs font-semibold rounded-xl flex items-center justify-center gap-1.5 transition disabled:opacity-50"
+                className="w-full mt-2 px-3 py-1.5 bg-surface-hover hover:bg-border border border-border text-text-primary text-xs font-semibold rounded-xl flex items-center justify-center gap-1.5 transition disabled:opacity-50"
               >
                 {sendInviteMutation.isPending ? (
                   <Loader2 className="w-3 h-3 animate-spin" />
@@ -216,7 +216,7 @@ export default function EventDetailPanel({
 
         {/* RSVP */}
         <div className="space-y-2">
-          <div className="text-xs font-semibold text-zinc-500 uppercase tracking-widest">
+          <div className="text-xs font-semibold text-text-muted uppercase tracking-widest">
             RSVP
           </div>
           <div className="flex gap-2">
@@ -228,7 +228,7 @@ export default function EventDetailPanel({
             </button>
             <button
               onClick={() => onRSVP?.(event.googleEventId, "tentative")}
-              className="flex-1 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
+              className="flex-1 py-1.5 bg-surface-hover hover:bg-border border border-border text-text-secondary text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
             >
               <HelpCircle className="w-3 h-3" /> Maybe
             </button>
@@ -243,10 +243,10 @@ export default function EventDetailPanel({
       </div>
 
       {/* Footer Actions */}
-      <div className="px-5 py-4 border-t border-[#222222] flex items-center gap-2">
+      <div className="px-5 py-4 border-t border-border flex items-center gap-2">
         <button
           onClick={() => onEdit(event)}
-          className="flex-1 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 text-xs font-semibold rounded-xl flex items-center justify-center gap-1.5 transition"
+          className="flex-1 py-2 bg-surface-hover hover:bg-border border border-border text-text-primary text-xs font-semibold rounded-xl flex items-center justify-center gap-1.5 transition"
         >
           <Edit2 className="w-3.5 h-3.5" />
           Edit Event

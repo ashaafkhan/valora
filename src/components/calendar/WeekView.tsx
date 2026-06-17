@@ -63,7 +63,7 @@ export default function WeekView({
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Day Headers */}
-      <div className="flex border-b border-[#222222] flex-shrink-0">
+      <div className="flex border-b border-border flex-shrink-0">
         {/* Time gutter spacer */}
         <div className="w-14 flex-shrink-0" />
         {days.map((day) => {
@@ -71,16 +71,16 @@ export default function WeekView({
           return (
             <div
               key={day.toISOString()}
-              className="flex-1 text-center py-2 border-l border-[#222222] select-none"
+              className="flex-1 text-center py-2 border-l border-border select-none"
             >
-              <div className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest">
+              <div className="text-[10px] font-semibold text-text-muted uppercase tracking-widest">
                 {format(day, "EEE")}
               </div>
               <div
                 className={`text-lg font-bold mt-0.5 w-8 h-8 flex items-center justify-center rounded-full mx-auto transition ${
                   today
                     ? "bg-[#0066ff] text-white"
-                    : "text-zinc-300 hover:bg-zinc-800"
+                    : "text-text-primary hover:bg-border"
                 }`}
               >
                 {format(day, "d")}
@@ -92,14 +92,14 @@ export default function WeekView({
 
       {/* All-day row */}
       {days.some((d) => getAllDayEventsForDay(d).length > 0) && (
-        <div className="flex border-b border-[#222222] flex-shrink-0 min-h-[28px]">
-          <div className="w-14 flex-shrink-0 text-[9px] text-zinc-600 font-mono flex items-center justify-end pr-2">
+        <div className="flex border-b border-border flex-shrink-0 min-h-[28px]">
+          <div className="w-14 flex-shrink-0 text-[9px] text-text-muted font-mono flex items-center justify-end pr-2">
             all-day
           </div>
           {days.map((day) => (
             <div
               key={day.toISOString()}
-              className="flex-1 border-l border-[#222222] px-0.5 py-0.5 space-y-0.5"
+              className="flex-1 border-l border-border px-0.5 py-0.5 space-y-0.5"
             >
               {getAllDayEventsForDay(day).map((ev) => (
                 <EventCard key={ev.id} event={ev} onClick={onClickEvent} compact />
@@ -117,7 +117,7 @@ export default function WeekView({
             {hours.map((hour) => (
               <div
                 key={hour}
-                className="absolute right-2 text-[9px] text-zinc-600 font-mono -translate-y-2"
+                className="absolute right-2 text-[9px] text-text-muted font-mono -translate-y-2"
                 style={{ top: `${(hour - DAY_START_HOUR) * HOUR_HEIGHT}px` }}
               >
                 {format(addMinutes(startOfDay(currentDate), hour * 60), "ha")}
@@ -133,7 +133,7 @@ export default function WeekView({
             return (
               <div
                 key={day.toISOString()}
-                className="flex-1 border-l border-[#222222] relative cursor-pointer"
+                className="flex-1 border-l border-border relative cursor-pointer"
                 onDragOver={(e) => {
                   e.preventDefault();
                   e.dataTransfer.dropEffect = "move";

@@ -55,11 +55,11 @@ export default function MonthView({
   return (
     <div className="flex flex-col h-full">
       {/* Day-of-week headers */}
-      <div className="grid grid-cols-7 border-b border-[#222222] flex-shrink-0">
+      <div className="grid grid-cols-7 border-b border-border flex-shrink-0">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
           <div
             key={d}
-            className="py-2 text-center text-[10px] font-semibold text-zinc-600 uppercase tracking-widest"
+            className="py-2 text-center text-[10px] font-semibold text-text-muted uppercase tracking-widest"
           >
             {d}
           </div>
@@ -81,7 +81,7 @@ export default function MonthView({
                   key={day.toISOString()}
                   className={`border-r border-[#1A1A1A] p-1 min-h-[100px] cursor-pointer transition group ${
                     inMonth
-                      ? "bg-transparent hover:bg-zinc-900/30"
+                      ? "bg-transparent hover:bg-surface-hover/30"
                       : "bg-[#080808] opacity-50"
                   }`}
                   onClick={() => onClickDay(day)}
@@ -93,8 +93,8 @@ export default function MonthView({
                         today
                           ? "bg-[#0066ff] text-white"
                           : inMonth
-                          ? "text-zinc-300 group-hover:text-white"
-                          : "text-zinc-700"
+                          ? "text-text-primary group-hover:text-white"
+                          : "text-text-muted"
                       }`}
                     >
                       {format(day, "d")}
@@ -119,7 +119,7 @@ export default function MonthView({
                           e.stopPropagation();
                           onClickDay(day);
                         }}
-                        className="text-[10px] text-zinc-500 hover:text-[#60a5fa] font-mono px-1 transition"
+                        className="text-[10px] text-text-muted hover:text-primary-light font-mono px-1 transition"
                       >
                         +{overflow} more
                       </button>
