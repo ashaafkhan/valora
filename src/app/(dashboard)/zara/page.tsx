@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Plus, Trash2, Send, Mic, Sparkles, Loader2 } from "lucide-react";
+import { Plus, Trash2, Send, Mic, Sparkles, Loader2, X, Check } from "lucide-react";
 import { format, isToday, isYesterday, isThisWeek } from "date-fns";
 import { AgentMessage, type ChatMessage, type ToolCallData } from "@/components/agent/AgentMessage";
 
@@ -141,16 +141,11 @@ export default function ZaraPage() {
   const [error, setError] = useState<string | null>(null);
 
   const [isListening, setIsListening] = useState(false);
+  const [isProcessingAudio, setIsProcessingAudio] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
-  const toggleListening = useCallback(async () => {
-    if (isListening && mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
-      setIsListening(false);
-      return;
-    }
-
+  const startListening = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
@@ -163,42 +158,6 @@ export default function ZaraPage() {
         }
       };
 
-      mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
-        audioChunksRef.current = [];
-        
-        // Stop all tracks to release the mic
-        stream.getTracks().forEach((track) => track.stop());
-
-        setIsThinking(true);
-        setError(null);
-
-        try {
-          const formData = new FormData();
-          formData.append("file", audioBlob, "audio.webm");
-
-          const res = await fetch("/api/speech-to-text", {
-            method: "POST",
-            body: formData,
-          });
-
-          if (!res.ok) {
-            const errData = await res.json();
-            throw new Error(errData.error || "Failed to transcribe audio");
-          }
-
-          const data = await res.json();
-          if (data.text) {
-            setInput((prev) => (prev ? prev + " " + data.text : data.text));
-          }
-        } catch (err) {
-          setError(err instanceof Error ? err.message : "Error transcribing audio");
-        } finally {
-          setIsThinking(false);
-          setTimeout(() => inputRef.current?.focus(), 50);
-        }
-      };
-
       mediaRecorder.start();
       setIsListening(true);
       setError(null);
@@ -206,7 +165,83 @@ export default function ZaraPage() {
       console.error("Could not start recording:", err);
       setError("Microphone access denied or not available.");
     }
+  }, []);
+
+  const stopAndProcessListening = useCallback(() => {
+    if (!mediaRecorderRef.current || !isListening) return;
+
+    mediaRecorderRef.current.onstop = async () => {
+      const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+      audioChunksRef.current = [];
+      
+      const stream = mediaRecorderRef.current?.stream;
+      stream?.getTracks().forEach((track) => track.stop());
+
+      setIsProcessingAudio(true);
+      setError(null);
+
+      try {
+        const formData = new FormData();
+        formData.append("file", audioBlob, "audio.webm");
+
+        const res = await fetch("/api/speech-to-text", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.error || "Failed to transcribe audio");
+        }
+
+        const data = await res.json();
+        if (data.text) {
+          setInput((prev) => (prev ? prev + " " + data.text : data.text));
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error transcribing audio");
+      } finally {
+        setIsProcessingAudio(false);
+        setIsListening(false);
+        setTimeout(() => inputRef.current?.focus(), 50);
+      }
+    };
+
+    mediaRecorderRef.current.stop();
   }, [isListening]);
+
+  const cancelListening = useCallback(() => {
+    if (!mediaRecorderRef.current || !isListening) return;
+    
+    mediaRecorderRef.current.onstop = () => {
+      audioChunksRef.current = [];
+      const stream = mediaRecorderRef.current?.stream;
+      stream?.getTracks().forEach((track) => track.stop());
+      setIsListening(false);
+    };
+    
+    mediaRecorderRef.current.stop();
+  }, [isListening]);
+
+  const toggleListening = useCallback(() => {
+    if (isListening) {
+      stopAndProcessListening();
+    } else {
+      startListening();
+    }
+  }, [isListening, startListening, stopAndProcessListening]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'd') {
+        e.preventDefault();
+        toggleListening();
+      }
+    };
+    
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [toggleListening]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -289,6 +324,14 @@ export default function ZaraPage() {
   useEffect(() => {
     void fetchSessions();
   }, []);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.height = "auto";
+      inputRef.current.style.height = `${Math.min(inputRef.current.scrollHeight, 128)}px`; // Max height of 8rem (32 in tailwind)
+    }
+  }, [input]);
 
   // Scroll to bottom
   useEffect(() => {
@@ -605,42 +648,76 @@ export default function ZaraPage() {
 
         {/* Input area */}
         <div className="px-6 py-4 border-t border-border bg-surface/30">
-          <div className="flex items-end gap-3 bg-surface border border-border rounded-2xl px-4 py-3 focus-within:border-primary/40 focus-within:ring-1 focus-within:ring-primary/10 transition-all">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  void handleSend();
-                }
-              }}
-              placeholder="Ask Zara anything... Draft emails, schedule meetings, search your inbox"
-              rows={1}
-              className="flex-1 bg-transparent text-xs text-text-primary placeholder-text-muted outline-none resize-none leading-relaxed max-h-32 overflow-y-auto"
-              style={{ minHeight: "20px" }}
-            />
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <button
-                onClick={toggleListening}
-                className={`w-8 h-8 rounded-xl transition-colors flex items-center justify-center cursor-pointer ${
-                  isListening 
-                    ? "bg-error/10 text-error animate-pulse" 
-                    : "text-text-muted hover:text-primary hover:bg-primary/5"
-                }`}
-                title={isListening ? "Stop listening" : "Start voice input"}
-              >
-                <Mic className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => void handleSend()}
-                disabled={!input.trim() || isThinking}
-                className="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center hover:bg-primary/95 transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed shadow-sm cursor-pointer"
-              >
-                <Send className="w-3.5 h-3.5" />
-              </button>
-            </div>
+          <div className="flex items-end gap-3 bg-surface border border-border rounded-2xl px-4 py-3 focus-within:border-primary/40 focus-within:ring-1 focus-within:ring-primary/10 transition-all min-h-[52px]">
+            {isListening ? (
+              <div className="flex-1 flex items-center justify-between px-2 py-1">
+                <div className="flex items-center gap-1">
+                  {[...Array(24)].map((_, i) => (
+                    <div 
+                      key={i} 
+                      className="w-1 bg-primary/70 rounded-full animate-pulse" 
+                      style={{ 
+                        height: `${Math.random() * 16 + 4}px`, 
+                        animationDelay: `${i * 0.1}s`,
+                        animationDuration: '0.6s'
+                      }} 
+                    />
+                  ))}
+                  <span className="text-xs font-semibold text-primary/70 ml-2 animate-pulse">Listening...</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button 
+                    onClick={cancelListening} 
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-surface hover:bg-error/10 text-text-muted hover:text-error transition-colors"
+                    title="Cancel"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={stopAndProcessListening} 
+                    disabled={isProcessingAudio} 
+                    className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary/90 transition-all disabled:opacity-50"
+                    title="Done"
+                  >
+                    {isProcessingAudio ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <textarea
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      void handleSend();
+                    }
+                  }}
+                  placeholder="Ask Zara anything... Draft emails, schedule meetings, search your inbox"
+                  rows={1}
+                  className="flex-1 bg-transparent text-xs text-text-primary placeholder-text-muted outline-none resize-none leading-relaxed max-h-32 overflow-y-auto"
+                  style={{ minHeight: "20px" }}
+                />
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <button
+                    onClick={toggleListening}
+                    className="w-8 h-8 rounded-xl transition-colors flex items-center justify-center cursor-pointer text-text-muted hover:text-primary hover:bg-primary/5 group relative"
+                    title="Dictate (Ctrl+Shift+D)"
+                  >
+                    <Mic className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => void handleSend()}
+                    disabled={!input.trim() || isThinking}
+                    className="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center hover:bg-primary/95 transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed shadow-sm cursor-pointer"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </>
+            )}
           </div>
           <p className="text-[10px] text-text-muted text-center mt-2 font-mono">
             Zara will ask for your confirmation before performing write actions.
