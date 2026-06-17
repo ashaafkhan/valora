@@ -44,11 +44,11 @@ export function LandingNav() {
             : 'border-transparent bg-transparent'}`}
       >
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
+        <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
           <div className="w-7 h-7 relative flex-shrink-0">
-            <Image src="/valora_logo.png" alt="Valora" fill className="object-contain" />
+            <Image src="/valora_logo.png" alt="Valora" fill className="object-contain logo-adaptive" />
           </div>
-          <span className="font-sora text-base font-bold tracking-tight text-[var(--text-primary)]">
+          <span className="font-sora text-base font-bold tracking-tight text-[var(--text-primary)] whitespace-nowrap">
             Valora
           </span>
         </Link>

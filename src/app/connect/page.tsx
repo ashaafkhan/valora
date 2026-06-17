@@ -180,7 +180,7 @@ export default async function ConnectPage({ searchParams }: PageProps) {
               <div>
                 <h3 className="font-bold text-zinc-100">Gmail</h3>
                 <p className="text-xs text-zinc-400 mt-0.5 leading-relaxed">
-                  Read, send, and manage your emails. Power your AI Inbox.
+                  Read, send, and manage your emails. Power your AI-Powered Inbox.
                 </p>
                 <div className="mt-2.5 flex items-center gap-1.5">
                   <span className={`w-1.5 h-1.5 rounded-full ${status.gmail === "connected" ? "bg-emerald-500 animate-pulse" : "bg-zinc-600"}`} />

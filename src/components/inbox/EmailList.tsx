@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { Mail, RefreshCw, Archive, Eye, CheckSquare, Square, Trash, Sparkles, Inbox } from "lucide-react";
 import { useState } from "react";
 import { fadeIn } from "@/lib/motion";
+import Link from "next/link";
+import { api } from "@/trpc/react";
 
 interface EmailListProps {
   emails: Email[];
@@ -38,6 +40,10 @@ export default function EmailList({
     bulkMarkRead,
     bulkDelete,
   } = useEmailStore();
+
+  const { data: connStatus } = api.gmail.getConnectionStatus.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  });
 
   const [searchFocused, setSearchFocused] = useState(false);
 
@@ -187,25 +193,45 @@ export default function EmailList({
         {isLoading ? (
           <EmailSkeleton />
         ) : emails.length === 0 ? (
-          <motion.div {...fadeIn} className="flex flex-col items-center justify-center h-full text-center p-8 space-y-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center shadow-[0_0_30px_rgba(0,102,255,0.1)]">
-              <Inbox className="w-7 h-7 text-primary" />
-            </div>
-            <div>
-              <p className="text-base font-semibold text-text-primary">You&apos;re all caught up!</p>
-              <p className="text-sm text-text-secondary mt-1 max-w-xs">
-                No emails in this section. Use CoPilot to draft your next message or sync to check for new mail.
-              </p>
-            </div>
-            <button
-              onClick={onSync}
-              disabled={isSyncing}
-              className="px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary text-xs font-semibold rounded-xl border border-primary/20 transition-all flex items-center gap-1.5"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? "animate-spin" : ""}`} />
-              Sync now
-            </button>
-          </motion.div>
+          connStatus?.gmailConnected === false ? (
+            <motion.div {...fadeIn} className="flex flex-col items-center justify-center h-full text-center p-8 space-y-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20 flex items-center justify-center shadow-[0_0_30px_rgba(239,68,68,0.1)] animate-pulse">
+                <Mail className="w-7 h-7 text-red-500" />
+              </div>
+              <div>
+                <p className="text-base font-semibold text-text-primary">Connect your Gmail</p>
+                <p className="text-sm text-text-secondary mt-1 max-w-xs leading-relaxed">
+                  Valora needs access to your Gmail account to sync emails, score priorities, and assist with smart drafts.
+                </p>
+              </div>
+              <Link
+                href="/connect"
+                className="px-5 py-2.5 bg-primary hover:bg-primary/95 text-white text-xs font-semibold rounded-xl transition-all shadow-sm flex items-center gap-1.5 cursor-pointer active:scale-95"
+              >
+                Connect Gmail Account
+              </Link>
+            </motion.div>
+          ) : (
+            <motion.div {...fadeIn} className="flex flex-col items-center justify-center h-full text-center p-8 space-y-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center shadow-[0_0_30px_rgba(0,102,255,0.1)]">
+                <Inbox className="w-7 h-7 text-primary" />
+              </div>
+              <div>
+                <p className="text-base font-semibold text-text-primary">You&apos;re all caught up!</p>
+                <p className="text-sm text-text-secondary mt-1 max-w-xs">
+                  No emails in this section. Use CoPilot to draft your next message or sync to check for new mail.
+                </p>
+              </div>
+              <button
+                onClick={onSync}
+                disabled={isSyncing}
+                className="px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary text-xs font-semibold rounded-xl border border-primary/20 transition-all flex items-center gap-1.5 cursor-pointer"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? "animate-spin" : ""}`} />
+                Sync now
+              </button>
+            </motion.div>
+          )
         ) : (
           emails.map((email) => (
             <EmailRow

@@ -110,7 +110,7 @@ export function InboxFeature() {
             <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest
                              uppercase text-[var(--primary)] mb-5">
               <span className="w-4 h-px bg-[var(--primary)]" />
-              AI INBOX
+              AI-POWERED INBOX
             </span>
           </motion.div>
 

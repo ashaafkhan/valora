@@ -9,8 +9,27 @@ import {
   markEmailRead,
 } from "@/lib/gmail";
 import { generateSmartDraft, extractMeetingFromEmail } from "@/lib/ai";
+import { corsair } from "@/server/corsair";
 
 export const gmailRouter = createTRPCRouter({
+  // ── Get Connection Status ────────────────────────────────────
+  getConnectionStatus: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+    try {
+      const status = await corsair.manage.connectionStatus.get({ tenantId: userId });
+      return {
+        gmailConnected: status.gmail === "connected",
+        calendarConnected: status.googlecalendar === "connected",
+      };
+    } catch (err) {
+      console.error("Failed to fetch connection status:", err);
+      return {
+        gmailConnected: false,
+        calendarConnected: false,
+      };
+    }
+  }),
+
   // ── Get All Emails ───────────────────────────────────────────
   getEmails: protectedProcedure
     .input(
