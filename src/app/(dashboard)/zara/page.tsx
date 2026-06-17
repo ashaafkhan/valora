@@ -141,63 +141,72 @@ export default function ZaraPage() {
   const [error, setError] = useState<string | null>(null);
 
   const [isListening, setIsListening] = useState(false);
-  const recognitionRef = useRef<any>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
 
-  const toggleListening = useCallback(() => {
-    if (isListening && recognitionRef.current) {
-      recognitionRef.current.stop();
+  const toggleListening = useCallback(async () => {
+    if (isListening && mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
       setIsListening(false);
       return;
     }
-
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      setError("Speech recognition is not supported in this browser.");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognitionRef.current = recognition;
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    
-    // Capture the input state at the moment the mic is clicked
-    let baseInput = input; 
-
-    recognition.onstart = () => {
-      setIsListening(true);
-      setError(null);
-    };
-
-    recognition.onresult = (event: any) => {
-      let interim = "";
-      let final = "";
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        if (event.results[i].isFinal) {
-          final += event.results[i][0].transcript;
-          baseInput = (baseInput ? baseInput + " " : "") + final;
-        } else {
-          interim += event.results[i][0].transcript;
-        }
-      }
-      setInput(baseInput + (interim ? " " + interim : ""));
-    };
-
-    recognition.onerror = (event: any) => {
-      console.error("Speech recognition error", event.error);
-      setIsListening(false);
-    };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
 
     try {
-      recognition.start();
-    } catch (e) {
-      console.error("Could not start recognition:", e);
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = async () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+        audioChunksRef.current = [];
+        
+        // Stop all tracks to release the mic
+        stream.getTracks().forEach((track) => track.stop());
+
+        setIsThinking(true);
+        setError(null);
+
+        try {
+          const formData = new FormData();
+          formData.append("file", audioBlob, "audio.webm");
+
+          const res = await fetch("/api/speech-to-text", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData.error || "Failed to transcribe audio");
+          }
+
+          const data = await res.json();
+          if (data.text) {
+            setInput((prev) => (prev ? prev + " " + data.text : data.text));
+          }
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "Error transcribing audio");
+        } finally {
+          setIsThinking(false);
+          setTimeout(() => inputRef.current?.focus(), 50);
+        }
+      };
+
+      mediaRecorder.start();
+      setIsListening(true);
+      setError(null);
+    } catch (err) {
+      console.error("Could not start recording:", err);
+      setError("Microphone access denied or not available.");
     }
-  }, [input, isListening]);
+  }, [isListening]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
