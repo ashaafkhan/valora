@@ -145,6 +145,65 @@ export default function ZaraPage() {
   const [loadingSessions, setLoadingSessions] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  const toggleListening = useCallback(() => {
+    if (isListening && recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+      return;
+    }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setError("Speech recognition is not supported in this browser.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognitionRef.current = recognition;
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    
+    // Capture the input state at the moment the mic is clicked
+    let baseInput = input; 
+
+    recognition.onstart = () => {
+      setIsListening(true);
+      setError(null);
+    };
+
+    recognition.onresult = (event: any) => {
+      let interim = "";
+      let final = "";
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          final += event.results[i][0].transcript;
+          baseInput = (baseInput ? baseInput + " " : "") + final;
+        } else {
+          interim += event.results[i][0].transcript;
+        }
+      }
+      setInput(baseInput + (interim ? " " + interim : ""));
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error", event.error);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    try {
+      recognition.start();
+    } catch (e) {
+      console.error("Could not start recognition:", e);
+    }
+  }, [input, isListening]);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -574,8 +633,13 @@ export default function ZaraPage() {
             />
             <div className="flex items-center gap-2 flex-shrink-0">
               <button
-                className="w-8 h-8 rounded-xl text-text-muted hover:text-primary hover:bg-primary/5 transition-colors flex items-center justify-center cursor-pointer"
-                title="Voice input (coming soon)"
+                onClick={toggleListening}
+                className={`w-8 h-8 rounded-xl transition-colors flex items-center justify-center cursor-pointer ${
+                  isListening 
+                    ? "bg-error/10 text-error animate-pulse" 
+                    : "text-text-muted hover:text-primary hover:bg-primary/5"
+                }`}
+                title={isListening ? "Stop listening" : "Start voice input"}
               >
                 <Mic className="w-4 h-4" />
               </button>
