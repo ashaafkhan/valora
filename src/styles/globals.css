@@ -176,8 +176,8 @@
   --border: #1c1c21;
   --border-strong: #2a2a32;
 
-  --primary: #0066FF;
-  --primary-light: #3b82f6;
+  --primary: #2563eb; /* Brighter blue for dark mode */
+  --primary-light: #60a5fa;
   --primary-foreground: #ffffff;
   --accent: #60a5fa;
   --indigo: #6366f1;
@@ -698,3 +698,16 @@ kbd {
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* ── Enforce primary text visibility ─────────── */
+.bg-primary,
+.bg-\\[var\\(--primary\\)\\],
+.bg-\\[\\#0066ff\\] {
+  color: #ffffff !important;
+}
+
+.bg-primary:hover,
+.bg-\\[var\\(--primary\\)\\]:hover,
+.bg-\\[\\#0066ff\\]:hover {
+  color: #ffffff !important;
+}
