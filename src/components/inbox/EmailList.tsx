@@ -205,7 +205,7 @@ export default function EmailList({
                 </p>
               </div>
               <Link
-                href="/connect"
+                href="/api/auth/connect?plugin=gmail"
                 className="px-5 py-2.5 bg-primary hover:bg-primary/95 text-white text-xs font-semibold rounded-xl transition-all shadow-sm flex items-center gap-1.5 cursor-pointer active:scale-95"
               >
                 Connect Gmail Account

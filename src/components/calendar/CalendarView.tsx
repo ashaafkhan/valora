@@ -122,7 +122,7 @@ export default function CalendarView() {
             Connect your account to view and create events.
           </p>
           <a
-            href="/connect"
+            href="/api/auth/connect?plugin=googlecalendar"
             className="inline-flex items-center gap-2 bg-[#0066ff] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#1d4ed8] transition-all shadow-lg shadow-blue-900/20 active:scale-95"
           >
             Connect Google Calendar <ChevronRight className="w-4 h-4" />
