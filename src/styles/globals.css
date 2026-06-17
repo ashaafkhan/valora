@@ -135,8 +135,8 @@
 
 /* ── Root (Light Mode Default) ──────────────── */
 :root {
-  --background: #fdfbf7;
-  --surface: #ffffff;
+  --background: #fdf7ed;
+  --surface: #fffefa;
   --surface-hover: #f3f4f6;
   --border: #e5e7eb;
   --border-strong: #d1d5db;
@@ -390,15 +390,6 @@ kbd {
 }
 
 /* ── Utilities ─────────────────────────────── */
-
-.logo-adaptive {
-  filter: invert(1);
-}
-
-.dark .logo-adaptive,
-[data-theme="dark"] .logo-adaptive {
-  filter: none;
-}
 
 /* ── Gradient Text ──────────────────────────── */
 .text-gradient {

@@ -46,7 +46,7 @@ export function LandingNav() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
           <div className="w-9 h-9 relative flex-shrink-0">
-            <Image src="/valora_logo.png" alt="Valora" fill className="object-contain logo-adaptive" />
+            <Image src="/valora_logo.png" alt="Valora" fill className="object-contain invert dark:invert-0 transition-all duration-300" />
           </div>
           <span className="font-sora text-xl font-bold tracking-tight text-[var(--text-primary)] whitespace-nowrap">
             Valora
