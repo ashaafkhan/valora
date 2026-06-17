@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import { groq, AI_MODEL } from "@/lib/ai";
+import { groq, AI_MODEL, chatCompletionWithOrchestration } from "@/lib/ai";
 import { addMemory } from "@/lib/mem0";
 import { executeSendEmail, executeCreateEvent } from "@/lib/agent-tools";
 
@@ -92,8 +92,8 @@ If the user modified the parameters (e.g. changed the recipient email or body), 
 If the user cancelled the action, acknowledge it.
 Keep it direct. Never expose password/OTP details.`;
 
-    // 4. Call Groq to generate confirmation text
-    const completion = await groq.chat.completions.create({
+    // 4. Call orchestration to generate confirmation text
+    const completion = await chatCompletionWithOrchestration({
       model: AI_MODEL,
       messages: [
         { role: "system", content: systemPrompt },
@@ -115,10 +115,10 @@ Keep it direct. Never expose password/OTP details.`;
         {
           role: "tool",
           tool_call_id: toolCallId,
-          content: JSON.stringify({ result: toolResultText, executedParameters: toolArgs }),
+          content: JSON.stringify({ result: toolResultText }),
         },
       ],
-      temperature: 0.3,
+      temperature: 0.5,
     });
 
     const choice = completion.choices[0];

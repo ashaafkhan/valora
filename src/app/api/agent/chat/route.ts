@@ -1,40 +1,13 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import { groq, AI_MODEL } from "@/lib/ai";
+import { groq, AI_MODEL, chatCompletionWithOrchestration } from "@/lib/ai";
 import { searchMemory, addMemory } from "@/lib/mem0";
 import { executeSearchEmails, executeGetSchedule } from "@/lib/agent-tools";
 
 interface Message {
   role: "user" | "assistant" | "system";
   content: string;
-}
-
-// Robust wrapper with automatic retry and model fallback (llama-3.1-8b-instant)
-async function groqChatCompletionWithRetry(params: any, retries = 2) {
-  for (let i = 0; i <= retries; i++) {
-    try {
-      return await groq.chat.completions.create(params);
-    } catch (err: any) {
-      console.warn(`[Groq] Completion attempt ${i + 1} failed:`, err?.message || err);
-      if (i === retries) {
-        if (params.model === AI_MODEL) {
-          console.log("[Groq] Falling back to llama-3.1-8b-instant");
-          try {
-            return await groq.chat.completions.create({
-              ...params,
-              model: "llama-3.1-8b-instant",
-            });
-          } catch (fallbackErr) {
-            throw fallbackErr;
-          }
-        }
-        throw err;
-      }
-      // Delay before retry (exponential backoff)
-      await new Promise((resolve) => setTimeout(resolve, (i + 1) * 800));
-    }
-  }
 }
 
 export async function GET(req: Request) {
@@ -205,7 +178,7 @@ User Preferences/Context:
 ${memoryContext}`;
 
     // 4. Call Groq with Retry/Fallback
-    const completion: any = await groqChatCompletionWithRetry({
+    const completion: any = await chatCompletionWithOrchestration({
       model: AI_MODEL,
       messages: [
         { role: "system", content: systemPrompt },
@@ -303,7 +276,7 @@ ${memoryContext}`;
       }
 
       // Feed tool result back to Groq for final textual answer (with Retry/Fallback)
-      const secondCompletion: any = await groqChatCompletionWithRetry({
+      const secondCompletion: any = await chatCompletionWithOrchestration({
         model: AI_MODEL,
         messages: [
           { role: "system", content: systemPrompt },

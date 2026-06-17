@@ -4,14 +4,46 @@
  * Using llama-3.3-70b-versatile for ultra-fast inference
  */
 import Groq from "groq-sdk";
+import OpenAI from "openai";
 import type { PriorityLabel } from "@/types";
 
-// Singleton Groq client
+// Singleton clients
 export const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY!,
 });
 
+export const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
 export const AI_MODEL = "llama-3.3-70b-versatile";
+
+// Robust wrapper with orchestration: OpenAI primary, Groq fallback
+export async function chatCompletionWithOrchestration(params: any, retries = 2) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      console.log(`[Orchestration] Attempting OpenAI (gpt-4.1)... Attempt ${i + 1}`);
+      return await openai.chat.completions.create({
+        ...params,
+        model: "gpt-4.1", // Using requested fallback text
+      });
+    } catch (err: any) {
+      console.warn(`[OpenAI] Completion attempt ${i + 1} failed:`, err?.message || err);
+      if (i === retries) {
+        console.log(`[Orchestration] Falling back to Groq (${AI_MODEL})...`);
+        try {
+          return await groq.chat.completions.create({
+            ...params,
+            model: AI_MODEL,
+          });
+        } catch (fallbackErr) {
+          throw fallbackErr;
+        }
+      }
+      await new Promise((resolve) => setTimeout(resolve, (i + 1) * 800));
+    }
+  }
+}
 
 // ── Email Priority Scoring ─────────────────────────────────────
 export interface PriorityResult {
