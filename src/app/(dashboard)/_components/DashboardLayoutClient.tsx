@@ -25,7 +25,7 @@ export default function DashboardLayoutClient({
   user: { name?: string | null; email?: string | null; image?: string | null };
 }) {
   const [cheatSheetOpen, setCheatSheetOpen] = useState(false);
-  const { toggle: toggleCommandPalette, close: closePalette, isOpen: paletteOpen } = useCommandPalette();
+  const { open: openPalette, toggle: toggleCommandPalette, close: closePalette, isOpen: paletteOpen } = useCommandPalette();
   const { openCompose } = useEmailStore();
   const [navChord, setNavChord] = useState<string | null>(null);
   const router = useRouter();

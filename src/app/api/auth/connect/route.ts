@@ -11,10 +11,8 @@ export async function GET(req: NextRequest) {
 
   const searchParams = req.nextUrl.searchParams;
   const pluginId = searchParams.get("plugin") || "gmail";
-
-  const host = req.headers.get("x-forwarded-host") || req.headers.get("host") || "localhost:3000";
-  const protocol = host.includes("localhost") ? "http" : "https";
-  const redirectUri = `${protocol}://${host}/api/corsair/callback`;
+  
+  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"}/api/corsair/callback`;
 
   const result = await generateOAuthUrl(corsair, pluginId, {
     tenantId: session.user.id,
