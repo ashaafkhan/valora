@@ -101,9 +101,8 @@ export default function EmailList({
         <div className="flex items-center gap-2">
           <CheckSquare
             onClick={handleToggleSelectAll}
-            className={`w-4 h-4 cursor-pointer hover:text-text-primary transition-colors ${
-              isAllSelected ? "text-primary" : "text-text-muted"
-            }`}
+            className={`w-4 h-4 cursor-pointer hover:text-text-primary transition-colors ${isAllSelected ? "text-primary" : "text-text-muted"
+              }`}
           />
           <button
             onClick={onSync}
@@ -133,19 +132,17 @@ export default function EmailList({
               key={sec.value}
               onClick={() => setSection(sec.value)}
               className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition duration-150 flex-shrink-0
-                ${
-                  isActive
-                    ? "bg-surface text-text-primary border border-border/80 shadow-sm valora-glow"
-                    : "text-text-secondary hover:text-text-primary hover:bg-surface-hover/55 border border-transparent"
+                ${isActive
+                  ? "bg-surface text-text-primary border border-border/80 shadow-sm valora-glow"
+                  : "text-text-secondary hover:text-text-primary hover:bg-surface-hover/55 border border-transparent"
                 }`}
             >
               {sec.dotColor && (
                 <span className={`w-1.5 h-1.5 rounded-full ${sec.dotColor}`} />
               )}
               {sec.label}
-              <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-md ${
-                isActive ? "bg-surface-hover border border-border/30 text-text-primary" : "bg-transparent text-text-muted"
-              }`}>
+              <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-md ${isActive ? "bg-surface-hover border border-border/30 text-text-primary" : "bg-transparent text-text-muted"
+                }`}>
                 {count}
               </span>
             </button>
@@ -204,12 +201,12 @@ export default function EmailList({
                   Valora needs access to your Gmail account to sync emails, score priorities, and assist with smart drafts.
                 </p>
               </div>
-              <a
-                href="/api/auth/connect?plugin=gmail&v=2"
+              <Link
+                href="/api/auth/connect?plugin=gmail"
                 className="px-5 py-2.5 bg-primary hover:bg-primary/95 text-white text-xs font-semibold rounded-xl transition-all shadow-sm flex items-center gap-1.5 cursor-pointer active:scale-95"
               >
                 Connect Gmail Account
-              </a>
+              </Link>
             </motion.div>
           ) : (
             <motion.div {...fadeIn} className="flex flex-col items-center justify-center h-full text-center p-8 space-y-4">

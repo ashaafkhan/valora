@@ -11,7 +11,10 @@ import { headers } from "next/headers";
 // Server Action to generate OAuth link for manual integrations
 async function getOAuthUrl(pluginId: string, userId: string) {
   "use server";
-  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL ?? "https://valorahq.in"}/api/corsair/callback`;
+  const headersList = await headers();
+  const host = headersList.get("x-forwarded-host") || headersList.get("host") || "localhost:3000";
+  const protocol = host.includes("localhost") ? "http" : "https";
+  const redirectUri = `${protocol}://${host}/api/corsair/callback`;
 
   const result = await generateOAuthUrl(corsair, pluginId, {
     tenantId: userId,
@@ -42,7 +45,7 @@ export default async function ConnectPage({ searchParams }: PageProps) {
 
         <div className="w-full max-w-md bg-zinc-900/40 backdrop-blur-xl border border-zinc-800/80 rounded-2xl p-8 text-center shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-          
+
           <div className="mx-auto w-16 h-16 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center mb-6">
             <Sparkles className="w-8 h-8 text-blue-400" />
           </div>
@@ -136,7 +139,7 @@ export default async function ConnectPage({ searchParams }: PageProps) {
         {agentConnectInfo ? (
           <div className="bg-zinc-900/60 backdrop-blur-xl border border-blue-500/20 rounded-2xl p-6 shadow-2xl relative overflow-hidden mb-8">
             <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500" />
-            
+
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center">
                 <Sparkles className="w-6 h-6 text-blue-400" />
@@ -187,7 +190,7 @@ export default async function ConnectPage({ searchParams }: PageProps) {
                 </div>
               </div>
             </div>
-            
+
             {status.gmail === "connected" ? (
               <form action={async () => {
                 "use server";

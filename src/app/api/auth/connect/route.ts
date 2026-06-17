@@ -14,10 +14,15 @@ export async function GET(req: NextRequest) {
   
   const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL ?? "https://valorahq.in"}/api/corsair/callback`;
 
+  console.log("[CONNECT DEBUG] NEXT_PUBLIC_APP_URL =", process.env.NEXT_PUBLIC_APP_URL);
+  console.log("[CONNECT DEBUG] redirectUri =", redirectUri);
+
   const result = await generateOAuthUrl(corsair, pluginId, {
     tenantId: session.user.id,
     redirectUri,
   });
+
+  console.log("[CONNECT DEBUG] Generated OAuth URL =", result.url);
 
   return NextResponse.redirect(result.url);
 }

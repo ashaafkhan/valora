@@ -1,0 +1,4 @@
+{
+  "resultUrl": "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&client_id=427102895860-02adao7g40s77p8smhcckjim0khf7ikm.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fvalorahq.in%2Fapi%2Fcorsair%2Fcallback&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.modify%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.labels%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.send%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.compose&state=eyJwbHVnaW4iOiJnbWFpbCIsInRlbmFudElkIjoidGVzdC11c2VyIiwiaWF0IjoxNzgxNjcxMTczNTYwfQ.AUCaRMspOW1wKDKPmb_qqAzLTYbP-neU6jsOpXmTw0M",
+  "redirectUriPassed": "https://valorahq.in/api/corsair/callback"
+}

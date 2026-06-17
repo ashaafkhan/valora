@@ -178,10 +178,10 @@ export default function CalendarView() {
       const updatedEvents = events.map((e) =>
         e.googleEventId === googleEventId
           ? {
-              ...e,
-              startTime: newStart,
-              endTime: newEnd,
-            }
+            ...e,
+            startTime: newStart,
+            endTime: newEnd,
+          }
           : e,
       );
       setEvents(updatedEvents);
@@ -271,12 +271,12 @@ export default function CalendarView() {
           <p className="text-sm text-text-muted mb-8 leading-relaxed">
             Connect your account to view and create events.
           </p>
-          <a
-            href="/api/auth/connect?plugin=googlecalendar&v=2"
+          <Link
+            href="/api/auth/connect?plugin=googlecalendar"
             className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-primary-light transition-all shadow-lg shadow-primary/20 active:scale-95"
           >
             Connect Google Calendar <ChevronRight className="w-4 h-4" />
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -374,11 +374,10 @@ export default function CalendarView() {
               <button
                 key={key}
                 onClick={() => setViewMode(key)}
-                className={`px-3 py-1 rounded-lg text-xs font-semibold transition ${
-                  viewMode === key
+                className={`px-3 py-1 rounded-lg text-xs font-semibold transition ${viewMode === key
                     ? "bg-primary text-white"
                     : "text-text-muted hover:text-text-primary"
-                }`}
+                  }`}
               >
                 {label}
               </button>
@@ -443,16 +442,16 @@ export default function CalendarView() {
         editEvent={
           editingEvent
             ? {
-                googleEventId: editingEvent.googleEventId,
-                title: editingEvent.title,
-                startTime: new Date(editingEvent.startTime),
-                endTime: new Date(editingEvent.endTime),
-                description: editingEvent.description,
-                location: editingEvent.location,
-                attendees: Array.isArray(editingEvent.attendees)
-                  ? (editingEvent.attendees as Array<{ email: string; name?: string; status: string }>)
-                  : [],
-              }
+              googleEventId: editingEvent.googleEventId,
+              title: editingEvent.title,
+              startTime: new Date(editingEvent.startTime),
+              endTime: new Date(editingEvent.endTime),
+              description: editingEvent.description,
+              location: editingEvent.location,
+              attendees: Array.isArray(editingEvent.attendees)
+                ? (editingEvent.attendees as Array<{ email: string; name?: string; status: string }>)
+                : [],
+            }
             : null
         }
       />
