@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState, useMemo } from "react";
 import { useEmailStore, selectFilteredEmails } from "@/store/emailStore";
 import { useCalendarStore } from "@/store/calendarStore";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/trpc/react";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboard";
 import EmailList from "@/components/inbox/EmailList";
@@ -43,8 +43,30 @@ export default function InboxPage() {
     return unsub;
   }, []);
 
-  // Get filtered emails from store
-  const displayEmails = selectFilteredEmails(useEmailStore.getState());
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab") || "inbox";
+
+  // Get base filtered emails from store (handles search query and priority sections)
+  const storeEmails = selectFilteredEmails(useEmailStore.getState());
+
+  // Apply tab-specific filtering
+  const displayEmails = useMemo(() => {
+    switch (tab) {
+      case "starred":
+        return storeEmails.filter((e) => e.isStarred);
+      case "sent":
+        return storeEmails.filter((e) => e.labels?.includes("SENT"));
+      case "drafts":
+        return storeEmails.filter((e) => e.labels?.includes("DRAFT"));
+      case "trash":
+        // In Gmail, TRASH is a label. We also have isArchived. We'll show both archived and explicit TRASH label for the trash tab.
+        return useEmailStore.getState().emails.filter((e) => e.isArchived || e.labels?.includes("TRASH"));
+      case "inbox":
+      default:
+        // Default inbox view (exclude drafts/sent unless explicitly viewed, and store filter already excludes archived)
+        return storeEmails.filter((e) => !e.labels?.includes("DRAFT") && !e.labels?.includes("SENT"));
+    }
+  }, [storeEmails, tab, tick]); // dependency on tick ensures it updates when store updates
 
   // ── tRPC Queries & Mutations ────────────────────────────────────
   const emailsQuery = api.gmail.getEmails.useQuery(

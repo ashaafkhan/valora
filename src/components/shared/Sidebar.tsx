@@ -55,7 +55,6 @@ const MAIL_NAV: NavItem[] = [
   { label: "Sent", href: "/inbox?tab=sent", icon: Send },
   { label: "Drafts", href: "/inbox?tab=drafts", icon: FileText },
   { label: "Trash", href: "/inbox?tab=trash", icon: Trash2 },
-  { label: "Subscriptions", href: "/settings/subscriptions", icon: Rss },
 ];
 
 const TOOLS_NAV: NavItem[] = [
