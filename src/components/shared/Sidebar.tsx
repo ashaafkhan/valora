@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Inbox, Star, Send, FileText, Trash2, Mail,
@@ -74,6 +74,7 @@ const ACCOUNT_NAV: NavItem[] = [
 
 export default function Sidebar({ user, onCompose }: SidebarProps) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
   const [zaraVisited, setZaraVisited] = useState(true);
@@ -89,8 +90,12 @@ export default function Sidebar({ user, onCompose }: SidebarProps) {
   }, [pathname]);
 
   const isActive = (href: string) => {
-    if (href === "/inbox") return pathname === "/inbox" || (pathname === "/inbox" && !pathname.includes("?"));
-    return pathname.startsWith(href.split("?")[0]!);
+    const currentQuery = searchParams.toString();
+    const currentUrl = currentQuery ? `${pathname}?${currentQuery}` : pathname;
+
+    if (href === "/inbox") return currentUrl === "/inbox";
+    if (href.includes("?")) return currentUrl === href;
+    return pathname.startsWith(href);
   };
 
   const sidebarWidth = collapsed ? 64 : 220;
