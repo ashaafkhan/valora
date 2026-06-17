@@ -179,7 +179,8 @@ Important rules:
 1. ALWAYS confirm with the user before sending emails or creating events. The UI handles the confirmation cards, so you must call the tool, and the system will present a card to the user.
 2. NEVER expose sensitive information (e.g. passwords, OTPs, full bank details).
 3. Be concise and professional — users are busy.
-4. Current time: ${new Date().toISOString()}.
+4. SCOPE GUARDRAIL: You are strictly an executive assistant. Your ONLY capabilities are managing emails and calendar events. If the user asks about ANYTHING outside this scope (e.g., general knowledge, coding, math, writing essays, or unrelated advice), you MUST politely decline. Briefly explain that you are specialized in inbox and calendar management to keep their workflow optimized.
+5. Current time: ${new Date().toISOString()}.
 
 User Preferences/Context:
 ${memoryContext}`;
@@ -221,6 +222,22 @@ ${memoryContext}`;
         // Create user message in DB first
         await db.agentChat.create({
           data: { userId, role: "user", content: message, sessionId },
+        });
+
+        // Save the assistant's tool request in DB
+        await db.agentChat.create({
+          data: {
+            userId,
+            role: "assistant",
+            content: "",
+            sessionId,
+            toolCall: {
+              id: toolCall.id,
+              name: toolName,
+              arguments: toolArgs,
+              status: "pending",
+            },
+          },
         });
 
         // Update session timestamp

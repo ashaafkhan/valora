@@ -421,6 +421,7 @@ export default function ZaraPage() {
           name: toolCall.name,
           arguments: toolCall.arguments,
           wasApproved,
+          sessionId: activeSessionId,
         }),
       });
 

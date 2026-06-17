@@ -1,4 +1,5 @@
 import { Mail, Calendar, Check, X, Bot, User, Clock } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export interface ToolCallData {
   id: string;
@@ -24,6 +25,15 @@ interface AgentMessageProps {
 export function AgentMessage({ message, onActionConfirm, isActionLoading }: AgentMessageProps) {
   const isUser = message.role === "user";
   const { toolCall } = message;
+
+  const [editedArgs, setEditedArgs] = useState<any>(toolCall?.arguments || {});
+
+  // Update local state if toolCall arguments change externally
+  useEffect(() => {
+    if (toolCall?.arguments) {
+      setEditedArgs(toolCall.arguments);
+    }
+  }, [toolCall?.arguments]);
 
   return (
     <div className={`flex gap-4 p-4 rounded-2xl transition-all duration-200 ${isUser ? "justify-end" : "justify-start"}`}>
@@ -87,25 +97,60 @@ export function AgentMessage({ message, onActionConfirm, isActionLoading }: Agen
             <div className="text-[11px] space-y-2.5 text-text-secondary leading-normal">
               {toolCall.name === "send_email" && (
                 <>
-                  <div className="flex gap-1.5">
+                  <div className="flex gap-1.5 items-center">
                     <span className="font-semibold text-text-muted w-14 flex-shrink-0">Recipient:</span>
-                    <span className="text-text-primary truncate">{toolCall.arguments.to}</span>
+                    {toolCall.status === "pending" ? (
+                      <input 
+                        type="text"
+                        value={editedArgs.to || ""}
+                        onChange={(e) => setEditedArgs({ ...editedArgs, to: e.target.value })}
+                        className="flex-1 bg-background/40 border border-border/30 rounded-md px-2 py-1 text-text-primary text-[11px] focus:outline-none focus:border-primary/50"
+                      />
+                    ) : (
+                      <span className="text-text-primary truncate">{toolCall.arguments.to}</span>
+                    )}
                   </div>
-                  <div className="flex gap-1.5">
+                  <div className="flex gap-1.5 items-center">
                     <span className="font-semibold text-text-muted w-14 flex-shrink-0">Subject:</span>
-                    <span className="text-text-primary truncate font-bold">{toolCall.arguments.subject}</span>
+                    {toolCall.status === "pending" ? (
+                      <input 
+                        type="text"
+                        value={editedArgs.subject || ""}
+                        onChange={(e) => setEditedArgs({ ...editedArgs, subject: e.target.value })}
+                        className="flex-1 bg-background/40 border border-border/30 rounded-md px-2 py-1 text-text-primary text-[11px] font-bold focus:outline-none focus:border-primary/50"
+                      />
+                    ) : (
+                      <span className="text-text-primary truncate font-bold">{toolCall.arguments.subject}</span>
+                    )}
                   </div>
-                  <div className="border border-border/30 rounded-xl bg-background/40 p-2.5 max-h-32 overflow-y-auto text-[10px] font-mono leading-relaxed mt-1 whitespace-pre-wrap">
-                    {toolCall.arguments.body}
-                  </div>
+                  {toolCall.status === "pending" ? (
+                    <textarea 
+                      value={editedArgs.body || ""}
+                      onChange={(e) => setEditedArgs({ ...editedArgs, body: e.target.value })}
+                      className="w-full border border-border/30 rounded-xl bg-background/40 p-2.5 min-h-[80px] max-h-32 overflow-y-auto text-[10px] font-mono leading-relaxed mt-1 whitespace-pre-wrap focus:outline-none focus:border-primary/50 resize-none"
+                    />
+                  ) : (
+                    <div className="border border-border/30 rounded-xl bg-background/40 p-2.5 max-h-32 overflow-y-auto text-[10px] font-mono leading-relaxed mt-1 whitespace-pre-wrap">
+                      {toolCall.arguments.body}
+                    </div>
+                  )}
                 </>
               )}
 
               {toolCall.name === "create_event" && (
                 <>
-                  <div className="flex gap-1.5">
+                  <div className="flex gap-1.5 items-center">
                     <span className="font-semibold text-text-muted w-14 flex-shrink-0">Event:</span>
-                    <span className="text-text-primary truncate font-bold">{toolCall.arguments.title}</span>
+                    {toolCall.status === "pending" ? (
+                      <input 
+                        type="text"
+                        value={editedArgs.title || ""}
+                        onChange={(e) => setEditedArgs({ ...editedArgs, title: e.target.value })}
+                        className="flex-1 bg-background/40 border border-border/30 rounded-md px-2 py-1 text-text-primary text-[11px] font-bold focus:outline-none focus:border-primary/50"
+                      />
+                    ) : (
+                      <span className="text-text-primary truncate font-bold">{toolCall.arguments.title}</span>
+                    )}
                   </div>
                   <div className="flex gap-1.5">
                     <span className="font-semibold text-text-muted w-14 flex-shrink-0">Start:</span>
@@ -130,17 +175,38 @@ export function AgentMessage({ message, onActionConfirm, isActionLoading }: Agen
                     </span>
                   </div>
                   {toolCall.arguments.attendees && toolCall.arguments.attendees.length > 0 && (
-                    <div className="flex gap-1.5">
+                    <div className="flex gap-1.5 items-center">
                       <span className="font-semibold text-text-muted w-14 flex-shrink-0">Guests:</span>
-                      <span className="text-text-primary truncate">
-                        {toolCall.arguments.attendees.join(", ")}
-                      </span>
+                      {toolCall.status === "pending" ? (
+                        <input 
+                          type="text"
+                          value={editedArgs.attendees?.join(", ") || ""}
+                          onChange={(e) => setEditedArgs({ ...editedArgs, attendees: e.target.value.split(",").map(s => s.trim()) })}
+                          className="flex-1 bg-background/40 border border-border/30 rounded-md px-2 py-1 text-text-primary text-[11px] focus:outline-none focus:border-primary/50"
+                        />
+                      ) : (
+                        <span className="text-text-primary truncate">
+                          {toolCall.arguments.attendees.join(", ")}
+                        </span>
+                      )}
                     </div>
                   )}
-                  {toolCall.arguments.description && (
-                    <div className="border border-border/30 rounded-xl bg-background/40 p-2.5 max-h-24 overflow-y-auto text-[10px] italic mt-1">
-                      {toolCall.arguments.description}
+                  {toolCall.status === "pending" ? (
+                    <div className="flex gap-1.5 items-start mt-2">
+                      <span className="font-semibold text-text-muted w-14 flex-shrink-0 pt-1">Notes:</span>
+                      <textarea 
+                        value={editedArgs.description || ""}
+                        onChange={(e) => setEditedArgs({ ...editedArgs, description: e.target.value })}
+                        className="flex-1 border border-border/30 rounded-xl bg-background/40 p-2.5 max-h-24 overflow-y-auto text-[10px] italic mt-1 focus:outline-none focus:border-primary/50 resize-none"
+                        placeholder="Optional description"
+                      />
                     </div>
+                  ) : (
+                    toolCall.arguments.description && (
+                      <div className="border border-border/30 rounded-xl bg-background/40 p-2.5 max-h-24 overflow-y-auto text-[10px] italic mt-1">
+                        {toolCall.arguments.description}
+                      </div>
+                    )
                   )}
                 </>
               )}
@@ -158,7 +224,7 @@ export function AgentMessage({ message, onActionConfirm, isActionLoading }: Agen
                   Cancel
                 </button>
                 <button
-                  onClick={() => onActionConfirm(message.id, toolCall, true)}
+                  onClick={() => onActionConfirm(message.id, { ...toolCall, arguments: editedArgs }, true)}
                   disabled={isActionLoading}
                   className="flex items-center gap-1.5 px-4.5 py-1.5 rounded-xl text-[10px] font-semibold bg-primary hover:bg-primary/95 text-white border border-primary/20 transition shadow-sm disabled:opacity-50"
                 >

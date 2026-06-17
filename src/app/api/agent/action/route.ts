@@ -23,9 +23,10 @@ export async function POST(req: Request) {
       name: string;
       arguments: Record<string, any>;
       wasApproved: boolean;
+      sessionId?: string;
     };
 
-    const { toolCallId, name, arguments: toolArgs, wasApproved } = body;
+    const { toolCallId, name, arguments: toolArgs, wasApproved, sessionId } = body;
 
     if (!toolCallId || !name || !toolArgs) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -75,7 +76,7 @@ export async function POST(req: Request) {
 
     // 3. Re-query the database chat history to rebuild conversation context
     const dbHistory = await db.agentChat.findMany({
-      where: { userId },
+      where: { userId, ...(sessionId ? { sessionId } : {}) },
       orderBy: { createdAt: "asc" },
       take: 15,
     });
@@ -122,12 +123,35 @@ Keep it direct. Never expose password/OTP details.`;
     const choice = completion.choices[0];
     const finalText = choice?.message?.content ?? `Action complete: ${toolResultText}`;
 
+    // Update the pending tool call in DB
+    if (sessionId) {
+      const pendingCalls = await db.agentChat.findMany({
+        where: { userId, sessionId, role: "assistant" },
+        orderBy: { createdAt: "desc" },
+        take: 5
+      });
+      const targetCall = pendingCalls.find(c => c.toolCall && (c.toolCall as any).id === toolCallId);
+      if (targetCall) {
+        await db.agentChat.update({
+          where: { id: targetCall.id },
+          data: {
+            toolCall: {
+              ...(typeof targetCall.toolCall === 'object' && targetCall.toolCall !== null ? targetCall.toolCall : {}),
+              status: wasApproved ? "approved" : "rejected",
+              arguments: toolArgs
+            }
+          }
+        });
+      }
+    }
+
     // 5. Save final textual message to database
     await db.agentChat.create({
       data: {
         userId,
         role: "assistant",
         content: finalText,
+        sessionId,
       },
     });
 
