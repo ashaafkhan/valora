@@ -108,13 +108,23 @@ function getBody(payload?: MessagePart | null): string {
 }
 
 // ── Email Synchronization ──────────────────────────────────────
-export async function syncGmailInbox(userId: string, maxThreads = 20): Promise<{ synced: number; failed: number }> {
+export async function syncGmailInbox(userId: string, maxThreads = 20, folder?: string): Promise<{ synced: number; failed: number }> {
   let synced = 0;
   let failed = 0;
 
   try {
+    let q: string | undefined = undefined;
+    if (folder) {
+      if (folder === "trash") q = "in:trash";
+      else if (folder === "sent") q = "in:sent";
+      else if (folder === "drafts") q = "in:drafts";
+      else if (folder === "starred") q = "is:starred";
+      else if (folder !== "inbox") q = `label:${folder.toUpperCase()}`;
+    }
+
     const res = await corsair.withTenant(userId).gmail.api.threads.list({
       maxResults: maxThreads,
+      q,
     });
 
     if (!res.threads || res.threads.length === 0) {

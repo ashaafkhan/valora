@@ -139,9 +139,9 @@ export default function InboxPage() {
   );
 
   const handleSync = useCallback(async () => {
-    await syncMutation.mutateAsync({ maxThreads: 25 });
+    await syncMutation.mutateAsync({ maxThreads: 25, folder: tab });
     await emailsQuery.refetch();
-  }, [syncMutation, emailsQuery]);
+  }, [syncMutation, emailsQuery, tab]);
 
   const handleReply = useCallback(
     async (body: string) => {

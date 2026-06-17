@@ -45,8 +45,11 @@ export const gmailRouter = createTRPCRouter({
 
       const whereClause: Prisma.EmailWhereInput = {
         userId,
-        isArchived: label === "archive",
       };
+
+      if (label === "archive") {
+        whereClause.isArchived = true;
+      }
 
       if (label && label !== "all" && label !== "archive") {
         whereClause.labels = { has: label.toUpperCase() };
@@ -87,10 +90,10 @@ export const gmailRouter = createTRPCRouter({
 
   // ── Sync Emails ──────────────────────────────────────────────
   syncInbox: protectedProcedure
-    .input(z.object({ maxThreads: z.number().optional().default(20) }))
+    .input(z.object({ maxThreads: z.number().optional().default(20), folder: z.string().optional() }))
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      const result = await syncGmailInbox(userId, input.maxThreads);
+      const result = await syncGmailInbox(userId, input.maxThreads, input.folder);
       return { success: true, ...result };
     }),
 
