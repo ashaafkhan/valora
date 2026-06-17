@@ -55,10 +55,10 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 relative flex-shrink-0 rounded-lg overflow-hidden bg-primary/5 border border-primary/10 flex items-center justify-center p-1">
+              <div className="w-10 h-10 relative flex-shrink-0 rounded-lg overflow-hidden bg-primary/5 border border-primary/10 flex items-center justify-center p-1">
                 <Image src="/valora_logo.png" alt="Valora" fill className="object-contain logo-adaptive" />
               </div>
-              <span className="font-sora text-lg font-bold text-[var(--text-primary)]">Valora</span>
+              <span className="font-sora text-xl font-bold text-[var(--text-primary)]">Valora</span>
             </Link>
             <p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-xs mb-6">
               Built in India with ❤ — Valora helps you command your inbox and own your time.

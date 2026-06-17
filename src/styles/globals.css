@@ -135,11 +135,12 @@
 
 /* ── Root (Light Mode Default) ──────────────── */
 :root {
-  --background: #FAFAFA;
-  --surface: #FFFFFF;
-  --surface-hover: #F3F4F6;
-  --border: #E5E7EB;
-  --border-strong: #D1D5DB;
+  --background: #fdfbf7;
+  --surface: #ffffff;
+  --surface-hover: #f3f4f6;
+  --border: #e5e7eb;
+  --border-strong: #d1d5db;
+  --bg-grid: rgba(0, 0, 0, 0.04);
 
   --primary: #0066FF;
   --primary-light: #3385FF;
@@ -175,6 +176,7 @@
   --surface-hover: #141417;
   --border: #1c1c21;
   --border-strong: #2a2a32;
+  --bg-grid: rgba(255, 255, 255, 0.02);
 
   --primary: #2563eb; /* Brighter blue for dark mode */
   --primary-light: #60a5fa;
@@ -289,6 +291,11 @@ html {
 
 body {
   background-color: var(--background);
+  background-image: 
+    linear-gradient(var(--bg-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center top;
   color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: 14px;
@@ -380,6 +387,17 @@ kbd {
 .font-sora {
   font-family: 'Sora', sans-serif;
   letter-spacing: -0.03em;
+}
+
+/* ── Utilities ─────────────────────────────── */
+
+.logo-adaptive {
+  filter: invert(1);
+}
+
+.dark .logo-adaptive,
+[data-theme="dark"] .logo-adaptive {
+  filter: none;
 }
 
 /* ── Gradient Text ──────────────────────────── */

@@ -861,16 +861,6 @@ export function Hero() {
         animate="show"
         className="relative z-10 text-center px-6 max-w-5xl mx-auto"
       >
-        {/* Badge */}
-        <motion.div variants={itemVariants} className="flex justify-center mb-7">
-          <div className="inline-flex items-center gap-2 bg-[var(--primary)]/10 border border-[var(--primary)]/25
-                          rounded-full px-4 py-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-pulse" />
-            <span className="text-xs font-semibold text-[var(--primary)] tracking-widest uppercase">
-              AI-First Command Center · Meet Zara
-            </span>
-          </div>
-        </motion.div>
 
         {/* Main Headline */}
         <motion.h1
