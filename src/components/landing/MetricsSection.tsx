@@ -107,7 +107,7 @@ export function MetricsSection() {
               {/* Bar chart */}
               <div className="flex items-end justify-between gap-2 h-24">
                 {volumes.map((v, i) => (
-                  <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                  <div key={i} className="flex-1 flex flex-col justify-end items-center gap-2 h-full">
                     <motion.div
                       initial={{ height: 0 }}
                       whileInView={{ height: `${v}%` }}
@@ -202,9 +202,9 @@ export function MetricsSection() {
               <p className="text-xs text-[var(--text-muted)] mb-6">Zara response distribution pattern</p>
               
               {/* Bell Curve Vertical Bars */}
-              <div className="flex items-end justify-between gap-1 h-24">
+              <div className="flex items-end justify-between gap-1 h-24 mt-4">
                 {activityHeights.map((h, i) => (
-                  <div key={i} className="flex-1 flex flex-col items-center">
+                  <div key={i} className="flex-1 flex flex-col justify-end items-center h-full">
                     <motion.div
                       initial={{ height: 0 }}
                       whileInView={{ height: `${h}%` }}

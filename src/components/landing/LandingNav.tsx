@@ -45,10 +45,10 @@ export function LandingNav() {
       >
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-          <div className="w-9 h-9 relative flex-shrink-0">
-            <Image src="/valora_logo.png" alt="Valora" fill className="object-contain invert dark:invert-0 transition-all duration-300" />
+          <div className="w-11 h-11 relative flex-shrink-0">
+            <Image src="/valora_logo.png" alt="Valora" fill className="object-contain logo-adaptive transition-all duration-300" />
           </div>
-          <span className="font-sora text-xl font-bold tracking-tight text-[var(--text-primary)] whitespace-nowrap">
+          <span className="font-sora text-2xl font-bold tracking-tight text-[var(--text-primary)] whitespace-nowrap">
             Valora
           </span>
         </Link>

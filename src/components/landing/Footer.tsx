@@ -55,13 +55,13 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="w-10 h-10 relative flex-shrink-0 rounded-lg overflow-hidden bg-primary/5 border border-primary/10 flex items-center justify-center p-1">
-                <Image src="/valora_logo.png" alt="Valora" fill className="object-contain invert dark:invert-0 transition-all duration-300" />
+              <div className="w-12 h-12 relative flex-shrink-0 rounded-lg overflow-hidden bg-primary/5 border border-primary/10 flex items-center justify-center p-1.5">
+                <Image src="/valora_logo.png" alt="Valora" fill className="object-contain logo-adaptive transition-all duration-300" />
               </div>
-              <span className="font-sora text-xl font-bold text-[var(--text-primary)]">Valora</span>
+              <span className="font-sora text-2xl font-bold text-[var(--text-primary)]">Valora</span>
             </Link>
             <p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-xs mb-6">
-              Built in India with ❤ — Valora helps you command your inbox and own your time.
+              Valora helps you command your inbox and own your time.
             </p>
             {/* Social links */}
             <div className="flex items-center gap-3">
@@ -106,7 +106,7 @@ export function Footer() {
         {/* Bottom strip */}
         <div className="pt-6 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-[var(--text-muted)] font-mono">
-            &copy; 2026 Valora · Built in India
+            &copy; 2026 Valora
           </p>
           <p className="text-xs text-[var(--text-muted)]">
             Command your inbox. Own your time.

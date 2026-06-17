@@ -6,7 +6,6 @@ import { MetricsSection } from "@/components/landing/MetricsSection";
 import { CalendarFeature } from "@/components/landing/CalendarFeature";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { Pricing } from "@/components/landing/Pricing";
-import { CTASection } from "@/components/landing/CTASection";
 import { Footer } from "@/components/landing/Footer";
 
 export default function HomePage() {
@@ -35,9 +34,6 @@ export default function HomePage() {
 
       {/* 8. Pricing — "Simple, transparent pricing." */}
       <Pricing />
-
-      {/* 9. CTA — "Ready to own your inbox?" */}
-      <CTASection />
 
       {/* 10. Footer */}
       <Footer />
