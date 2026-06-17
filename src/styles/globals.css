@@ -342,13 +342,13 @@ h1, h2, h3, h4, h5, h6 {
   transition: color 0.3s ease;
 }
 
-a {
+a:not([class*="text-"]):not([class*="bg-"]) {
   color: var(--primary);
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
-a:hover {
+a:not([class*="text-"]):not([class*="bg-"]):hover {
   color: var(--primary-light);
 }
 
@@ -699,15 +699,4 @@ kbd {
 .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
-/* ── Enforce primary text visibility ─────────── */
-.bg-primary,
-.bg-\\[var\\(--primary\\)\\],
-.bg-\\[\\#0066ff\\] {
-  color: #ffffff !important;
-}
 
-.bg-primary:hover,
-.bg-\\[var\\(--primary\\)\\]:hover,
-.bg-\\[\\#0066ff\\]:hover {
-  color: #ffffff !important;
-}
