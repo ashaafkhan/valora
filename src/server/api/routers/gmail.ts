@@ -53,7 +53,8 @@ export const gmailRouter = createTRPCRouter({
       }
 
       if (label && label !== "all" && label !== "archive") {
-        whereClause.labels = { has: label.toUpperCase() };
+        const queryLabel = label.toUpperCase() === "DRAFTS" ? "DRAFT" : label.toUpperCase();
+        whereClause.labels = { has: queryLabel };
       }
 
       if (priority && priority !== "all") {

@@ -34,14 +34,21 @@ export async function disconnectIntegration(pluginId: string) {
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   try {
-    // Corsair doesn't expose a direct manage.disconnect API, so we manually remove
-    // the connection from the underlying tables managed by the pg pool.
+    // Delete dependent entities first (foreign key constraint)
     await conn.query(
+      `DELETE FROM "corsair_entities" WHERE account_id IN (
+         SELECT id FROM "corsair_accounts" WHERE tenant_id = $1 AND integration_id = (SELECT id FROM "corsair_integrations" WHERE name = $2 LIMIT 1)
+       )`,
+      [session.user.id, pluginId]
+    );
+
+    // Then delete the account token
+    const res = await conn.query(
       `DELETE FROM "corsair_accounts" WHERE tenant_id = $1 AND integration_id = (SELECT id FROM "corsair_integrations" WHERE name = $2 LIMIT 1)`,
       [session.user.id, pluginId]
     );
-    
-    return { success: true };
+    console.log(`[disconnect] deleted ${res.rowCount} rows for tenant ${session.user.id} and plugin ${pluginId}`);
+    return { success: true, rowCount: res.rowCount };
   } catch (err) {
     console.error("Failed to disconnect:", err);
     // Fallback: if table names differ in this version of Corsair, 

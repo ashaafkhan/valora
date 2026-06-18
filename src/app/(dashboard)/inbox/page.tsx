@@ -70,7 +70,7 @@ export default function InboxPage() {
 
   // ── tRPC Queries & Mutations ────────────────────────────────────
   const emailsQuery = api.gmail.getEmails.useQuery(
-    {},
+    { label: tab === "inbox" ? undefined : tab },
     {
       refetchOnWindowFocus: false,
       refetchInterval: 2 * 60 * 1000, // Passive refresh every 2 minutes

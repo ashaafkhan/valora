@@ -75,9 +75,18 @@ export default function EmailList({
 
   function EmailSkeleton() {
     return (
-      <div className="space-y-0">
+      <div className="space-y-0 relative h-full">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-background/40 backdrop-blur-[1px]">
+          <div className="flex flex-col items-center gap-3 p-6 bg-surface/90 border border-primary/20 rounded-2xl shadow-xl max-w-[280px] text-center animate-fade-in">
+            <Sparkles className="w-8 h-8 text-primary animate-pulse" />
+            <p className="text-sm font-semibold text-text-primary">Valora AI is analyzing...</p>
+            <p className="text-[11px] text-text-secondary leading-relaxed">
+              We are securely syncing and prioritizing your recent emails to build your command center.
+            </p>
+          </div>
+        </div>
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="flex items-center gap-3 px-4 py-3 border-b border-border/40">
+          <div key={i} className="flex items-center gap-3 px-4 py-3 border-b border-border/40 opacity-50">
             <div className="skeleton w-3.5 h-3.5 rounded" />
             <div className="skeleton w-5 h-5 rounded" />
             <div className="skeleton w-9 h-9 rounded-xl" />
