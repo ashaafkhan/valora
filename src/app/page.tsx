@@ -7,10 +7,12 @@ import { CalendarFeature } from "@/components/landing/CalendarFeature";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { Pricing } from "@/components/landing/Pricing";
 import { Footer } from "@/components/landing/Footer";
+import { AnimatedBackground } from "@/components/landing/AnimatedBackground";
 
 export default function HomePage() {
   return (
     <main className="relative min-h-screen bg-[var(--background)] overflow-x-hidden">
+      <AnimatedBackground />
       {/* Sticky Navigation */}
       <LandingNav />
 
