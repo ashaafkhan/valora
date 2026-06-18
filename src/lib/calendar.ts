@@ -251,7 +251,7 @@ export async function queryCalendarAssistant(
     .map((e) => `"${e.title}" from ${e.startTime.toISOString()} to ${e.endTime.toISOString()} (Status: ${e.status})`)
     .join("\n");
 
-  const prompt = `You are Zara AI, Valora's intelligent executive assistant. The user is asking you a question about their calendar.
+  const prompt = `You are Valora's intelligent Calendar Assistant. The user is asking you a question about their calendar.
 
 Current time: ${now.toISOString()}
 

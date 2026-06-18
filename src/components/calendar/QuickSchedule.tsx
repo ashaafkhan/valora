@@ -31,7 +31,7 @@ export default function QuickSchedule() {
       setResponse(result);
       setInput(""); // clear input after asking
     } catch (err) {
-      setError("Failed to reach Zara — please try again.");
+      setError("Failed to reach Assistant — please try again.");
     }
   };
 
@@ -47,7 +47,7 @@ export default function QuickSchedule() {
     <div className="space-y-3">
       {/* Input */}
       <div
-        className={`flex items-center gap-2 px-3 py-2 bg-surface border rounded-2xl shadow-sm transition-all duration-200 ${
+        className={`flex items-center gap-2 px-3 py-2 bg-surface border rounded-2xl shadow-sm transition-all duration-200 focus-within:border-primary/40 focus-within:ring-2 focus-within:ring-primary/10 ${
           response
             ? "border-primary/40 ring-2 ring-primary/10 shadow-primary/5"
             : "border-border hover:border-border-strong hover:shadow-md"
@@ -63,8 +63,8 @@ export default function QuickSchedule() {
             if (response) setResponse(null);
           }}
           onKeyDown={(e) => e.key === "Enter" && handleAsk()}
-          placeholder="Ask Zara about your schedule..."
-          className="flex-1 min-w-0 bg-transparent border-0 outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0 text-sm font-medium text-text-primary placeholder:text-text-muted/70 focus:ring-0 text-ellipsis"
+          placeholder="Ask about your calendar events..."
+          className="flex-1 min-w-0 bg-transparent border-0 !outline-none !ring-0 focus:!outline-none focus:!ring-0 focus-visible:!outline-none focus-visible:!ring-0 text-sm font-medium text-text-primary placeholder:text-text-muted/70 text-ellipsis"
           disabled={isAsking}
         />
         <button
@@ -105,7 +105,7 @@ export default function QuickSchedule() {
             </div>
             <div className="flex-1 min-w-0 space-y-2">
               <div className="text-xs font-bold text-primary uppercase tracking-wider mb-1">
-                Zara AI
+                Calendar Assistant
               </div>
               <div className="text-sm text-text-primary whitespace-pre-wrap leading-relaxed">
                 {response}
