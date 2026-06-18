@@ -217,7 +217,12 @@ export async function syncGmailInbox(userId: string, maxThreads = 20, folder?: s
       const body = getBody(message.payload) || (message.snippet ?? "");
       const bodyPreview = message.snippet ?? body.slice(0, 200);
 
-      const labels = message.labelIds ?? [];
+      const labels = message.labelIds ? [...message.labelIds] : [];
+      if (folder === "trash" && !labels.includes("TRASH")) labels.push("TRASH");
+      if (folder === "sent" && !labels.includes("SENT")) labels.push("SENT");
+      if (folder === "drafts" && !labels.includes("DRAFT")) labels.push("DRAFT");
+      if (folder === "starred" && !labels.includes("STARRED")) labels.push("STARRED");
+
       const isRead = !labels.includes("UNREAD");
       const isStarred = labels.includes("STARRED");
       const isArchived = !labels.includes("INBOX");
