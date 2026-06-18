@@ -321,7 +321,6 @@ export default function SettingsPage() {
 
   const navSections = [
     { id: "account", label: "Account", icon: User },
-    { id: "ai", label: "AI & Priority", icon: Sparkles },
     { id: "integrations", label: "Integrations", icon: Link2 },
     { id: "privacy", label: "Privacy & Security", icon: Shield },
     { id: "danger", label: "Danger Zone", icon: AlertTriangle },
@@ -427,73 +426,6 @@ export default function SettingsPage() {
                 </button>
               </div>
             </SettingsSection>
-          )}
-
-          {/* ── AI & Priority ────────────────────────────────── */}
-          {activeSection === "ai" && (
-            <>
-              <SettingsSection
-                icon={Sparkles}
-                title="AI Priority Engine"
-                subtitle="Powered by Groq Llama-3.3-70b — ultra-fast inference"
-                iconBg="bg-blue-500/10 border-blue-500/20"
-                iconColor="text-blue-400"
-              >
-                <div className="py-2">
-                  <ToggleRow
-                    label="AI Priority Inbox"
-                    description="Automatically classify emails as Urgent, High, Normal, or Low using LLM scoring."
-                    enabled={settings.enableAIPriority}
-                    onChange={(v) => updateSetting("enableAIPriority", v)}
-                    badge="Recommended"
-                  />
-                </div>
-                <div className="pb-4 pt-1 grid grid-cols-4 gap-2">
-                  {[
-                    { label: "Urgent", color: "bg-error/15 border-error/30 text-error" },
-                    { label: "High", color: "bg-warning/15 border-warning/30 text-warning" },
-                    { label: "Normal", color: "bg-surface-hover border-border text-text-secondary" },
-                    { label: "Low", color: "bg-surface-hover border-border/50 text-text-muted" },
-                  ].map(({ label, color }) => (
-                    <div key={label} className={`text-center py-2 rounded-xl border text-[10px] font-bold uppercase tracking-wider ${color}`}>
-                      {label}
-                    </div>
-                  ))}
-                </div>
-              </SettingsSection>
-
-              <SettingsSection
-                icon={Bot}
-                title="AI Agent"
-                subtitle="Valora Copilot — your executive assistant with memory"
-                iconBg="bg-blue-500/10 border-blue-500/20"
-                iconColor="text-blue-400"
-              >
-                <div className="py-5 space-y-4">
-                  <div className="p-4 bg-background/50 rounded-xl border border-border/60 text-xs text-text-secondary leading-relaxed space-y-2">
-                    <p className="text-text-primary font-semibold text-xs">What Valora AI can do:</p>
-                    <ul className="space-y-1.5 mt-2">
-                      {[
-                        "Search your inbox with natural language",
-                        "Draft and send emails on your behalf (with confirmation)",
-                        "Create calendar events and fetch your schedule",
-                        "Summarize threads and extract meeting details",
-                        "Remember your preferences across sessions via Mem0",
-                      ].map((item) => (
-                        <li key={item} className="flex items-start gap-2">
-                          <Check className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <p className="text-[10px] text-text-muted font-mono">
-                    Model: <span className="text-primary-light">llama-3.3-70b-versatile</span> via Groq API ·
-                    Memory: <span className="text-primary-light">Mem0</span> persistent store
-                  </p>
-                </div>
-              </SettingsSection>
-            </>
           )}
 
           {/* ── Integrations ─────────────────────────────────── */}

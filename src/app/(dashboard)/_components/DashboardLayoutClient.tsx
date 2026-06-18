@@ -35,23 +35,6 @@ export default function DashboardLayoutClient({
     refetchOnWindowFocus: false,
   });
 
-  // ── Default light theme on first load ──────────────────────────
-  useEffect(() => {
-    const stored = localStorage.getItem("valora-theme");
-    const theme = stored ?? "light";
-    const html = document.documentElement;
-
-    if (theme === "dark") {
-      html.setAttribute("data-theme", "dark");
-      html.classList.add("dark");
-      html.classList.remove("light");
-    } else {
-      html.setAttribute("data-theme", "light");
-      html.classList.add("light");
-      html.classList.remove("dark");
-    }
-  }, []);
-
   // ── Global keyboard shortcuts ──────────────────────────────────
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {

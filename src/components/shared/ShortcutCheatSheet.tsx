@@ -43,7 +43,6 @@ const RIGHT_SHORTCUTS = [
     group: "Compose",
     items: [
       { keys: ["Ctrl", "↵"], desc: "Send email" },
-      { keys: ["Tab"], desc: "Accept AI autocomplete" },
       { keys: ["Esc"], desc: "Close compose" },
     ],
   },
@@ -62,7 +61,7 @@ const RIGHT_SHORTCUTS = [
   {
     group: "Zara",
     items: [
-      { keys: ["Ctrl", "/"], desc: "New chat session" },
+      { keys: ["Ctrl", "Shift", "D"], desc: "Toggle voice mode" },
     ],
   },
 ];
