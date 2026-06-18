@@ -251,8 +251,9 @@ export const gmailRouter = createTRPCRouter({
       await ctx.db.labelRule.create({
         data: {
           userId,
-          fromEmail: input.senderEmail,
-          action: "trash",
+          name: `Block ${input.senderEmail}`,
+          conditions: { from: input.senderEmail },
+          actions: { action: "trash" },
         },
       });
 
