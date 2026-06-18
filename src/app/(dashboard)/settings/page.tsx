@@ -35,7 +35,7 @@ import {
   RefreshCcw,
 } from "lucide-react";
 import { api } from "@/trpc/react";
-import { getIntegrationOAuthUrl, disconnectIntegration } from "./actions";
+import { getIntegrationOAuthUrl, disconnectIntegration, deleteUserAccount } from "./actions";
 
 // ── Types ───────────────────────────────────────────────────────
 type ThemeOption = "dark" | "light" | "system";
@@ -350,6 +350,19 @@ export default function SettingsPage() {
       });
     } catch (err) {
       console.error("Failed to reset database preferences:", err);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      const res = await deleteUserAccount();
+      if (res?.success) {
+        signOut({ callbackUrl: "/login" });
+      } else {
+        console.error("Failed to delete account");
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -712,7 +725,7 @@ export default function SettingsPage() {
                       >
                         Cancel
                       </button>
-                      <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-error border-0 text-white text-xs font-bold hover:brightness-90 transition cursor-pointer">
+                      <button onClick={handleDeleteAccount} className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-error border-0 text-white text-xs font-bold hover:brightness-90 transition cursor-pointer">
                         <AlertTriangle className="w-3.5 h-3.5" />
                         Confirm Delete
                       </button>

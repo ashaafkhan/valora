@@ -4,7 +4,7 @@ import { auth } from "@/server/auth";
 import { corsair } from "@/server/corsair";
 import { generateOAuthUrl } from "corsair/oauth";
 import { headers } from "next/headers";
-import { conn } from "@/server/db";
+import { conn, db } from "@/server/db";
 
 /**
  * Generate OAuth URL for an integration
@@ -60,5 +60,44 @@ export async function disconnectIntegration(pluginId: string) {
   } catch (err) {
     console.error("Failed to disconnect:", err);
     return { success: false, error: "Failed to disconnect" };
+  }
+}
+
+/**
+ * Irreversibly delete a user account and all associated data
+ */
+export async function deleteUserAccount() {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+  
+  const userId = session.user.id;
+
+  try {
+    // 1. Delete all Corsair data (webhooks, encrypted tokens, synced events)
+    await conn.query(`DELETE FROM "corsair_events" WHERE account_id IN (SELECT id FROM "corsair_accounts" WHERE tenant_id = $1)`, [userId]).catch(e => console.error(e));
+    await conn.query(`DELETE FROM "corsair_entities" WHERE account_id IN (SELECT id FROM "corsair_accounts" WHERE tenant_id = $1)`, [userId]).catch(e => console.error(e));
+    await conn.query(`DELETE FROM "corsair_accounts" WHERE tenant_id = $1`, [userId]).catch(e => console.error(e));
+
+    // 2. Delete all Prisma relations manually to avoid FK constraint errors 
+    // since Email/CalendarEvent etc do not have onDelete: Cascade
+    await db.$transaction([
+      db.email.deleteMany({ where: { userId } }),
+      db.calendarEvent.deleteMany({ where: { userId } }),
+      db.agentChat.deleteMany({ where: { userId } }),
+      db.agentMemory.deleteMany({ where: { userId } }),
+      db.labelRule.deleteMany({ where: { userId } }),
+      db.chatSession.deleteMany({ where: { userId } }),
+      db.payment.deleteMany({ where: { userId } }),
+      db.dailyDigest.deleteMany({ where: { userId } }),
+      db.scheduledEmail.deleteMany({ where: { userId } }),
+      
+      // Finally delete the user (Account and Session will cascade automatically)
+      db.user.delete({ where: { id: userId } })
+    ]);
+
+    return { success: true };
+  } catch (err) {
+    console.error("Failed to delete account:", err);
+    return { success: false, error: "Failed to delete account" };
   }
 }
