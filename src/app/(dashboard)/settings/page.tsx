@@ -419,17 +419,6 @@ export default function SettingsPage() {
                     <span className="text-text-secondary text-xs">Version</span>
                     <span className="text-text-muted font-mono text-xs">v1.0.0</span>
                   </div>
-                  <div className="flex items-center justify-between py-3">
-                    <span className="text-text-secondary text-xs">Domain</span>
-                    <a
-                      href="https://valorahq.in"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-primary-light hover:text-accent flex items-center gap-1 font-mono transition"
-                    >
-                      valorahq.in <ExternalLink className="w-3 h-3" />
-                    </a>
-                  </div>
                 </div>
 
                 <button
@@ -880,35 +869,6 @@ export default function SettingsPage() {
             </SettingsSection>
           )}
 
-          {/* ── Save Button (for non-danger sections) ─────────── */}
-          {activeSection !== "danger" && activeSection !== "shortcuts" && (
-            <div className="flex items-center justify-between pt-2 pb-6">
-              <button
-                onClick={handleReset}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-border text-text-secondary text-xs font-semibold hover:bg-surface-hover transition cursor-pointer"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                Reset to Defaults
-              </button>
-              <button
-                onClick={handleSave}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  saved
-                    ? "bg-success text-white border-0 shadow-lg shadow-success/20"
-                    : "bg-primary hover:bg-primary-light text-primary-foreground border-0 shadow-lg shadow-primary/20"
-                }`}
-              >
-                {saved ? (
-                  <>
-                    <Check className="w-3.5 h-3.5" />
-                    Saved!
-                  </>
-                ) : (
-                  "Save Settings"
-                )}
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>

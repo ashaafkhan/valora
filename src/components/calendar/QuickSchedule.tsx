@@ -27,7 +27,11 @@ export default function QuickSchedule() {
     setResponse(null);
 
     try {
-      const result = await askMutation.mutateAsync({ input: input.trim() });
+      const result = await askMutation.mutateAsync({ 
+        input: input.trim(),
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        localTime: new Date().toString()
+      });
       setResponse(result);
       setInput(""); // clear input after asking
     } catch (err) {

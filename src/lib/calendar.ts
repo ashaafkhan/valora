@@ -232,6 +232,8 @@ export async function deleteCalendarEvent(userId: string, googleEventId: string)
 export async function queryCalendarAssistant(
   input: string,
   userId: string,
+  timezone?: string,
+  localTime?: string
 ): Promise<string> {
   // Fetch recent past and upcoming events for context
   const now = new Date();
@@ -247,24 +249,32 @@ export async function queryCalendarAssistant(
     orderBy: { startTime: "asc" },
   });
 
+  const tz = timezone || "UTC";
+
   const eventContext = events
-    .map((e) => `"${e.title}" from ${e.startTime.toISOString()} to ${e.endTime.toISOString()} (Status: ${e.status})`)
+    .map((e) => {
+      const startLocal = e.startTime.toLocaleString("en-US", { timeZone: tz, dateStyle: "full", timeStyle: "short" });
+      const endLocal = e.endTime.toLocaleString("en-US", { timeZone: tz, timeStyle: "short" });
+      return `"${e.title}" from ${startLocal} to ${endLocal} (Status: ${e.status})`;
+    })
     .join("\n");
 
   const prompt = `You are Valora's intelligent Calendar Assistant. The user is asking you a question about their calendar.
 
-Current time: ${now.toISOString()}
+Current time context:
+- User's Timezone: ${tz}
+- User's Local Time: ${localTime || now.toISOString()}
 
-User's recent and upcoming calendar events:
+User's recent and upcoming calendar events (all times shown below are already converted to the User's Local Timezone):
 ${eventContext || "No events found."}
 
 User request: "${input}"
 
 Instructions:
 - If the user asks you to ADD, CREATE, or SCHEDULE a new event, politely tell them to "Please use the Zara AI chat interface or the Create Event button to schedule new events." Do NOT attempt to confirm scheduling here.
-- If the user asks for a summary of events, what events they attended, or what's coming up, provide a concise, friendly, and highly readable summary.
+- If the user asks for a summary of events, what events they attended, or what's coming up, provide a concise, friendly, and highly readable summary in plain natural language.
 - Keep your response brief, professional, and directly answer the question.
-- Do NOT use markdown headings. Use bolding and bullet points if needed.`;
+- Do NOT use markdown formatting (no bolding, italics, or asterisks).`;
 
   try {
     const completion = await groq.chat.completions.create({

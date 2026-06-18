@@ -138,10 +138,10 @@ export const calendarRouter = createTRPCRouter({
 
   // ── Calendar AI Assistant ─────────────────────────────────────────
   queryCalendarAssistant: protectedProcedure
-    .input(z.object({ input: z.string() }))
+    .input(z.object({ input: z.string(), timezone: z.string().optional(), localTime: z.string().optional() }))
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      return queryCalendarAssistant(input.input, userId);
+      return queryCalendarAssistant(input.input, userId, input.timezone, input.localTime);
     }),
 
   // ── Send Email Invite to Attendees ────────────────────────────
