@@ -108,6 +108,7 @@ function SettingsSection({
   children,
   iconColor = "text-primary-light",
   iconBg = "bg-primary/10 border-primary/20",
+  rightAction,
 }: {
   icon: React.ComponentType<{ className?: string }>;
   title: string;
@@ -115,17 +116,21 @@ function SettingsSection({
   children: React.ReactNode;
   iconColor?: string;
   iconBg?: string;
+  rightAction?: React.ReactNode;
 }) {
   return (
     <section className="bg-surface border border-border rounded-2xl overflow-hidden animate-fade-in">
-      <div className="px-6 py-4 border-b border-border/60 flex items-center gap-3 bg-background/30">
-        <div className={`w-8 h-8 rounded-xl border flex items-center justify-center flex-shrink-0 ${iconBg}`}>
-          <Icon className={`w-4 h-4 ${iconColor}`} />
+      <div className="px-6 py-4 border-b border-border/60 flex items-center justify-between bg-background/30">
+        <div className="flex items-center gap-3">
+          <div className={`w-8 h-8 rounded-xl border flex items-center justify-center flex-shrink-0 ${iconBg}`}>
+            <Icon className={`w-4 h-4 ${iconColor}`} />
+          </div>
+          <div>
+            <h2 className="text-sm font-bold text-text-primary">{title}</h2>
+            <p className="text-xs text-text-muted">{subtitle}</p>
+          </div>
         </div>
-        <div>
-          <h2 className="text-sm font-bold text-text-primary">{title}</h2>
-          <p className="text-xs text-text-muted">{subtitle}</p>
-        </div>
+        {rightAction && <div>{rightAction}</div>}
       </div>
       <div className="px-6 py-2">{children}</div>
     </section>
