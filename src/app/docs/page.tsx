@@ -114,6 +114,162 @@ export default function DocsPage() {
             </div>
           </section>
 
+          {/* Section: Architecture Deep Dive */}
+          <section className="space-y-6">
+            <h2 className="text-2xl font-bold text-text-primary font-sora border-b border-border/50 pb-2">
+              Architecture Deep Dive
+            </h2>
+            
+            {/* ASCII Diagram */}
+            <div className="bg-[#0D0D12] border border-border/40 rounded-2xl p-6 font-mono text-sm text-emerald-400/90 overflow-x-auto whitespace-pre leading-snug">
+{`   [Google Workspace]
+           │ (Webhooks)
+           ▼
+    ┌──────────────┐
+    │ Corsair SDK  │
+    └──────┬───────┘
+           │ (Raw Payload)
+           ▼
+    ┌──────────────┐       (Context)      ┌──────────────┐
+    │ Valora Core  │ ◄──────────────────► │ Mem0 Vector  │
+    │  (Next.js)   │                      │   Memory     │
+    └──────┬───────┘                      └──────────────┘
+           │
+           ▼
+    ┌──────────────┐
+    │ Groq (LLaMA) │ (800+ tokens/sec Classification)
+    └──────┬───────┘
+           │
+           ▼
+    ┌──────────────┐
+    │  Zustand UI  │ (Sub-200ms Client Sync)
+    └──────────────┘`}
+            </div>
+
+            <div className="prose prose-invert max-w-none text-text-secondary leading-relaxed space-y-4 pt-4">
+              <p>
+                <strong>1. Ingestion Layer:</strong> We use Corsair's headless Google API abstraction to ingest webhooks instantaneously. Unlike legacy polling systems, Valora knows about a new email the millisecond Google receives it.
+              </p>
+              <p>
+                <strong>2. Inference & Classification:</strong> Raw payloads are sanitized and sent to our Groq API endpoints. Using LLaMA-3.3-70b-versatile, the system achieves 800+ tokens/second inference to classify the urgency and intent of the email before it ever renders on the client.
+              </p>
+              <p>
+                <strong>3. Vector Storage:</strong> Processed emails and calendar events are converted into high-dimensional vector embeddings and stored in Neon PostgreSQL using the <code>pgvector</code> extension. This enables true semantic search (e.g., searching "when are we deploying" actually finds the email about "release scheduled for Friday").
+              </p>
+              <p>
+                <strong>4. Real-time Client Sync:</strong> The frontend bypasses traditional React render cycles for heavy lists by heavily leveraging Zustand and tRPC subscriptions, ensuring sub-200ms UI interactions.
+              </p>
+            </div>
+          </section>
+
+          {/* Section: Future Roadmap */}
+          <section className="space-y-6">
+            <h2 className="text-2xl font-bold text-text-primary font-sora border-b border-border/50 pb-2">
+              Future Roadmap: The Unified Workspace
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <FeatureCard 
+                icon={Database}
+                title="Google Drive Integration"
+                desc="Seamlessly attach, search, and semantically query all your Google Drive documents directly from the command center."
+              />
+              <FeatureCard 
+                icon={Code}
+                title="GitHub Repositories"
+                desc="Manage pull requests, issues, and CI/CD alerts without leaving your workflow. The AI will summarize diffs automatically."
+              />
+              <FeatureCard 
+                icon={Zap}
+                title="Slack & Discord"
+                desc="Unified messaging. Let the AI triage your Slack DMs and prioritize them alongside your urgent emails."
+              />
+              <FeatureCard 
+                icon={Server}
+                title="WhatsApp Business"
+                desc="Bring client communications from WhatsApp into Valora. Have the AI draft professional responses based on your email history."
+              />
+            </div>
+          </section>
+
+          {/* Section: API Reference */}
+          <section className="space-y-6">
+            <h2 className="text-2xl font-bold text-text-primary font-sora border-b border-border/50 pb-2">
+              REST API Reference
+            </h2>
+            <div className="space-y-4">
+              <ApiEndpoint 
+                method="GET" 
+                path="/api/gmail/messages"
+                desc="Fetch all synced emails for the authenticated user."
+              />
+              <ApiEndpoint 
+                method="GET" 
+                path="/api/gmail/thread/:id"
+                desc="Retrieve a full email thread and its messages."
+              />
+              <ApiEndpoint 
+                method="POST" 
+                path="/api/gmail/send"
+                desc="Send a new email or reply. Body requires { to, subject, text, threadId? }."
+              />
+              <ApiEndpoint 
+                method="POST" 
+                path="/api/gmail/messages/:id/archive"
+                desc="Archive an email message."
+              />
+              <ApiEndpoint 
+                method="POST" 
+                path="/api/gmail/messages/:id/read"
+                desc="Mark an email as read."
+              />
+              <ApiEndpoint 
+                method="POST" 
+                path="/api/gmail/messages/:id/star"
+                desc="Toggle the starred state of an email."
+              />
+              <ApiEndpoint 
+                method="POST" 
+                path="/api/search"
+                desc="Perform a semantic vector search across emails, calendar events, and memory using pgvector."
+              />
+              <ApiEndpoint 
+                method="GET" 
+                path="/api/user/profile"
+                desc="Fetch the authenticated user's profile and plan details."
+              />
+              <ApiEndpoint 
+                method="PATCH" 
+                path="/api/user/preferences"
+                desc="Update user preferences (theme, emailsPerPage, notifications)."
+              />
+              <ApiEndpoint 
+                method="POST" 
+                path="/api/speech-to-text"
+                desc="Upload an audio blob to transcribe speech via Groq Whisper API."
+              />
+              <ApiEndpoint 
+                method="POST" 
+                path="/api/webhooks/gmail"
+                desc="Corsair webhook listener for real-time Gmail inbox changes."
+              />
+              <ApiEndpoint 
+                method="POST" 
+                path="/api/webhooks/calendar"
+                desc="Corsair webhook listener for real-time Google Calendar updates."
+              />
+              <ApiEndpoint 
+                method="GET" 
+                path="/api/trpc/:batch"
+                desc="Batched tRPC endpoint for type-safe client-server state sync."
+              />
+              <ApiEndpoint 
+                method="POST" 
+                path="/api/search/corsair"
+                desc="Query the Corsair unified search index across all connected integrations."
+              />
+            </div>
+          </section>
+
           {/* Section: Getting Started */}
           <section className="space-y-6">
             <h2 className="text-2xl font-bold text-text-primary font-sora border-b border-border/50 pb-2">
@@ -158,6 +314,28 @@ function FeatureCard({ icon: Icon, title, desc }: { icon: any; title: string; de
       </div>
       <h3 className="text-lg font-semibold text-text-primary mb-2">{title}</h3>
       <p className="text-sm text-text-secondary leading-relaxed">{desc}</p>
+    </div>
+  );
+}
+
+function ApiEndpoint({ method, path, desc }: { method: string; path: string; desc: string }) {
+  const methodColor = 
+    method === "GET" ? "text-emerald-400 bg-emerald-400/10 border-emerald-400/20" :
+    method === "POST" ? "text-blue-400 bg-blue-400/10 border-blue-400/20" :
+    method === "PATCH" ? "text-amber-400 bg-amber-400/10 border-amber-400/20" :
+    "text-purple-400 bg-purple-400/10 border-purple-400/20";
+
+  return (
+    <div className="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-xl border border-border/40 bg-surface/30 hover:bg-surface/60 transition-colors">
+      <div className={`px-2.5 py-1 rounded-md border text-xs font-bold tracking-wider font-mono shrink-0 ${methodColor}`}>
+        {method}
+      </div>
+      <div className="font-mono text-sm text-text-primary font-medium shrink-0">
+        {path}
+      </div>
+      <div className="text-sm text-text-secondary md:ml-auto">
+        {desc}
+      </div>
     </div>
   );
 }
