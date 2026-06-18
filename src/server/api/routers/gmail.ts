@@ -9,6 +9,7 @@ import {
   markEmailRead,
 } from "@/lib/gmail";
 import { generateSmartDraft, extractMeetingFromEmail } from "@/lib/ai";
+import { PRICING_LIMITS } from "@/lib/pricing";
 import { corsair } from "@/server/corsair";
 
 export const gmailRouter = createTRPCRouter({
@@ -155,8 +156,26 @@ export const gmailRouter = createTRPCRouter({
         tone: z.enum(["professional", "casual", "brief"]).optional(),
       }),
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      
+      const user = await ctx.db.user.findUnique({ where: { id: userId } });
+      if (!user) throw new Error("User not found");
+
+      const plan = (user.plan as any) || "free";
+      const limits = PRICING_LIMITS[plan as keyof typeof PRICING_LIMITS];
+
+      if (user.emailComposeUsed >= limits.emailCompose) {
+        throw new Error(`You have reached your limit of ${limits.emailCompose} email drafts for the ${plan} plan. Please upgrade.`);
+      }
+
       const draft = await generateSmartDraft(input);
+
+      await ctx.db.user.update({
+        where: { id: userId },
+        data: { emailComposeUsed: { increment: 1 } },
+      });
+
       return { draft };
     }),
 
