@@ -184,12 +184,13 @@ export async function POST(req: Request) {
 You help busy professionals manage their inbox, compose emails, and organize their schedules.
 
 You have access to tools to help the user. Use 'store_memory' if the user explicitly asks you to remember something or states a preference.
-Important rules:
-1. ALWAYS confirm with the user before sending emails or creating events. The UI handles the confirmation cards, so you must call the tool, and the system will present a card to the user.
-2. NEVER expose sensitive information (e.g. passwords, OTPs, full bank details).
-3. Be concise and professional — users are busy.
-4. SCOPE GUARDRAIL: You are strictly an executive assistant. Your ONLY capabilities are managing emails and calendar events, and remembering user preferences. If the user asks about ANYTHING outside this scope (e.g., general knowledge, coding, math, writing essays, or unrelated advice), you MUST politely decline. Briefly explain that you are specialized in inbox and calendar management to keep their workflow optimized.
-5. CURRENT TIME & TIMEZONE:
+1. ACTION BIAS: When the user asks you to send an email or create an event, IMMEDIATELY call the corresponding tool (e.g., `send_email`). DO NOT ask for conversational confirmation. The tool call itself generates an editable UI confirmation card for the user. If information is missing, invent reasonable placeholders or draft content based on the context, and call the tool anyway so the user can review it in the UI.
+2. FORMATTING: Use plain natural language. Do NOT use markdown formatting (like **bold**, *italics*, or bullet points). Keep the response conversational and highly readable as raw text.
+3. ANTI-HALLUCINATION & MEMORY USE: Treat the 'User Preferences/Context' below ONLY as background context (e.g., preferred tone, default email addresses, names). NEVER invent past emails, meetings, or facts that aren't explicitly provided in the current conversation. ALWAYS prioritize the user's immediate request over past memory. If a detail is missing, ask for it or use a placeholder, do not guess based on memory unless it's a stated preference.
+4. NEVER expose sensitive information (e.g. passwords, OTPs, full bank details).
+5. Be concise and professional — users are busy.
+6. SCOPE GUARDRAIL: You are strictly an executive assistant. Your ONLY capabilities are managing emails and calendar events, and remembering user preferences. If the user asks about ANYTHING outside this scope (e.g., general knowledge, coding, math, writing essays, or unrelated advice), you MUST politely decline. Briefly explain that you are specialized in inbox and calendar management to keep their workflow optimized.
+6. CURRENT TIME & TIMEZONE:
    - User's Timezone: ${timezone || 'UTC'}
    - User's Local Time: ${localTime || new Date().toISOString()}
    - CRITICAL: When generating startISO and endISO for the create_event tool, you MUST include the correct timezone offset in the ISO string (e.g., "2026-06-18T18:00:00+05:30") so the time is correct in the user's local timezone. Do NOT use "Z" (UTC) unless you have mathematically converted the local time to UTC.
@@ -219,38 +220,46 @@ ${memoryContext}`;
 
     // Check if the model wants to call tools
     if (toolCalls && toolCalls.length > 0) {
-      const toolCall = toolCalls[0]!;
-      const toolName = toolCall.function.name;
+      const writeToolCalls = toolCalls.filter(tc => tc.function.name === "send_email" || tc.function.name === "create_event");
 
-      let toolArgs: Record<string, any> = {};
-      try {
-        toolArgs = JSON.parse(toolCall.function.arguments) as Record<string, unknown>;
-      } catch (err) {
-        console.error("[Agent] Failed to parse tool arguments:", toolCall.function.arguments, err);
-      }
-
-      // A. Write tools (send_email, create_event) -> Return tool call information to client for UI confirmation card
-      if (toolName === "send_email" || toolName === "create_event") {
+      if (writeToolCalls.length > 0) {
         // Create user message in DB first
         await db.agentChat.create({
           data: { userId, role: "user", content: message, sessionId },
         });
 
-        // Save the assistant's tool request in DB
-        await db.agentChat.create({
-          data: {
-            userId,
-            role: "assistant",
-            content: "",
-            sessionId,
-            toolCall: {
-              id: toolCall.id,
-              name: toolName,
-              arguments: toolArgs,
-              status: "pending",
+        const formattedToolCalls = [];
+
+        // Save each assistant's tool request in DB
+        for (const tc of writeToolCalls) {
+          let toolArgs: Record<string, any> = {};
+          try {
+            toolArgs = JSON.parse(tc.function.arguments) as Record<string, unknown>;
+          } catch (err) {
+            console.error("[Agent] Failed to parse tool arguments:", tc.function.arguments, err);
+          }
+
+          await db.agentChat.create({
+            data: {
+              userId,
+              role: "assistant",
+              content: "",
+              sessionId,
+              toolCall: {
+                id: tc.id,
+                name: tc.function.name,
+                arguments: toolArgs,
+                status: "pending",
+              },
             },
-          },
-        });
+          });
+
+          formattedToolCalls.push({
+            id: tc.id,
+            name: tc.function.name,
+            arguments: toolArgs,
+          });
+        }
 
         // Update session timestamp
         if (sessionId) {
@@ -262,15 +271,20 @@ ${memoryContext}`;
 
         return NextResponse.json({
           type: "action_required",
-          toolCall: {
-            id: toolCall.id,
-            name: toolName,
-            arguments: toolArgs,
-          },
+          toolCalls: formattedToolCalls,
         });
       }
 
       // B. Read-only tools (search_emails, get_schedule, store_memory) -> Execute immediately and continue the chain
+      const toolCall = toolCalls[0]!;
+      const toolName = toolCall.function.name;
+      let toolArgs: Record<string, any> = {};
+      try {
+        toolArgs = JSON.parse(toolCall.function.arguments) as Record<string, unknown>;
+      } catch (err) {
+        console.error("[Agent] Failed to parse tool arguments:", toolCall.function.arguments, err);
+      }
+      
       let toolResultData: unknown;
       if (toolName === "search_emails") {
         const query = String(toolArgs.query ?? "");

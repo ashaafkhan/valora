@@ -75,21 +75,21 @@ export function AgentChat() {
       const data = (await res.json()) as {
         type: "message" | "action_required";
         content?: string;
-        toolCall?: { id: string; name: string; arguments: any };
+        toolCalls?: Array<{ id: string; name: string; arguments: any }>;
       };
 
-      if (data.type === "action_required" && data.toolCall) {
-        const toolMsg: ChatMessage = {
+      if (data.type === "action_required" && data.toolCalls) {
+        const toolMsgs: ChatMessage[] = data.toolCalls.map((tc) => ({
           id: Math.random().toString(),
           role: "assistant",
           content: "I need your approval to execute this action:",
           createdAt: new Date(),
           toolCall: {
-            ...data.toolCall,
+            ...tc,
             status: "pending",
           },
-        };
-        setMessages((prev) => [...prev, toolMsg]);
+        }));
+        setMessages((prev) => [...prev, ...toolMsgs]);
       } else {
         const agentMsg: ChatMessage = {
           id: Math.random().toString(),

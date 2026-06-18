@@ -450,21 +450,21 @@ export default function ZaraPage() {
       const data = (await res.json()) as {
         type: "message" | "action_required";
         content?: string;
-        toolCall?: { id: string; name: string; arguments: any };
+        toolCalls?: Array<{ id: string; name: string; arguments: any }>;
       };
 
-      if (data.type === "action_required" && data.toolCall) {
-        const toolMsg: ChatMessage = {
-          id: `assistant-tool-${Date.now()}`,
+      if (data.type === "action_required" && data.toolCalls) {
+        const toolMsgs: ChatMessage[] = data.toolCalls.map((tc) => ({
+          id: `assistant-tool-${tc.id}`,
           role: "assistant",
           content: "I need your approval to execute this action:",
           createdAt: new Date(),
           toolCall: {
-            ...data.toolCall,
+            ...tc,
             status: "pending",
           },
-        };
-        setMessages((prev) => [...prev, toolMsg]);
+        }));
+        setMessages((prev) => [...prev, ...toolMsgs]);
       } else {
         const agentMsg: ChatMessage = {
           id: `assistant-${Date.now()}`,
