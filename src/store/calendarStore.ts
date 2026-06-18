@@ -36,7 +36,7 @@ interface CalendarState {
 
 export const useCalendarStore = create<CalendarState>((set, get) => ({
   events: [],
-  viewMode: "week",
+  viewMode: "month",
   currentDate: new Date(),
   selectedEventId: null,
   isCreatingEvent: false,

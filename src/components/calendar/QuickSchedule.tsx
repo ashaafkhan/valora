@@ -83,16 +83,17 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
   const isCreating = createMutation.isPending;
 
   return (
-    <div className="space-y-2">
+  return (
+    <div className="space-y-3">
       {/* Input */}
       <div
-        className={`flex items-center gap-3 px-4 py-3 bg-[#111111] border rounded-2xl transition ${
+        className={`flex items-center gap-3 px-4 py-3 bg-surface border rounded-2xl shadow-sm transition-all duration-200 ${
           parsed
-            ? "border-[#0066ff]/40"
-            : "border-border hover:border-border-strong"
+            ? "border-primary/40 ring-2 ring-primary/10 shadow-primary/5"
+            : "border-border hover:border-border-strong hover:shadow-md"
         }`}
       >
-        <Sparkles className="w-4 h-4 text-primary-light flex-shrink-0" />
+        <Sparkles className="w-5 h-5 text-primary flex-shrink-0 animate-pulse" />
         <input
           ref={inputRef}
           type="text"
@@ -103,71 +104,79 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
           }}
           onKeyDown={(e) => e.key === "Enter" && handleParse()}
           placeholder='e.g. "Schedule 30min with team@co.com next Tuesday at 3pm"'
-          className="flex-1 bg-transparent border-0 outline-none text-sm text-text-primary placeholder-text-muted focus:ring-0"
+          className="flex-1 bg-transparent border-0 outline-none text-sm font-medium text-text-primary placeholder:text-text-muted/70 focus:ring-0"
           disabled={isParsing}
         />
         <button
           onClick={handleParse}
           disabled={!input.trim() || isParsing}
-          className="px-3 py-1.5 bg-[#0066ff]/15 hover:bg-[#0066ff]/25 border border-[#0066ff]/30 text-primary-light text-xs font-semibold rounded-xl flex items-center gap-1.5 transition disabled:opacity-50 flex-shrink-0"
+          className="px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all disabled:opacity-50 flex-shrink-0 shadow-sm hover:shadow"
         >
           {isParsing ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />
           ) : (
-            <Zap className="w-3.5 h-3.5" />
+            <Zap className="w-3.5 h-3.5 fill-current" />
           )}
-          Parse
+          Generate
         </button>
       </div>
 
       {/* Error */}
       {error && (
-        <div className="flex items-center gap-2 px-3 py-2 bg-rose-900/20 border border-rose-800/30 rounded-xl text-xs text-rose-400">
-          <X className="w-3.5 h-3.5 flex-shrink-0" />
+        <div className="flex items-center gap-2 px-4 py-3 bg-error/10 border border-error/20 rounded-xl text-xs font-semibold text-error shadow-sm animate-in fade-in slide-in-from-top-2">
+          <X className="w-4 h-4 flex-shrink-0" />
           {error}
         </div>
       )}
 
       {/* Parsed result */}
       {parsed && (
-        <div className="border border-[#0066ff]/30 bg-[#0066ff]/5 rounded-2xl p-4 space-y-3">
+        <div className="border border-primary/30 bg-primary/5 rounded-2xl p-5 space-y-4 shadow-sm animate-in fade-in slide-in-from-top-4">
           {/* Conflict warning */}
           {parsed.hasConflict && (
-            <div className="flex items-center gap-2 px-3 py-2 bg-amber-900/20 border border-amber-800/30 rounded-xl text-xs text-amber-400">
-              <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+            <div className="flex items-center gap-2 px-3 py-2 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs font-semibold text-amber-600 dark:text-amber-400">
+              <AlertTriangle className="w-4 h-4 flex-shrink-0" />
               Conflicts with &quot;{parsed.conflictWith}&quot; — you can still create it
             </div>
           )}
 
           <div className="space-y-1.5">
-            <div className="text-sm font-semibold text-text-primary">{parsed.title}</div>
-            <div className="text-xs text-text-secondary font-mono">
+            <div className="text-base font-bold text-text-primary flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              {parsed.title}
+            </div>
+            <div className="text-sm text-text-secondary font-mono bg-surface-hover inline-block px-2 py-1 rounded-md border border-border">
               {format(new Date(parsed.startISO), "EEE, MMM d · h:mm a")} →{" "}
               {format(new Date(parsed.endISO), "h:mm a")}
             </div>
             {parsed.attendeeEmail && (
-              <div className="text-xs text-[#93c5fd]">with {parsed.attendeeEmail}</div>
+              <div className="text-sm font-medium text-primary flex items-center gap-1.5 mt-2">
+                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span className="text-[10px]">@</span>
+                </div>
+                {parsed.attendeeEmail}
+              </div>
             )}
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-3 pt-2">
             <button
               onClick={handleConfirm}
               disabled={isCreating}
-              className="flex-1 py-2 bg-[#0066ff] hover:bg-[#1d4ed8] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition disabled:opacity-50 shadow-lg shadow-blue-900/20"
+              className="flex-1 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 transition-all disabled:opacity-50 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5"
             >
               {isCreating ? (
-                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
-                <Check className="w-3.5 h-3.5" />
+                <Check className="w-4 h-4" />
               )}
-              Confirm & Create
+              Confirm & Schedule
             </button>
             <button
               onClick={handleCancel}
-              className="px-3 py-2 bg-surface-hover hover:bg-border border border-border text-text-secondary text-xs rounded-xl transition"
+              className="px-4 py-2.5 bg-surface hover:bg-surface-hover border border-border text-text-secondary text-sm font-semibold rounded-xl transition-all hover:text-text-primary"
             >
-              <X className="w-3.5 h-3.5" />
+              Cancel
             </button>
           </div>
         </div>
