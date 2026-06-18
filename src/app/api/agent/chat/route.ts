@@ -220,7 +220,7 @@ ${memoryContext}`;
 
     // Check if the model wants to call tools
     if (toolCalls && toolCalls.length > 0) {
-      const writeToolCalls = toolCalls.filter(tc => tc.function.name === "send_email" || tc.function.name === "create_event");
+      const writeToolCalls = toolCalls.filter((tc: any) => tc.function.name === "send_email" || tc.function.name === "create_event");
 
       if (writeToolCalls.length > 0) {
         // Create user message in DB first
