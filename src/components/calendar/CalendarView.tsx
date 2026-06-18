@@ -327,13 +327,9 @@ export default function CalendarView() {
         {/* Quick Schedule */}
         <div className="px-3 pb-4 border-t border-border pt-3">
           <div className="text-[10px] font-semibold text-text-muted uppercase tracking-widest mb-2 flex items-center gap-1.5">
-            ✨ Quick Schedule
+            ✨ Ask Zara
           </div>
-          <QuickSchedule
-            onConfirm={() => {
-              void eventsQuery.refetch();
-            }}
-          />
+          <QuickSchedule />
         </div>
       </div>
 

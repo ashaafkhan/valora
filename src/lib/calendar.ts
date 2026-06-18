@@ -228,95 +228,55 @@ export async function deleteCalendarEvent(userId: string, googleEventId: string)
   }
 }
 
-// ── Natural Language Schedule Parsing (AI-powered) ──────────────
-export interface ParsedSchedule {
-  title: string;
-  attendeeEmail: string;
-  startISO: string;
-  endISO: string;
-  hasConflict: boolean;
-  conflictWith?: string;
-}
-
-export async function parseNaturalSchedule(
+// ── Calendar AI Assistant ─────────────────────────────────────────
+export async function queryCalendarAssistant(
   input: string,
   userId: string,
-): Promise<ParsedSchedule> {
-  // Fetch upcoming events for conflict context
+): Promise<string> {
+  // Fetch recent past and upcoming events for context
   const now = new Date();
-  const weekOut = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+  const pastWeek = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000); // 2 weeks back
+  const futureMonth = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 1 month forward
 
-  const upcomingEvents = await db.calendarEvent.findMany({
+  const events = await db.calendarEvent.findMany({
     where: {
       userId,
-      startTime: { gte: now, lte: weekOut },
+      startTime: { gte: pastWeek, lte: futureMonth },
     },
-    select: { title: true, startTime: true, endTime: true },
+    select: { title: true, startTime: true, endTime: true, status: true, attendees: true, location: true },
     orderBy: { startTime: "asc" },
-    take: 20,
   });
 
-  const eventContext = upcomingEvents
-    .map((e) => `"${e.title}" from ${e.startTime.toISOString()} to ${e.endTime.toISOString()}`)
+  const eventContext = events
+    .map((e) => `"${e.title}" from ${e.startTime.toISOString()} to ${e.endTime.toISOString()} (Status: ${e.status})`)
     .join("\n");
 
-  const prompt = `You are Valora's AI scheduling assistant. Parse this scheduling request and return ONLY valid JSON.
+  const prompt = `You are Zara AI, Valora's intelligent executive assistant. The user is asking you a question about their calendar.
 
 Current time: ${now.toISOString()}
 
-Existing calendar events this week:
-${eventContext || "No events scheduled yet."}
+User's recent and upcoming calendar events:
+${eventContext || "No events found."}
 
-Scheduling request: "${input}"
+User request: "${input}"
 
-Return JSON with this exact shape:
-{
-  "title": "Meeting title",
-  "attendeeEmail": "attendee@email.com or empty string",
-  "startISO": "ISO 8601 datetime string",
-  "endISO": "ISO 8601 datetime string",
-  "hasConflict": false,
-  "conflictWith": "conflicting event title or empty string"
-}
-
-Rules:
-- If no year specified, assume current year
-- Default duration is 30 minutes unless specified
-- Check if proposed time overlaps any existing event; set hasConflict=true if so
-- If no email found, use empty string
-- Return ONLY the JSON object, no markdown, no explanation`;
+Instructions:
+- If the user asks you to ADD, CREATE, or SCHEDULE a new event, politely tell them to "Please use the Zara AI chat interface or the Create Event button to schedule new events." Do NOT attempt to confirm scheduling here.
+- If the user asks for a summary of events, what events they attended, or what's coming up, provide a concise, friendly, and highly readable summary.
+- Keep your response brief, professional, and directly answer the question.
+- Do NOT use markdown headings. Use bolding and bullet points if needed.`;
 
   try {
     const completion = await groq.chat.completions.create({
       model: AI_MODEL,
       messages: [{ role: "user", content: prompt }],
-      temperature: 0.1,
-      max_tokens: 300,
-      response_format: { type: "json_object" },
+      temperature: 0.3,
+      max_tokens: 400,
     });
 
-    const raw = completion.choices[0]?.message?.content ?? "{}";
-    const parsed = JSON.parse(raw) as ParsedSchedule;
-
-    // Validate required fields
-    parsed.title = parsed.title || "New Meeting";
-    parsed.attendeeEmail = parsed.attendeeEmail || "";
-    parsed.startISO = parsed.startISO || now.toISOString();
-    parsed.endISO =
-      parsed.endISO ||
-      new Date(now.getTime() + 30 * 60 * 1000).toISOString();
-    parsed.hasConflict = parsed.hasConflict ?? false;
-    parsed.conflictWith = parsed.conflictWith ?? "";
-
-    return parsed;
+    return completion.choices[0]?.message?.content || "I couldn't process that request right now.";
   } catch (err) {
-    console.error("[Calendar] NL parse failed:", err);
-    return {
-      title: "New Meeting",
-      attendeeEmail: "",
-      startISO: now.toISOString(),
-      endISO: new Date(now.getTime() + 30 * 60 * 1000).toISOString(),
-      hasConflict: false,
-    };
+    console.error("[Calendar] AI query failed:", err);
+    return "I'm having trouble connecting to my brain. Please try again later.";
   }
 }

@@ -6,7 +6,7 @@ import {
   createCalendarEvent,
   updateCalendarEvent,
   deleteCalendarEvent,
-  parseNaturalSchedule,
+  queryCalendarAssistant,
 } from "@/lib/calendar";
 import { sendGmailEmail } from "@/lib/gmail";
 import { corsair } from "@/server/corsair";
@@ -136,12 +136,12 @@ export const calendarRouter = createTRPCRouter({
       return { hasConflict: conflicts.length > 0, conflicts };
     }),
 
-  // ── Natural Language Scheduling (AI-powered) ──────────────────
-  parseNaturalSchedule: protectedProcedure
+  // ── Calendar AI Assistant ─────────────────────────────────────────
+  queryCalendarAssistant: protectedProcedure
     .input(z.object({ input: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
-      return parseNaturalSchedule(input.input, userId);
+      return queryCalendarAssistant(input.input, userId);
     }),
 
   // ── Send Email Invite to Attendees ────────────────────────────
