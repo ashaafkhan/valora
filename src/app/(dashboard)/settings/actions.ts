@@ -35,13 +35,9 @@ export async function disconnectIntegration(pluginId: string) {
 
   try {
     // Corsair doesn't expose a direct manage.disconnect API, so we manually remove
-    // the connection and permissions from the underlying tables managed by the pg pool.
+    // the connection from the underlying tables managed by the pg pool.
     await conn.query(
-      `DELETE FROM "corsair_connections" WHERE tenant_id = $1 AND plugin_id = $2`,
-      [session.user.id, pluginId]
-    );
-    await conn.query(
-      `DELETE FROM "corsair_permissions" WHERE tenant_id = $1 AND plugin_id = $2`,
+      `DELETE FROM "corsair_accounts" WHERE tenant_id = $1 AND integration_id = (SELECT id FROM "corsair_integrations" WHERE name = $2 LIMIT 1)`,
       [session.user.id, pluginId]
     );
     
