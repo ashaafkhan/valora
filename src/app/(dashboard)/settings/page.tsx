@@ -353,7 +353,7 @@ export default function SettingsPage() {
     { id: "integrations", label: "Integrations", icon: Link2 },
     { id: "privacy", label: "Privacy & Security", icon: Shield },
     { id: "danger", label: "Danger Zone", icon: AlertTriangle },
-  ];
+  ] as const;
 
   const themeOptions: { value: ThemeOption; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { value: "dark", label: "Dark", icon: Moon },
