@@ -11,57 +11,74 @@ const PLANS = [
     badgeColor: 'text-[var(--text-muted)] bg-[var(--surface-hover)] border-[var(--border)]',
     desc: 'Perfect for trying out Valora.',
     features: [
-      '50 AI email summaries / month',
+      '30 AI email summaries / month',
+      '15 email composes / month',
+      '5 voice messages / month',
       'Basic priority scoring',
       'Gmail sync',
       'Command palette',
-      'Keyboard shortcuts',
-      'Email search (50ms)',
     ],
     cta: 'Try standard edition',
     ctaClass: 'border border-[var(--border)] text-[var(--text-primary)] hover:border-[var(--primary)]/50 hover:bg-[var(--primary)]/5',
     recommended: false,
+    href: '/login',
   },
   {
     name: 'Pro',
     price: { monthly: 129, annual: 79 },
-    badge: 'Most Popular',
+    badge: 'Popular',
     badgeColor: 'text-[var(--primary)] bg-[var(--primary)]/10 border-[var(--primary)]/25',
     desc: 'For professionals who live in their inbox.',
     features: [
-      'Unlimited AI summaries',
+      '150 AI messages / month',
+      '50 email composes / month',
+      '15 voice messages / month',
       'Smart reply drafting',
       'Full calendar integration',
       'Shield Mode',
-      'Zara AI chat',
-      'Priority inbox',
-      'Meeting scheduling',
-      'Analytics dashboard',
     ],
     cta: 'Buy pro license',
+    ctaClass: 'border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/10',
+    recommended: false,
+    href: '/login',
+  },
+  {
+    name: 'Pro Max',
+    price: { monthly: 499, annual: 299 },
+    badge: 'Best Value',
+    badgeColor: 'text-[var(--primary)] bg-[var(--primary)]/10 border-[var(--primary)]/25',
+    desc: 'Ultimate productivity for power users.',
+    features: [
+      '500 AI messages / month',
+      '150 email composes / month',
+      '30 voice messages / month',
+      'Everything in Pro',
+      'Priority support',
+      'Analytics dashboard',
+    ],
+    cta: 'Buy pro max license',
     ctaClass: 'btn-shimmer bg-[var(--primary)] text-white shadow-[0_0_30px_rgba(0,102,255,0.4)] hover:shadow-[0_0_50px_rgba(0,102,255,0.6)]',
     recommended: true,
+    href: '/login',
   },
   {
     name: 'Enterprise',
-    price: { monthly: 499, annual: 299 },
-    badge: 'For Enterprise',
+    price: { monthly: 'Custom', annual: 'Custom' },
+    badge: 'For Teams',
     badgeColor: 'text-[var(--text-secondary)] bg-[var(--surface-hover)] border-[var(--border)]',
     desc: 'Shared intelligence for your whole team.',
     features: [
-      'Everything in Pro',
+      'Unlimited AI messages',
+      'Unlimited email composes',
+      'Unlimited voice messages',
       'Team shared inbox',
-      'Shared AI workflows',
-      'Admin controls',
-      'API access',
-      'Priority support',
       'Custom integrations',
       'Dedicated account manager',
-      'SSO / SAML',
     ],
-    cta: 'Buy enterprise license',
+    cta: 'Contact Sales',
     ctaClass: 'border border-[var(--border)] text-[var(--text-primary)] hover:border-[var(--primary)]/50 hover:bg-[var(--primary)]/5',
     recommended: false,
+    href: 'mailto:ashaaf92@gmail.com',
   },
 ]
 
@@ -135,7 +152,7 @@ export function Pricing() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid md:grid-cols-3 gap-5 items-start"
+          className="grid md:grid-cols-2 xl:grid-cols-4 gap-5 items-start"
         >
           {PLANS.map((plan, i) => (
             <motion.div
@@ -177,7 +194,7 @@ export function Pricing() {
 
               {/* CTA */}
               <Link
-                href="/login"
+                href={plan.href}
                 className={`block text-center text-sm font-semibold py-3 rounded-xl mb-7 
                             transition-all duration-200 hover:-translate-y-0.5 ${plan.ctaClass}`}
               >

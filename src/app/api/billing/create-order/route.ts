@@ -1,79 +1,52 @@
 import { NextResponse } from "next/server";
-import { handleRouteError, parseJson, requireUserId } from "@/lib/api-route";
+import Razorpay from "razorpay";
+import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import { z } from "zod";
+import { PRICING_PRICES, PlanType } from "@/lib/pricing";
 
-const createOrderSchema = z.object({
-  plan: z.enum(["standard", "premium", "enterprise"]),
+const razorpay = new Razorpay({
+  key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "",
+  key_secret: process.env.RAZORPAY_KEY_SECRET || "",
 });
 
-const PLAN_PRICES: Record<string, number> = {
-  standard: 9900, // ₹99 = 9900 paise
-  premium: 49900, // ₹499
-  enterprise: 299900, // ₹2999
-};
-
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const userId = await requireUserId();
-    const input = await parseJson(request, createOrderSchema);
-    const amount = PLAN_PRICES[input.plan] || 0;
-
-    const keyId = process.env.RAZORPAY_KEY_ID || "rzp_test_qYj7h4u3c5fG9H";
-    const keySecret = process.env.RAZORPAY_KEY_SECRET || "test_secret";
-
-    // Call Razorpay API to create order
-    // Basic Auth header using keyId:keySecret
-    const authHeader = `Basic ${Buffer.from(`${keyId}:${keySecret}`).toString("base64")}`;
-    
-    // In actual production without keys, we can mock or make the real call.
-    // If keys are test placeholders, let's still try to call Razorpay, or fallback to a mock order ID if it fails or if secret is not set.
-    let orderId = `order_mock_${Math.random().toString(36).substring(2, 12)}`;
-    
-    if (process.env.RAZORPAY_KEY_SECRET) {
-      try {
-        const res = await fetch("https://api.razorpay.com/v1/orders", {
-          method: "POST",
-          headers: {
-            "Authorization": authHeader,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount,
-            currency: "INR",
-            receipt: `rcpt_${Date.now()}`,
-          }),
-        });
-
-        if (res.ok) {
-          const data = (await res.json()) as { id: string };
-          orderId = data.id;
-        } else {
-          console.warn("[Razorpay] Failed to create real order, falling back to mock:", await res.text());
-        }
-      } catch (err) {
-        console.error("[Razorpay] Error connecting to Razorpay API:", err);
-      }
+    const session = await auth();
+    if (!session?.user?.id) {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // Save payment record in DB
-    const payment = await db.payment.create({
+    const { plan } = await req.json();
+
+    if (!plan || !PRICING_PRICES[plan as PlanType]) {
+      return NextResponse.json({ error: "Invalid plan selected" }, { status: 400 });
+    }
+
+    const amount = PRICING_PRICES[plan as PlanType].amount;
+    
+    // Amount is in INR. Razorpay expects paise (amount * 100)
+    const options = {
+      amount: amount * 100,
+      currency: "INR",
+      receipt: `receipt_order_${Math.random().toString(36).substring(7)}`,
+    };
+
+    const order = await razorpay.orders.create(options);
+
+    // Save pending payment in DB
+    await db.payment.create({
       data: {
-        userId,
-        razorpayOrderId: orderId,
-        plan: input.plan,
-        amount,
+        userId: session.user.id,
+        razorpayOrderId: order.id,
+        plan: plan,
+        amount: amount * 100,
         status: "created",
       },
     });
 
-    return NextResponse.json({
-      orderId: payment.razorpayOrderId,
-      amount: payment.amount,
-      currency: payment.currency,
-      keyId,
-    });
+    return NextResponse.json({ orderId: order.id, amount: options.amount });
   } catch (error) {
-    return handleRouteError(error);
+    console.error("Razorpay create order error:", error);
+    return NextResponse.json({ error: "Failed to create order" }, { status: 500 });
   }
 }

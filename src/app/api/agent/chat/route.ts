@@ -5,6 +5,8 @@ import { groq, AI_MODEL, chatCompletionWithOrchestration } from "@/lib/ai";
 import { searchMemory, addMemory } from "@/lib/mem0";
 import { executeSearchEmails, executeGetSchedule } from "@/lib/agent-tools";
 
+import { PRICING_LIMITS, PlanType } from "@/lib/pricing";
+
 interface Message {
   role: "user" | "assistant" | "system";
   content: string;
@@ -47,6 +49,21 @@ export async function POST(req: Request) {
     }
 
     const userId = session.user.id;
+    
+    // Fetch user to check limits
+    const user = await db.user.findUnique({ where: { id: userId } });
+    if (!user) return new NextResponse("User not found", { status: 404 });
+
+    const plan = (user.plan as PlanType) || "free";
+    const limits = PRICING_LIMITS[plan];
+
+    if (user.aiMessagesUsed >= limits.aiMessages) {
+      return NextResponse.json(
+        { error: `You have reached your limit of ${limits.aiMessages} AI messages for the ${plan} plan. Please upgrade.` },
+        { status: 403 }
+      );
+    }
+
     const body = (await req.json()) as { message: string; sessionId?: string };
     const { message, sessionId } = body;
 
@@ -319,6 +336,12 @@ ${memoryContext}`;
         { role: "assistant", content: finalText },
       ]).catch((e) => console.error("Mem0 background save failed:", e));
 
+      // Increment AI message usage
+      await db.user.update({
+        where: { id: userId },
+        data: { aiMessagesUsed: { increment: 1 } },
+      });
+
       return NextResponse.json({
         type: "message",
         content: finalText,
@@ -349,6 +372,12 @@ ${memoryContext}`;
       { role: "user", content: message },
       { role: "assistant", content: plainText },
     ]).catch((e) => console.error("Mem0 background save failed:", e));
+
+    // Increment AI message usage
+    await db.user.update({
+      where: { id: userId },
+      data: { aiMessagesUsed: { increment: 1 } },
+    });
 
     return NextResponse.json({
       type: "message",
