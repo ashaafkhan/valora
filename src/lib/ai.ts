@@ -110,14 +110,20 @@ export async function generateSmartDraft(params: {
 }): Promise<string> {
   const tone = params.tone ?? "professional";
 
-  const prompt = `You are Valora's AI Draft Assistant. Write an email reply or new email.
+  const prompt = `You are an expert ghostwriter drafting an email on behalf of the user.
+Your task is to write the exact email body the user will send.
 
-To: ${params.to}
-Subject: ${params.subject}
-${params.context ? `Context: ${params.context}` : ""}
+Recipient: ${params.to}
+Purpose / Subject of the email: ${params.subject}
+${params.context ? `Additional Context/Details: ${params.context}` : ""}
 Tone: ${tone}
 
-Write ONLY the email body. No subject line. Keep it ${tone === "brief" ? "very short (2-3 sentences)" : "concise and clear"}. Sign off appropriately.`;
+Instructions:
+- Write ONLY the email body. Do not include the Subject line.
+- Frame the email appropriately so it reads as if the user wrote it to the recipient about the provided purpose/subject.
+- Do NOT act as an AI assistant responding to a prompt. Write the actual email content directly.
+- Keep it ${tone === "brief" ? "very short (2-3 sentences)" : "concise, natural, and clear"}.
+- Sign off generically.`;
 
   const completion = await groq.chat.completions.create({
     model: AI_MODEL,

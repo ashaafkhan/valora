@@ -103,6 +103,11 @@ export type CorsairEntity = $Result.DefaultSelection<Prisma.$CorsairEntityPayloa
  * 
  */
 export type CorsairEvent = $Result.DefaultSelection<Prisma.$CorsairEventPayload>
+/**
+ * Model ScheduledEmail
+ * 
+ */
+export type ScheduledEmail = $Result.DefaultSelection<Prisma.$ScheduledEmailPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -401,6 +406,16 @@ export class PrismaClient<
     * ```
     */
   get corsairEvent(): Prisma.CorsairEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.scheduledEmail`: Exposes CRUD operations for the **ScheduledEmail** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ScheduledEmails
+    * const scheduledEmails = await prisma.scheduledEmail.findMany()
+    * ```
+    */
+  get scheduledEmail(): Prisma.ScheduledEmailDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -859,7 +874,8 @@ export namespace Prisma {
     CorsairIntegration: 'CorsairIntegration',
     CorsairAccount: 'CorsairAccount',
     CorsairEntity: 'CorsairEntity',
-    CorsairEvent: 'CorsairEvent'
+    CorsairEvent: 'CorsairEvent',
+    ScheduledEmail: 'ScheduledEmail'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -878,7 +894,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "session" | "verificationToken" | "user" | "emailThread" | "email" | "calendarEvent" | "agentChat" | "agentMemory" | "labelRule" | "webhookLog" | "chatSession" | "payment" | "dailyDigest" | "corsairIntegration" | "corsairAccount" | "corsairEntity" | "corsairEvent"
+      modelProps: "account" | "session" | "verificationToken" | "user" | "emailThread" | "email" | "calendarEvent" | "agentChat" | "agentMemory" | "labelRule" | "webhookLog" | "chatSession" | "payment" | "dailyDigest" | "corsairIntegration" | "corsairAccount" | "corsairEntity" | "corsairEvent" | "scheduledEmail"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2214,6 +2230,80 @@ export namespace Prisma {
           }
         }
       }
+      ScheduledEmail: {
+        payload: Prisma.$ScheduledEmailPayload<ExtArgs>
+        fields: Prisma.ScheduledEmailFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ScheduledEmailFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ScheduledEmailFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload>
+          }
+          findFirst: {
+            args: Prisma.ScheduledEmailFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ScheduledEmailFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload>
+          }
+          findMany: {
+            args: Prisma.ScheduledEmailFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload>[]
+          }
+          create: {
+            args: Prisma.ScheduledEmailCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload>
+          }
+          createMany: {
+            args: Prisma.ScheduledEmailCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ScheduledEmailCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload>[]
+          }
+          delete: {
+            args: Prisma.ScheduledEmailDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload>
+          }
+          update: {
+            args: Prisma.ScheduledEmailUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload>
+          }
+          deleteMany: {
+            args: Prisma.ScheduledEmailDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ScheduledEmailUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ScheduledEmailUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload>[]
+          }
+          upsert: {
+            args: Prisma.ScheduledEmailUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledEmailPayload>
+          }
+          aggregate: {
+            args: Prisma.ScheduledEmailAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateScheduledEmail>
+          }
+          groupBy: {
+            args: Prisma.ScheduledEmailGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScheduledEmailGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ScheduledEmailCountArgs<ExtArgs>
+            result: $Utils.Optional<ScheduledEmailCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2328,6 +2418,7 @@ export namespace Prisma {
     corsairAccount?: CorsairAccountOmit
     corsairEntity?: CorsairEntityOmit
     corsairEvent?: CorsairEventOmit
+    scheduledEmail?: ScheduledEmailOmit
   }
 
   /* Types for Logging */
@@ -2418,6 +2509,7 @@ export namespace Prisma {
     chatSessions: number
     payments: number
     dailyDigests: number
+    scheduledEmails: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2431,6 +2523,7 @@ export namespace Prisma {
     chatSessions?: boolean | UserCountOutputTypeCountChatSessionsArgs
     payments?: boolean | UserCountOutputTypeCountPaymentsArgs
     dailyDigests?: boolean | UserCountOutputTypeCountDailyDigestsArgs
+    scheduledEmails?: boolean | UserCountOutputTypeCountScheduledEmailsArgs
   }
 
   // Custom InputTypes
@@ -2512,6 +2605,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountDailyDigestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DailyDigestWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountScheduledEmailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScheduledEmailWhereInput
   }
 
 
@@ -6190,6 +6290,7 @@ export namespace Prisma {
     chatSessions?: boolean | User$chatSessionsArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     dailyDigests?: boolean | User$dailyDigestsArgs<ExtArgs>
+    scheduledEmails?: boolean | User$scheduledEmailsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -6271,6 +6372,7 @@ export namespace Prisma {
     chatSessions?: boolean | User$chatSessionsArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     dailyDigests?: boolean | User$dailyDigestsArgs<ExtArgs>
+    scheduledEmails?: boolean | User$scheduledEmailsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -6289,6 +6391,7 @@ export namespace Prisma {
       chatSessions: Prisma.$ChatSessionPayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
       dailyDigests: Prisma.$DailyDigestPayload<ExtArgs>[]
+      scheduledEmails: Prisma.$ScheduledEmailPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6714,6 +6817,7 @@ export namespace Prisma {
     chatSessions<T extends User$chatSessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$chatSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     payments<T extends User$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dailyDigests<T extends User$dailyDigestsArgs<ExtArgs> = {}>(args?: Subset<T, User$dailyDigestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyDigestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    scheduledEmails<T extends User$scheduledEmailsArgs<ExtArgs> = {}>(args?: Subset<T, User$scheduledEmailsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7387,6 +7491,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DailyDigestScalarFieldEnum | DailyDigestScalarFieldEnum[]
+  }
+
+  /**
+   * User.scheduledEmails
+   */
+  export type User$scheduledEmailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+    where?: ScheduledEmailWhereInput
+    orderBy?: ScheduledEmailOrderByWithRelationInput | ScheduledEmailOrderByWithRelationInput[]
+    cursor?: ScheduledEmailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ScheduledEmailScalarFieldEnum | ScheduledEmailScalarFieldEnum[]
   }
 
   /**
@@ -23002,6 +23130,1125 @@ export namespace Prisma {
 
 
   /**
+   * Model ScheduledEmail
+   */
+
+  export type AggregateScheduledEmail = {
+    _count: ScheduledEmailCountAggregateOutputType | null
+    _min: ScheduledEmailMinAggregateOutputType | null
+    _max: ScheduledEmailMaxAggregateOutputType | null
+  }
+
+  export type ScheduledEmailMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    to: string | null
+    subject: string | null
+    body: string | null
+    scheduledAt: Date | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScheduledEmailMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    to: string | null
+    subject: string | null
+    body: string | null
+    scheduledAt: Date | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScheduledEmailCountAggregateOutputType = {
+    id: number
+    userId: number
+    to: number
+    cc: number
+    subject: number
+    body: number
+    scheduledAt: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ScheduledEmailMinAggregateInputType = {
+    id?: true
+    userId?: true
+    to?: true
+    subject?: true
+    body?: true
+    scheduledAt?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScheduledEmailMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    to?: true
+    subject?: true
+    body?: true
+    scheduledAt?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScheduledEmailCountAggregateInputType = {
+    id?: true
+    userId?: true
+    to?: true
+    cc?: true
+    subject?: true
+    body?: true
+    scheduledAt?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ScheduledEmailAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScheduledEmail to aggregate.
+     */
+    where?: ScheduledEmailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScheduledEmails to fetch.
+     */
+    orderBy?: ScheduledEmailOrderByWithRelationInput | ScheduledEmailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ScheduledEmailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScheduledEmails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScheduledEmails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ScheduledEmails
+    **/
+    _count?: true | ScheduledEmailCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ScheduledEmailMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ScheduledEmailMaxAggregateInputType
+  }
+
+  export type GetScheduledEmailAggregateType<T extends ScheduledEmailAggregateArgs> = {
+        [P in keyof T & keyof AggregateScheduledEmail]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateScheduledEmail[P]>
+      : GetScalarType<T[P], AggregateScheduledEmail[P]>
+  }
+
+
+
+
+  export type ScheduledEmailGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScheduledEmailWhereInput
+    orderBy?: ScheduledEmailOrderByWithAggregationInput | ScheduledEmailOrderByWithAggregationInput[]
+    by: ScheduledEmailScalarFieldEnum[] | ScheduledEmailScalarFieldEnum
+    having?: ScheduledEmailScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ScheduledEmailCountAggregateInputType | true
+    _min?: ScheduledEmailMinAggregateInputType
+    _max?: ScheduledEmailMaxAggregateInputType
+  }
+
+  export type ScheduledEmailGroupByOutputType = {
+    id: string
+    userId: string
+    to: string
+    cc: string[]
+    subject: string
+    body: string
+    scheduledAt: Date
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ScheduledEmailCountAggregateOutputType | null
+    _min: ScheduledEmailMinAggregateOutputType | null
+    _max: ScheduledEmailMaxAggregateOutputType | null
+  }
+
+  type GetScheduledEmailGroupByPayload<T extends ScheduledEmailGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ScheduledEmailGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ScheduledEmailGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ScheduledEmailGroupByOutputType[P]>
+            : GetScalarType<T[P], ScheduledEmailGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ScheduledEmailSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    to?: boolean
+    cc?: boolean
+    subject?: boolean
+    body?: boolean
+    scheduledAt?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["scheduledEmail"]>
+
+  export type ScheduledEmailSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    to?: boolean
+    cc?: boolean
+    subject?: boolean
+    body?: boolean
+    scheduledAt?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["scheduledEmail"]>
+
+  export type ScheduledEmailSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    to?: boolean
+    cc?: boolean
+    subject?: boolean
+    body?: boolean
+    scheduledAt?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["scheduledEmail"]>
+
+  export type ScheduledEmailSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    to?: boolean
+    cc?: boolean
+    subject?: boolean
+    body?: boolean
+    scheduledAt?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ScheduledEmailOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "to" | "cc" | "subject" | "body" | "scheduledAt" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["scheduledEmail"]>
+  export type ScheduledEmailInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ScheduledEmailIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ScheduledEmailIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ScheduledEmailPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ScheduledEmail"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      to: string
+      cc: string[]
+      subject: string
+      body: string
+      scheduledAt: Date
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["scheduledEmail"]>
+    composites: {}
+  }
+
+  type ScheduledEmailGetPayload<S extends boolean | null | undefined | ScheduledEmailDefaultArgs> = $Result.GetResult<Prisma.$ScheduledEmailPayload, S>
+
+  type ScheduledEmailCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ScheduledEmailFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ScheduledEmailCountAggregateInputType | true
+    }
+
+  export interface ScheduledEmailDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ScheduledEmail'], meta: { name: 'ScheduledEmail' } }
+    /**
+     * Find zero or one ScheduledEmail that matches the filter.
+     * @param {ScheduledEmailFindUniqueArgs} args - Arguments to find a ScheduledEmail
+     * @example
+     * // Get one ScheduledEmail
+     * const scheduledEmail = await prisma.scheduledEmail.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ScheduledEmailFindUniqueArgs>(args: SelectSubset<T, ScheduledEmailFindUniqueArgs<ExtArgs>>): Prisma__ScheduledEmailClient<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ScheduledEmail that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ScheduledEmailFindUniqueOrThrowArgs} args - Arguments to find a ScheduledEmail
+     * @example
+     * // Get one ScheduledEmail
+     * const scheduledEmail = await prisma.scheduledEmail.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ScheduledEmailFindUniqueOrThrowArgs>(args: SelectSubset<T, ScheduledEmailFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScheduledEmailClient<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScheduledEmail that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduledEmailFindFirstArgs} args - Arguments to find a ScheduledEmail
+     * @example
+     * // Get one ScheduledEmail
+     * const scheduledEmail = await prisma.scheduledEmail.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ScheduledEmailFindFirstArgs>(args?: SelectSubset<T, ScheduledEmailFindFirstArgs<ExtArgs>>): Prisma__ScheduledEmailClient<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScheduledEmail that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduledEmailFindFirstOrThrowArgs} args - Arguments to find a ScheduledEmail
+     * @example
+     * // Get one ScheduledEmail
+     * const scheduledEmail = await prisma.scheduledEmail.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ScheduledEmailFindFirstOrThrowArgs>(args?: SelectSubset<T, ScheduledEmailFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScheduledEmailClient<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ScheduledEmails that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduledEmailFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ScheduledEmails
+     * const scheduledEmails = await prisma.scheduledEmail.findMany()
+     * 
+     * // Get first 10 ScheduledEmails
+     * const scheduledEmails = await prisma.scheduledEmail.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const scheduledEmailWithIdOnly = await prisma.scheduledEmail.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ScheduledEmailFindManyArgs>(args?: SelectSubset<T, ScheduledEmailFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ScheduledEmail.
+     * @param {ScheduledEmailCreateArgs} args - Arguments to create a ScheduledEmail.
+     * @example
+     * // Create one ScheduledEmail
+     * const ScheduledEmail = await prisma.scheduledEmail.create({
+     *   data: {
+     *     // ... data to create a ScheduledEmail
+     *   }
+     * })
+     * 
+     */
+    create<T extends ScheduledEmailCreateArgs>(args: SelectSubset<T, ScheduledEmailCreateArgs<ExtArgs>>): Prisma__ScheduledEmailClient<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ScheduledEmails.
+     * @param {ScheduledEmailCreateManyArgs} args - Arguments to create many ScheduledEmails.
+     * @example
+     * // Create many ScheduledEmails
+     * const scheduledEmail = await prisma.scheduledEmail.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ScheduledEmailCreateManyArgs>(args?: SelectSubset<T, ScheduledEmailCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ScheduledEmails and returns the data saved in the database.
+     * @param {ScheduledEmailCreateManyAndReturnArgs} args - Arguments to create many ScheduledEmails.
+     * @example
+     * // Create many ScheduledEmails
+     * const scheduledEmail = await prisma.scheduledEmail.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ScheduledEmails and only return the `id`
+     * const scheduledEmailWithIdOnly = await prisma.scheduledEmail.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ScheduledEmailCreateManyAndReturnArgs>(args?: SelectSubset<T, ScheduledEmailCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ScheduledEmail.
+     * @param {ScheduledEmailDeleteArgs} args - Arguments to delete one ScheduledEmail.
+     * @example
+     * // Delete one ScheduledEmail
+     * const ScheduledEmail = await prisma.scheduledEmail.delete({
+     *   where: {
+     *     // ... filter to delete one ScheduledEmail
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ScheduledEmailDeleteArgs>(args: SelectSubset<T, ScheduledEmailDeleteArgs<ExtArgs>>): Prisma__ScheduledEmailClient<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ScheduledEmail.
+     * @param {ScheduledEmailUpdateArgs} args - Arguments to update one ScheduledEmail.
+     * @example
+     * // Update one ScheduledEmail
+     * const scheduledEmail = await prisma.scheduledEmail.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ScheduledEmailUpdateArgs>(args: SelectSubset<T, ScheduledEmailUpdateArgs<ExtArgs>>): Prisma__ScheduledEmailClient<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ScheduledEmails.
+     * @param {ScheduledEmailDeleteManyArgs} args - Arguments to filter ScheduledEmails to delete.
+     * @example
+     * // Delete a few ScheduledEmails
+     * const { count } = await prisma.scheduledEmail.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ScheduledEmailDeleteManyArgs>(args?: SelectSubset<T, ScheduledEmailDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScheduledEmails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduledEmailUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ScheduledEmails
+     * const scheduledEmail = await prisma.scheduledEmail.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ScheduledEmailUpdateManyArgs>(args: SelectSubset<T, ScheduledEmailUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScheduledEmails and returns the data updated in the database.
+     * @param {ScheduledEmailUpdateManyAndReturnArgs} args - Arguments to update many ScheduledEmails.
+     * @example
+     * // Update many ScheduledEmails
+     * const scheduledEmail = await prisma.scheduledEmail.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ScheduledEmails and only return the `id`
+     * const scheduledEmailWithIdOnly = await prisma.scheduledEmail.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ScheduledEmailUpdateManyAndReturnArgs>(args: SelectSubset<T, ScheduledEmailUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ScheduledEmail.
+     * @param {ScheduledEmailUpsertArgs} args - Arguments to update or create a ScheduledEmail.
+     * @example
+     * // Update or create a ScheduledEmail
+     * const scheduledEmail = await prisma.scheduledEmail.upsert({
+     *   create: {
+     *     // ... data to create a ScheduledEmail
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ScheduledEmail we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ScheduledEmailUpsertArgs>(args: SelectSubset<T, ScheduledEmailUpsertArgs<ExtArgs>>): Prisma__ScheduledEmailClient<$Result.GetResult<Prisma.$ScheduledEmailPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ScheduledEmails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduledEmailCountArgs} args - Arguments to filter ScheduledEmails to count.
+     * @example
+     * // Count the number of ScheduledEmails
+     * const count = await prisma.scheduledEmail.count({
+     *   where: {
+     *     // ... the filter for the ScheduledEmails we want to count
+     *   }
+     * })
+    **/
+    count<T extends ScheduledEmailCountArgs>(
+      args?: Subset<T, ScheduledEmailCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ScheduledEmailCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ScheduledEmail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduledEmailAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ScheduledEmailAggregateArgs>(args: Subset<T, ScheduledEmailAggregateArgs>): Prisma.PrismaPromise<GetScheduledEmailAggregateType<T>>
+
+    /**
+     * Group by ScheduledEmail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduledEmailGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ScheduledEmailGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ScheduledEmailGroupByArgs['orderBy'] }
+        : { orderBy?: ScheduledEmailGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ScheduledEmailGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScheduledEmailGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ScheduledEmail model
+   */
+  readonly fields: ScheduledEmailFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ScheduledEmail.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ScheduledEmailClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ScheduledEmail model
+   */
+  interface ScheduledEmailFieldRefs {
+    readonly id: FieldRef<"ScheduledEmail", 'String'>
+    readonly userId: FieldRef<"ScheduledEmail", 'String'>
+    readonly to: FieldRef<"ScheduledEmail", 'String'>
+    readonly cc: FieldRef<"ScheduledEmail", 'String[]'>
+    readonly subject: FieldRef<"ScheduledEmail", 'String'>
+    readonly body: FieldRef<"ScheduledEmail", 'String'>
+    readonly scheduledAt: FieldRef<"ScheduledEmail", 'DateTime'>
+    readonly status: FieldRef<"ScheduledEmail", 'String'>
+    readonly createdAt: FieldRef<"ScheduledEmail", 'DateTime'>
+    readonly updatedAt: FieldRef<"ScheduledEmail", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ScheduledEmail findUnique
+   */
+  export type ScheduledEmailFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+    /**
+     * Filter, which ScheduledEmail to fetch.
+     */
+    where: ScheduledEmailWhereUniqueInput
+  }
+
+  /**
+   * ScheduledEmail findUniqueOrThrow
+   */
+  export type ScheduledEmailFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+    /**
+     * Filter, which ScheduledEmail to fetch.
+     */
+    where: ScheduledEmailWhereUniqueInput
+  }
+
+  /**
+   * ScheduledEmail findFirst
+   */
+  export type ScheduledEmailFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+    /**
+     * Filter, which ScheduledEmail to fetch.
+     */
+    where?: ScheduledEmailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScheduledEmails to fetch.
+     */
+    orderBy?: ScheduledEmailOrderByWithRelationInput | ScheduledEmailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScheduledEmails.
+     */
+    cursor?: ScheduledEmailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScheduledEmails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScheduledEmails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScheduledEmails.
+     */
+    distinct?: ScheduledEmailScalarFieldEnum | ScheduledEmailScalarFieldEnum[]
+  }
+
+  /**
+   * ScheduledEmail findFirstOrThrow
+   */
+  export type ScheduledEmailFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+    /**
+     * Filter, which ScheduledEmail to fetch.
+     */
+    where?: ScheduledEmailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScheduledEmails to fetch.
+     */
+    orderBy?: ScheduledEmailOrderByWithRelationInput | ScheduledEmailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScheduledEmails.
+     */
+    cursor?: ScheduledEmailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScheduledEmails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScheduledEmails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScheduledEmails.
+     */
+    distinct?: ScheduledEmailScalarFieldEnum | ScheduledEmailScalarFieldEnum[]
+  }
+
+  /**
+   * ScheduledEmail findMany
+   */
+  export type ScheduledEmailFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+    /**
+     * Filter, which ScheduledEmails to fetch.
+     */
+    where?: ScheduledEmailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScheduledEmails to fetch.
+     */
+    orderBy?: ScheduledEmailOrderByWithRelationInput | ScheduledEmailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ScheduledEmails.
+     */
+    cursor?: ScheduledEmailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScheduledEmails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScheduledEmails.
+     */
+    skip?: number
+    distinct?: ScheduledEmailScalarFieldEnum | ScheduledEmailScalarFieldEnum[]
+  }
+
+  /**
+   * ScheduledEmail create
+   */
+  export type ScheduledEmailCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ScheduledEmail.
+     */
+    data: XOR<ScheduledEmailCreateInput, ScheduledEmailUncheckedCreateInput>
+  }
+
+  /**
+   * ScheduledEmail createMany
+   */
+  export type ScheduledEmailCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ScheduledEmails.
+     */
+    data: ScheduledEmailCreateManyInput | ScheduledEmailCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScheduledEmail createManyAndReturn
+   */
+  export type ScheduledEmailCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * The data used to create many ScheduledEmails.
+     */
+    data: ScheduledEmailCreateManyInput | ScheduledEmailCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ScheduledEmail update
+   */
+  export type ScheduledEmailUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ScheduledEmail.
+     */
+    data: XOR<ScheduledEmailUpdateInput, ScheduledEmailUncheckedUpdateInput>
+    /**
+     * Choose, which ScheduledEmail to update.
+     */
+    where: ScheduledEmailWhereUniqueInput
+  }
+
+  /**
+   * ScheduledEmail updateMany
+   */
+  export type ScheduledEmailUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ScheduledEmails.
+     */
+    data: XOR<ScheduledEmailUpdateManyMutationInput, ScheduledEmailUncheckedUpdateManyInput>
+    /**
+     * Filter which ScheduledEmails to update
+     */
+    where?: ScheduledEmailWhereInput
+    /**
+     * Limit how many ScheduledEmails to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScheduledEmail updateManyAndReturn
+   */
+  export type ScheduledEmailUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * The data used to update ScheduledEmails.
+     */
+    data: XOR<ScheduledEmailUpdateManyMutationInput, ScheduledEmailUncheckedUpdateManyInput>
+    /**
+     * Filter which ScheduledEmails to update
+     */
+    where?: ScheduledEmailWhereInput
+    /**
+     * Limit how many ScheduledEmails to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ScheduledEmail upsert
+   */
+  export type ScheduledEmailUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ScheduledEmail to update in case it exists.
+     */
+    where: ScheduledEmailWhereUniqueInput
+    /**
+     * In case the ScheduledEmail found by the `where` argument doesn't exist, create a new ScheduledEmail with this data.
+     */
+    create: XOR<ScheduledEmailCreateInput, ScheduledEmailUncheckedCreateInput>
+    /**
+     * In case the ScheduledEmail was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ScheduledEmailUpdateInput, ScheduledEmailUncheckedUpdateInput>
+  }
+
+  /**
+   * ScheduledEmail delete
+   */
+  export type ScheduledEmailDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+    /**
+     * Filter which ScheduledEmail to delete.
+     */
+    where: ScheduledEmailWhereUniqueInput
+  }
+
+  /**
+   * ScheduledEmail deleteMany
+   */
+  export type ScheduledEmailDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScheduledEmails to delete
+     */
+    where?: ScheduledEmailWhereInput
+    /**
+     * Limit how many ScheduledEmails to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScheduledEmail without action
+   */
+  export type ScheduledEmailDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduledEmail
+     */
+    select?: ScheduledEmailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScheduledEmail
+     */
+    omit?: ScheduledEmailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduledEmailInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -23283,6 +24530,22 @@ export namespace Prisma {
   };
 
   export type CorsairEventScalarFieldEnum = (typeof CorsairEventScalarFieldEnum)[keyof typeof CorsairEventScalarFieldEnum]
+
+
+  export const ScheduledEmailScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    to: 'to',
+    cc: 'cc',
+    subject: 'subject',
+    body: 'body',
+    scheduledAt: 'scheduledAt',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ScheduledEmailScalarFieldEnum = (typeof ScheduledEmailScalarFieldEnum)[keyof typeof ScheduledEmailScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -23642,6 +24905,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionListRelationFilter
     payments?: PaymentListRelationFilter
     dailyDigests?: DailyDigestListRelationFilter
+    scheduledEmails?: ScheduledEmailListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -23674,6 +24938,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
     dailyDigests?: DailyDigestOrderByRelationAggregateInput
+    scheduledEmails?: ScheduledEmailOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -23709,6 +24974,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionListRelationFilter
     payments?: PaymentListRelationFilter
     dailyDigests?: DailyDigestListRelationFilter
+    scheduledEmails?: ScheduledEmailListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -24815,6 +26081,86 @@ export namespace Prisma {
     status?: StringNullableWithAggregatesFilter<"CorsairEvent"> | string | null
   }
 
+  export type ScheduledEmailWhereInput = {
+    AND?: ScheduledEmailWhereInput | ScheduledEmailWhereInput[]
+    OR?: ScheduledEmailWhereInput[]
+    NOT?: ScheduledEmailWhereInput | ScheduledEmailWhereInput[]
+    id?: StringFilter<"ScheduledEmail"> | string
+    userId?: StringFilter<"ScheduledEmail"> | string
+    to?: StringFilter<"ScheduledEmail"> | string
+    cc?: StringNullableListFilter<"ScheduledEmail">
+    subject?: StringFilter<"ScheduledEmail"> | string
+    body?: StringFilter<"ScheduledEmail"> | string
+    scheduledAt?: DateTimeFilter<"ScheduledEmail"> | Date | string
+    status?: StringFilter<"ScheduledEmail"> | string
+    createdAt?: DateTimeFilter<"ScheduledEmail"> | Date | string
+    updatedAt?: DateTimeFilter<"ScheduledEmail"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ScheduledEmailOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    to?: SortOrder
+    cc?: SortOrder
+    subject?: SortOrder
+    body?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ScheduledEmailWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ScheduledEmailWhereInput | ScheduledEmailWhereInput[]
+    OR?: ScheduledEmailWhereInput[]
+    NOT?: ScheduledEmailWhereInput | ScheduledEmailWhereInput[]
+    userId?: StringFilter<"ScheduledEmail"> | string
+    to?: StringFilter<"ScheduledEmail"> | string
+    cc?: StringNullableListFilter<"ScheduledEmail">
+    subject?: StringFilter<"ScheduledEmail"> | string
+    body?: StringFilter<"ScheduledEmail"> | string
+    scheduledAt?: DateTimeFilter<"ScheduledEmail"> | Date | string
+    status?: StringFilter<"ScheduledEmail"> | string
+    createdAt?: DateTimeFilter<"ScheduledEmail"> | Date | string
+    updatedAt?: DateTimeFilter<"ScheduledEmail"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ScheduledEmailOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    to?: SortOrder
+    cc?: SortOrder
+    subject?: SortOrder
+    body?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ScheduledEmailCountOrderByAggregateInput
+    _max?: ScheduledEmailMaxOrderByAggregateInput
+    _min?: ScheduledEmailMinOrderByAggregateInput
+  }
+
+  export type ScheduledEmailScalarWhereWithAggregatesInput = {
+    AND?: ScheduledEmailScalarWhereWithAggregatesInput | ScheduledEmailScalarWhereWithAggregatesInput[]
+    OR?: ScheduledEmailScalarWhereWithAggregatesInput[]
+    NOT?: ScheduledEmailScalarWhereWithAggregatesInput | ScheduledEmailScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ScheduledEmail"> | string
+    userId?: StringWithAggregatesFilter<"ScheduledEmail"> | string
+    to?: StringWithAggregatesFilter<"ScheduledEmail"> | string
+    cc?: StringNullableListFilter<"ScheduledEmail">
+    subject?: StringWithAggregatesFilter<"ScheduledEmail"> | string
+    body?: StringWithAggregatesFilter<"ScheduledEmail"> | string
+    scheduledAt?: DateTimeWithAggregatesFilter<"ScheduledEmail"> | Date | string
+    status?: StringWithAggregatesFilter<"ScheduledEmail"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ScheduledEmail"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ScheduledEmail"> | Date | string
+  }
+
   export type AccountCreateInput = {
     id?: string
     type: string
@@ -25046,6 +26392,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -25078,6 +26425,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -25110,6 +26458,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -25142,6 +26491,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -26372,6 +27722,96 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type ScheduledEmailCreateInput = {
+    id?: string
+    to: string
+    cc?: ScheduledEmailCreateccInput | string[]
+    subject: string
+    body: string
+    scheduledAt: Date | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutScheduledEmailsInput
+  }
+
+  export type ScheduledEmailUncheckedCreateInput = {
+    id?: string
+    userId: string
+    to: string
+    cc?: ScheduledEmailCreateccInput | string[]
+    subject: string
+    body: string
+    scheduledAt: Date | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScheduledEmailUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    to?: StringFieldUpdateOperationsInput | string
+    cc?: ScheduledEmailUpdateccInput | string[]
+    subject?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutScheduledEmailsNestedInput
+  }
+
+  export type ScheduledEmailUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    to?: StringFieldUpdateOperationsInput | string
+    cc?: ScheduledEmailUpdateccInput | string[]
+    subject?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScheduledEmailCreateManyInput = {
+    id?: string
+    userId: string
+    to: string
+    cc?: ScheduledEmailCreateccInput | string[]
+    subject: string
+    body: string
+    scheduledAt: Date | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScheduledEmailUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    to?: StringFieldUpdateOperationsInput | string
+    cc?: ScheduledEmailUpdateccInput | string[]
+    subject?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScheduledEmailUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    to?: StringFieldUpdateOperationsInput | string
+    cc?: ScheduledEmailUpdateccInput | string[]
+    subject?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -26717,6 +28157,12 @@ export namespace Prisma {
     none?: DailyDigestWhereInput
   }
 
+  export type ScheduledEmailListRelationFilter = {
+    every?: ScheduledEmailWhereInput
+    some?: ScheduledEmailWhereInput
+    none?: ScheduledEmailWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -26754,6 +28200,10 @@ export namespace Prisma {
   }
 
   export type DailyDigestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ScheduledEmailOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -27490,6 +28940,43 @@ export namespace Prisma {
     status?: SortOrder
   }
 
+  export type ScheduledEmailCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    to?: SortOrder
+    cc?: SortOrder
+    subject?: SortOrder
+    body?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScheduledEmailMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    to?: SortOrder
+    subject?: SortOrder
+    body?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScheduledEmailMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    to?: SortOrder
+    subject?: SortOrder
+    body?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -27608,6 +29095,13 @@ export namespace Prisma {
     connect?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
   }
 
+  export type ScheduledEmailCreateNestedManyWithoutUserInput = {
+    create?: XOR<ScheduledEmailCreateWithoutUserInput, ScheduledEmailUncheckedCreateWithoutUserInput> | ScheduledEmailCreateWithoutUserInput[] | ScheduledEmailUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ScheduledEmailCreateOrConnectWithoutUserInput | ScheduledEmailCreateOrConnectWithoutUserInput[]
+    createMany?: ScheduledEmailCreateManyUserInputEnvelope
+    connect?: ScheduledEmailWhereUniqueInput | ScheduledEmailWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -27676,6 +29170,13 @@ export namespace Prisma {
     connectOrCreate?: DailyDigestCreateOrConnectWithoutUserInput | DailyDigestCreateOrConnectWithoutUserInput[]
     createMany?: DailyDigestCreateManyUserInputEnvelope
     connect?: DailyDigestWhereUniqueInput | DailyDigestWhereUniqueInput[]
+  }
+
+  export type ScheduledEmailUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ScheduledEmailCreateWithoutUserInput, ScheduledEmailUncheckedCreateWithoutUserInput> | ScheduledEmailCreateWithoutUserInput[] | ScheduledEmailUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ScheduledEmailCreateOrConnectWithoutUserInput | ScheduledEmailCreateOrConnectWithoutUserInput[]
+    createMany?: ScheduledEmailCreateManyUserInputEnvelope
+    connect?: ScheduledEmailWhereUniqueInput | ScheduledEmailWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -27834,6 +29335,20 @@ export namespace Prisma {
     deleteMany?: DailyDigestScalarWhereInput | DailyDigestScalarWhereInput[]
   }
 
+  export type ScheduledEmailUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ScheduledEmailCreateWithoutUserInput, ScheduledEmailUncheckedCreateWithoutUserInput> | ScheduledEmailCreateWithoutUserInput[] | ScheduledEmailUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ScheduledEmailCreateOrConnectWithoutUserInput | ScheduledEmailCreateOrConnectWithoutUserInput[]
+    upsert?: ScheduledEmailUpsertWithWhereUniqueWithoutUserInput | ScheduledEmailUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ScheduledEmailCreateManyUserInputEnvelope
+    set?: ScheduledEmailWhereUniqueInput | ScheduledEmailWhereUniqueInput[]
+    disconnect?: ScheduledEmailWhereUniqueInput | ScheduledEmailWhereUniqueInput[]
+    delete?: ScheduledEmailWhereUniqueInput | ScheduledEmailWhereUniqueInput[]
+    connect?: ScheduledEmailWhereUniqueInput | ScheduledEmailWhereUniqueInput[]
+    update?: ScheduledEmailUpdateWithWhereUniqueWithoutUserInput | ScheduledEmailUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ScheduledEmailUpdateManyWithWhereWithoutUserInput | ScheduledEmailUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ScheduledEmailScalarWhereInput | ScheduledEmailScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -27972,6 +29487,20 @@ export namespace Prisma {
     update?: DailyDigestUpdateWithWhereUniqueWithoutUserInput | DailyDigestUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: DailyDigestUpdateManyWithWhereWithoutUserInput | DailyDigestUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: DailyDigestScalarWhereInput | DailyDigestScalarWhereInput[]
+  }
+
+  export type ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ScheduledEmailCreateWithoutUserInput, ScheduledEmailUncheckedCreateWithoutUserInput> | ScheduledEmailCreateWithoutUserInput[] | ScheduledEmailUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ScheduledEmailCreateOrConnectWithoutUserInput | ScheduledEmailCreateOrConnectWithoutUserInput[]
+    upsert?: ScheduledEmailUpsertWithWhereUniqueWithoutUserInput | ScheduledEmailUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ScheduledEmailCreateManyUserInputEnvelope
+    set?: ScheduledEmailWhereUniqueInput | ScheduledEmailWhereUniqueInput[]
+    disconnect?: ScheduledEmailWhereUniqueInput | ScheduledEmailWhereUniqueInput[]
+    delete?: ScheduledEmailWhereUniqueInput | ScheduledEmailWhereUniqueInput[]
+    connect?: ScheduledEmailWhereUniqueInput | ScheduledEmailWhereUniqueInput[]
+    update?: ScheduledEmailUpdateWithWhereUniqueWithoutUserInput | ScheduledEmailUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ScheduledEmailUpdateManyWithWhereWithoutUserInput | ScheduledEmailUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ScheduledEmailScalarWhereInput | ScheduledEmailScalarWhereInput[]
   }
 
   export type EmailCreateNestedManyWithoutThreadInput = {
@@ -28404,6 +29933,29 @@ export namespace Prisma {
     update?: XOR<XOR<CorsairAccountUpdateToOneWithWhereWithoutEventsInput, CorsairAccountUpdateWithoutEventsInput>, CorsairAccountUncheckedUpdateWithoutEventsInput>
   }
 
+  export type ScheduledEmailCreateccInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutScheduledEmailsInput = {
+    create?: XOR<UserCreateWithoutScheduledEmailsInput, UserUncheckedCreateWithoutScheduledEmailsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutScheduledEmailsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ScheduledEmailUpdateccInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateOneRequiredWithoutScheduledEmailsNestedInput = {
+    create?: XOR<UserCreateWithoutScheduledEmailsInput, UserUncheckedCreateWithoutScheduledEmailsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutScheduledEmailsInput
+    upsert?: UserUpsertWithoutScheduledEmailsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutScheduledEmailsInput, UserUpdateWithoutScheduledEmailsInput>, UserUncheckedUpdateWithoutScheduledEmailsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -28680,6 +30232,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -28711,6 +30264,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -28758,6 +30312,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -28789,6 +30344,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -28820,6 +30376,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -28851,6 +30408,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -28898,6 +30456,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -28929,6 +30488,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -29275,6 +30835,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ScheduledEmailCreateWithoutUserInput = {
+    id?: string
+    to: string
+    cc?: ScheduledEmailCreateccInput | string[]
+    subject: string
+    body: string
+    scheduledAt: Date | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScheduledEmailUncheckedCreateWithoutUserInput = {
+    id?: string
+    to: string
+    cc?: ScheduledEmailCreateccInput | string[]
+    subject: string
+    body: string
+    scheduledAt: Date | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScheduledEmailCreateOrConnectWithoutUserInput = {
+    where: ScheduledEmailWhereUniqueInput
+    create: XOR<ScheduledEmailCreateWithoutUserInput, ScheduledEmailUncheckedCreateWithoutUserInput>
+  }
+
+  export type ScheduledEmailCreateManyUserInputEnvelope = {
+    data: ScheduledEmailCreateManyUserInput | ScheduledEmailCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -29596,6 +31190,38 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"DailyDigest"> | Date | string
   }
 
+  export type ScheduledEmailUpsertWithWhereUniqueWithoutUserInput = {
+    where: ScheduledEmailWhereUniqueInput
+    update: XOR<ScheduledEmailUpdateWithoutUserInput, ScheduledEmailUncheckedUpdateWithoutUserInput>
+    create: XOR<ScheduledEmailCreateWithoutUserInput, ScheduledEmailUncheckedCreateWithoutUserInput>
+  }
+
+  export type ScheduledEmailUpdateWithWhereUniqueWithoutUserInput = {
+    where: ScheduledEmailWhereUniqueInput
+    data: XOR<ScheduledEmailUpdateWithoutUserInput, ScheduledEmailUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ScheduledEmailUpdateManyWithWhereWithoutUserInput = {
+    where: ScheduledEmailScalarWhereInput
+    data: XOR<ScheduledEmailUpdateManyMutationInput, ScheduledEmailUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ScheduledEmailScalarWhereInput = {
+    AND?: ScheduledEmailScalarWhereInput | ScheduledEmailScalarWhereInput[]
+    OR?: ScheduledEmailScalarWhereInput[]
+    NOT?: ScheduledEmailScalarWhereInput | ScheduledEmailScalarWhereInput[]
+    id?: StringFilter<"ScheduledEmail"> | string
+    userId?: StringFilter<"ScheduledEmail"> | string
+    to?: StringFilter<"ScheduledEmail"> | string
+    cc?: StringNullableListFilter<"ScheduledEmail">
+    subject?: StringFilter<"ScheduledEmail"> | string
+    body?: StringFilter<"ScheduledEmail"> | string
+    scheduledAt?: DateTimeFilter<"ScheduledEmail"> | Date | string
+    status?: StringFilter<"ScheduledEmail"> | string
+    createdAt?: DateTimeFilter<"ScheduledEmail"> | Date | string
+    updatedAt?: DateTimeFilter<"ScheduledEmail"> | Date | string
+  }
+
   export type EmailCreateWithoutThreadInput = {
     id?: string
     gmailId: string
@@ -29701,6 +31327,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEmailsInput = {
@@ -29732,6 +31359,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEmailsInput = {
@@ -29800,6 +31428,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEmailsInput = {
@@ -29831,6 +31460,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type EmailThreadUpsertWithoutEmailsInput = {
@@ -29889,6 +31519,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCalendarEventsInput = {
@@ -29920,6 +31551,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCalendarEventsInput = {
@@ -29967,6 +31599,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCalendarEventsInput = {
@@ -29998,6 +31631,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAgentChatsInput = {
@@ -30029,6 +31663,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAgentChatsInput = {
@@ -30060,6 +31695,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAgentChatsInput = {
@@ -30128,6 +31764,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAgentChatsInput = {
@@ -30159,6 +31796,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChatSessionUpsertWithoutMessagesInput = {
@@ -30217,6 +31855,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAgentMemoriesInput = {
@@ -30248,6 +31887,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAgentMemoriesInput = {
@@ -30295,6 +31935,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAgentMemoriesInput = {
@@ -30326,6 +31967,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutLabelRulesInput = {
@@ -30357,6 +31999,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLabelRulesInput = {
@@ -30388,6 +32031,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLabelRulesInput = {
@@ -30435,6 +32079,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLabelRulesInput = {
@@ -30466,6 +32111,7 @@ export namespace Prisma {
     chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutChatSessionsInput = {
@@ -30497,6 +32143,7 @@ export namespace Prisma {
     labelRules?: LabelRuleCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatSessionsInput = {
@@ -30528,6 +32175,7 @@ export namespace Prisma {
     labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatSessionsInput = {
@@ -30605,6 +32253,7 @@ export namespace Prisma {
     labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatSessionsInput = {
@@ -30636,6 +32285,7 @@ export namespace Prisma {
     labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AgentChatUpsertWithWhereUniqueWithoutChatSessionInput = {
@@ -30683,6 +32333,7 @@ export namespace Prisma {
     labelRules?: LabelRuleCreateNestedManyWithoutUserInput
     chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -30714,6 +32365,7 @@ export namespace Prisma {
     labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
     chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
     dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -30761,6 +32413,7 @@ export namespace Prisma {
     labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
     chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -30792,6 +32445,7 @@ export namespace Prisma {
     labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
     chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
     dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutDailyDigestsInput = {
@@ -30823,6 +32477,7 @@ export namespace Prisma {
     labelRules?: LabelRuleCreateNestedManyWithoutUserInput
     chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDailyDigestsInput = {
@@ -30854,6 +32509,7 @@ export namespace Prisma {
     labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
     chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    scheduledEmails?: ScheduledEmailUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDailyDigestsInput = {
@@ -30901,6 +32557,7 @@ export namespace Prisma {
     labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
     chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDailyDigestsInput = {
@@ -30932,6 +32589,7 @@ export namespace Prisma {
     labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
     chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    scheduledEmails?: ScheduledEmailUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CorsairAccountCreateWithoutIntegrationInput = {
@@ -31284,6 +32942,150 @@ export namespace Prisma {
     entities?: CorsairEntityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
+  export type UserCreateWithoutScheduledEmailsInput = {
+    id?: string
+    email?: string | null
+    name?: string | null
+    image?: string | null
+    emailVerified?: Date | string | null
+    provider?: string
+    googleAccessToken?: string | null
+    googleRefreshToken?: string | null
+    tokenExpiresAt?: Date | string | null
+    onboardingDone?: boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    emails?: EmailCreateNestedManyWithoutUserInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutUserInput
+    agentChats?: AgentChatCreateNestedManyWithoutUserInput
+    agentMemories?: AgentMemoryCreateNestedManyWithoutUserInput
+    labelRules?: LabelRuleCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutScheduledEmailsInput = {
+    id?: string
+    email?: string | null
+    name?: string | null
+    image?: string | null
+    emailVerified?: Date | string | null
+    provider?: string
+    googleAccessToken?: string | null
+    googleRefreshToken?: string | null
+    tokenExpiresAt?: Date | string | null
+    onboardingDone?: boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: string
+    plan?: string
+    planResetDate?: Date | string
+    aiMessagesUsed?: number
+    voiceInputUsed?: number
+    emailComposeUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    emails?: EmailUncheckedCreateNestedManyWithoutUserInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutUserInput
+    agentChats?: AgentChatUncheckedCreateNestedManyWithoutUserInput
+    agentMemories?: AgentMemoryUncheckedCreateNestedManyWithoutUserInput
+    labelRules?: LabelRuleUncheckedCreateNestedManyWithoutUserInput
+    chatSessions?: ChatSessionUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    dailyDigests?: DailyDigestUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutScheduledEmailsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutScheduledEmailsInput, UserUncheckedCreateWithoutScheduledEmailsInput>
+  }
+
+  export type UserUpsertWithoutScheduledEmailsInput = {
+    update: XOR<UserUpdateWithoutScheduledEmailsInput, UserUncheckedUpdateWithoutScheduledEmailsInput>
+    create: XOR<UserCreateWithoutScheduledEmailsInput, UserUncheckedCreateWithoutScheduledEmailsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutScheduledEmailsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutScheduledEmailsInput, UserUncheckedUpdateWithoutScheduledEmailsInput>
+  }
+
+  export type UserUpdateWithoutScheduledEmailsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: StringFieldUpdateOperationsInput | string
+    googleAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    googleRefreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingDone?: BoolFieldUpdateOperationsInput | boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    emails?: EmailUpdateManyWithoutUserNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutUserNestedInput
+    agentChats?: AgentChatUpdateManyWithoutUserNestedInput
+    agentMemories?: AgentMemoryUpdateManyWithoutUserNestedInput
+    labelRules?: LabelRuleUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutScheduledEmailsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: StringFieldUpdateOperationsInput | string
+    googleAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    googleRefreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingDone?: BoolFieldUpdateOperationsInput | boolean
+    preferences?: JsonNullValueInput | InputJsonValue
+    theme?: StringFieldUpdateOperationsInput | string
+    plan?: StringFieldUpdateOperationsInput | string
+    planResetDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    aiMessagesUsed?: IntFieldUpdateOperationsInput | number
+    voiceInputUsed?: IntFieldUpdateOperationsInput | number
+    emailComposeUsed?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    emails?: EmailUncheckedUpdateManyWithoutUserNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutUserNestedInput
+    agentChats?: AgentChatUncheckedUpdateManyWithoutUserNestedInput
+    agentMemories?: AgentMemoryUncheckedUpdateManyWithoutUserNestedInput
+    labelRules?: LabelRuleUncheckedUpdateManyWithoutUserNestedInput
+    chatSessions?: ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    dailyDigests?: DailyDigestUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type AccountCreateManyUserInput = {
     id?: string
     type: string
@@ -31403,6 +33205,18 @@ export namespace Prisma {
     content: JsonNullValueInput | InputJsonValue
     generated?: boolean
     createdAt?: Date | string
+  }
+
+  export type ScheduledEmailCreateManyUserInput = {
+    id?: string
+    to: string
+    cc?: ScheduledEmailCreateccInput | string[]
+    subject: string
+    body: string
+    scheduledAt: Date | string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -31768,6 +33582,42 @@ export namespace Prisma {
     content?: JsonNullValueInput | InputJsonValue
     generated?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScheduledEmailUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    to?: StringFieldUpdateOperationsInput | string
+    cc?: ScheduledEmailUpdateccInput | string[]
+    subject?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScheduledEmailUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    to?: StringFieldUpdateOperationsInput | string
+    cc?: ScheduledEmailUpdateccInput | string[]
+    subject?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScheduledEmailUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    to?: StringFieldUpdateOperationsInput | string
+    cc?: ScheduledEmailUpdateccInput | string[]
+    subject?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EmailCreateManyThreadInput = {

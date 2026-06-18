@@ -81,6 +81,7 @@ model User {
   chatSessions   ChatSession[]
   payments       Payment[]
   dailyDigests   DailyDigest[]
+  scheduledEmails ScheduledEmail[]
 
   @@index([email])
 }
@@ -311,4 +312,21 @@ model CorsairEvent {
   account   CorsairAccount @relation(fields: [accountId], references: [id])
 
   @@map("corsair_events")
+}
+
+model ScheduledEmail {
+  id          String   @id @default(cuid())
+  userId      String
+  to          String
+  cc          String[]
+  subject     String
+  body        String   @db.Text
+  scheduledAt DateTime
+  status      String   @default("pending") // "pending", "sent", "failed"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status, scheduledAt])
 }

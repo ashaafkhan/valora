@@ -106,10 +106,31 @@ export const gmailRouter = createTRPCRouter({
         subject: z.string(),
         body: z.string(),
         cc: z.array(z.string()).optional(),
+        scheduledAt: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
+      
+      if (input.scheduledAt) {
+        const scheduledTime = new Date(input.scheduledAt);
+        if (scheduledTime > new Date()) {
+          // Save to database instead of sending immediately
+          await ctx.db.scheduledEmail.create({
+            data: {
+              userId,
+              to: input.to,
+              subject: input.subject,
+              body: input.body,
+              cc: input.cc || [],
+              scheduledAt: scheduledTime,
+              status: "pending",
+            },
+          });
+          return { scheduled: true };
+        }
+      }
+
       return sendGmailEmail({
         userId,
         to: input.to,

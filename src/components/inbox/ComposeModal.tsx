@@ -101,6 +101,7 @@ export default function ComposeModal() {
         subject: subject.trim(),
         body,
         cc: ccArray.length > 0 ? ccArray : undefined,
+        scheduledAt: scheduledAt || undefined,
       });
 
       // Reset and close

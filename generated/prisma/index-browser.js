@@ -337,6 +337,19 @@ exports.Prisma.CorsairEventScalarFieldEnum = {
   status: 'status'
 };
 
+exports.Prisma.ScheduledEmailScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  to: 'to',
+  cc: 'cc',
+  subject: 'subject',
+  body: 'body',
+  scheduledAt: 'scheduledAt',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -386,7 +399,8 @@ exports.Prisma.ModelName = {
   CorsairIntegration: 'CorsairIntegration',
   CorsairAccount: 'CorsairAccount',
   CorsairEntity: 'CorsairEntity',
-  CorsairEvent: 'CorsairEvent'
+  CorsairEvent: 'CorsairEvent',
+  ScheduledEmail: 'ScheduledEmail'
 };
 
 /**
