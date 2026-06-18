@@ -91,11 +91,11 @@ export function LandingNav() {
           </button>
 
           <Link
-            href="/login"
+            href="/docs"
             className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]
                        transition-colors px-3 py-2 font-medium"
           >
-            Sign in
+            Docs
           </Link>
           <Link
             href="/login"
