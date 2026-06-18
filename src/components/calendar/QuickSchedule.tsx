@@ -86,13 +86,13 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
     <div className="space-y-3">
       {/* Input */}
       <div
-        className={`flex items-center gap-3 px-4 py-3 bg-surface border rounded-2xl shadow-sm transition-all duration-200 ${
+        className={`flex items-center gap-2 px-3 py-2 bg-surface border rounded-2xl shadow-sm transition-all duration-200 ${
           parsed
             ? "border-primary/40 ring-2 ring-primary/10 shadow-primary/5"
             : "border-border hover:border-border-strong hover:shadow-md"
         }`}
       >
-        <Sparkles className="w-5 h-5 text-primary flex-shrink-0 animate-pulse" />
+        <Sparkles className="w-4 h-4 text-primary flex-shrink-0 animate-pulse ml-1" />
         <input
           ref={inputRef}
           type="text"
@@ -103,20 +103,22 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
           }}
           onKeyDown={(e) => e.key === "Enter" && handleParse()}
           placeholder="e.g. 'Meet team tomorrow at 3pm'"
-          className="flex-1 min-w-0 bg-transparent border-0 outline-none text-sm font-medium text-text-primary placeholder:text-text-muted/70 focus:ring-0 text-ellipsis"
+          className="flex-1 min-w-0 bg-transparent border-0 outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0 text-sm font-medium text-text-primary placeholder:text-text-muted/70 focus:ring-0 text-ellipsis"
           disabled={isParsing}
         />
         <button
           onClick={handleParse}
           disabled={!input.trim() || isParsing}
-          className="px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all disabled:opacity-50 flex-shrink-0 shadow-sm hover:shadow"
+          className={`bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary font-bold rounded-xl flex items-center justify-center transition-all duration-300 disabled:opacity-50 flex-shrink-0 shadow-sm hover:shadow ${
+            input.trim() ? "px-3 py-1.5 text-xs gap-1.5" : "w-8 h-8 p-0"
+          }`}
         >
           {isParsing ? (
-            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            <Loader2 className="w-3.5 h-3.5 animate-spin flex-shrink-0" />
           ) : (
-            <Zap className="w-3.5 h-3.5 fill-current" />
+            <Zap className="w-3.5 h-3.5 fill-current flex-shrink-0" />
           )}
-          Generate
+          {input.trim() ? <span>Generate</span> : null}
         </button>
       </div>
 
