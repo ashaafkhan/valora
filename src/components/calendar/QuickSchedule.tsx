@@ -102,8 +102,8 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
             if (parsed) setParsed(null);
           }}
           onKeyDown={(e) => e.key === "Enter" && handleParse()}
-          placeholder='e.g. "Schedule 30min with team@co.com next Tuesday at 3pm"'
-          className="flex-1 bg-transparent border-0 outline-none text-sm font-medium text-text-primary placeholder:text-text-muted/70 focus:ring-0"
+          placeholder="e.g. 'Meet team tomorrow at 3pm'"
+          className="flex-1 min-w-0 bg-transparent border-0 outline-none text-sm font-medium text-text-primary placeholder:text-text-muted/70 focus:ring-0 text-ellipsis"
           disabled={isParsing}
         />
         <button

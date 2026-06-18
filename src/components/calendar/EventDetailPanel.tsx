@@ -83,10 +83,10 @@ export default function EventDetailPanel({
             <span
               className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
                 event.status === "cancelled"
-                  ? "bg-rose-900/30 text-rose-400 border border-rose-800/30"
+                  ? "bg-rose-100 text-rose-700 border border-rose-200 dark:bg-rose-900/30 dark:text-rose-400 dark:border-rose-800/30"
                   : event.status === "tentative"
-                  ? "bg-amber-900/30 text-amber-400 border border-amber-800/30"
-                  : "bg-emerald-900/30 text-emerald-400 border border-emerald-800/30"
+                  ? "bg-amber-100 text-amber-700 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800/30"
+                  : "bg-emerald-100 text-emerald-700 border border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800/30"
               }`}
             >
               {event.status}
@@ -180,10 +180,10 @@ export default function EventDetailPanel({
                   <span
                     className={`text-[9px] font-semibold px-1.5 py-0.5 rounded-full flex-shrink-0 ${
                       a.status === "accepted"
-                        ? "bg-emerald-900/30 text-emerald-400"
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
                         : a.status === "declined"
-                        ? "bg-rose-900/30 text-rose-400"
-                        : "bg-border text-text-muted"
+                        ? "bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400"
+                        : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
                     }`}
                   >
                     {a.status === "accepted"
@@ -222,19 +222,19 @@ export default function EventDetailPanel({
           <div className="flex gap-2">
             <button
               onClick={() => onRSVP?.(event.googleEventId, "accepted")}
-              className="flex-1 py-1.5 bg-emerald-900/20 hover:bg-emerald-900/40 border border-emerald-800/30 text-emerald-400 text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
+              className="flex-1 py-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 dark:bg-emerald-900/20 dark:hover:bg-emerald-900/40 dark:border dark:border-emerald-800/30 dark:text-emerald-400 text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
             >
               <Check className="w-3 h-3" /> Accept
             </button>
             <button
               onClick={() => onRSVP?.(event.googleEventId, "tentative")}
-              className="flex-1 py-1.5 bg-surface-hover hover:bg-border border border-border text-text-secondary text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
+              className="flex-1 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-700 dark:bg-surface-hover dark:hover:bg-border border border-border dark:text-text-secondary text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
             >
               <HelpCircle className="w-3 h-3" /> Maybe
             </button>
             <button
               onClick={() => onRSVP?.(event.googleEventId, "declined")}
-              className="flex-1 py-1.5 bg-rose-900/20 hover:bg-rose-900/40 border border-rose-800/30 text-rose-400 text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
+              className="flex-1 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 dark:bg-rose-900/20 dark:hover:bg-rose-900/40 dark:border dark:border-rose-800/30 dark:text-rose-400 text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
             >
               <XIcon className="w-3 h-3" /> Decline
             </button>

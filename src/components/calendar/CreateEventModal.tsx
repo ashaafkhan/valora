@@ -209,11 +209,11 @@ export default function CreateEventModal({
       />
 
       {/* Modal */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[520px] bg-[#111111] border border-[#2A2A2A] rounded-2xl shadow-2xl z-50 overflow-hidden animate-fade-in-scale">
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[520px] bg-surface border border-border rounded-2xl shadow-2xl z-50 overflow-hidden animate-fade-in-scale">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-zinc-950">
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-surface-hover/50">
           <span className="text-sm font-bold text-text-primary flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-primary-light" />
+            <Calendar className="w-4 h-4 text-primary" />
             {isEditing ? "Edit Event" : "New Event"}
           </span>
           <button
@@ -233,7 +233,7 @@ export default function CreateEventModal({
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Event title"
             autoFocus
-            className="w-full bg-transparent border-0 border-b border-[#333333] focus:border-[#0066ff] outline-none text-lg font-semibold text-text-primary placeholder-text-muted pb-2 transition"
+            className="w-full bg-transparent border-0 border-b border-border focus:border-primary outline-none text-lg font-semibold text-text-primary placeholder:text-text-muted/70 pb-2 transition"
           />
 
           {/* Conflict warning */}
@@ -261,7 +261,7 @@ export default function CreateEventModal({
                     setEndTime(dateToInputValue(newEnd));
                   }
                 }}
-                className="w-full bg-surface-hover/50 border border-[#2A2A2A] focus:border-[#0066ff] rounded-xl px-3 py-2 text-xs text-text-primary outline-none transition"
+                className="w-full bg-surface-hover/50 border border-border focus:border-primary rounded-xl px-3 py-2 text-sm text-text-primary outline-none transition"
               />
             </div>
             <div className="space-y-1">
@@ -272,7 +272,7 @@ export default function CreateEventModal({
                 type="datetime-local"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
-                className="w-full bg-surface-hover/50 border border-[#2A2A2A] focus:border-[#0066ff] rounded-xl px-3 py-2 text-xs text-text-primary outline-none transition"
+                className="w-full bg-surface-hover/50 border border-border focus:border-primary rounded-xl px-3 py-2 text-sm text-text-primary outline-none transition"
               />
             </div>
           </div>
@@ -311,18 +311,18 @@ export default function CreateEventModal({
                   onChange={(e) => setAttendeeInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addAttendee()}
                   placeholder="attendee@email.com"
-                  className="flex-1 bg-surface-hover/50 border border-[#2A2A2A] focus:border-[#0066ff] rounded-xl px-3 py-2 text-xs text-text-primary placeholder-text-muted outline-none transition"
+                  className="flex-1 bg-surface-hover/50 border border-border focus:border-primary rounded-xl px-3 py-2 text-sm text-text-primary placeholder:text-text-muted/70 outline-none transition"
                 />
                 <button
                   onClick={addAttendee}
-                  className="px-3 py-2 bg-border hover:bg-zinc-700 border border-zinc-700 text-text-primary rounded-xl transition"
+                  className="px-3 py-2 bg-surface hover:bg-surface-hover border border-border text-text-primary rounded-xl transition"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
               </div>
 
               {suggestions.length > 0 && (
-                <div className="absolute left-0 right-0 z-50 bg-[#161616] border border-[#2A2A2A] rounded-xl mt-1 overflow-hidden shadow-xl max-h-48 overflow-y-auto">
+                <div className="absolute left-0 right-0 z-50 bg-surface border border-border rounded-xl mt-1 overflow-hidden shadow-xl max-h-48 overflow-y-auto">
                   {suggestions.map((contact) => (
                     <button
                       key={contact.email}
@@ -331,7 +331,7 @@ export default function CreateEventModal({
                         setAttendees([...attendees, contact.email]);
                         setAttendeeInput("");
                       }}
-                      className="w-full text-left px-3 py-2 hover:bg-[#0066ff]/10 text-xs text-text-primary flex flex-col gap-0.5 transition border-b border-border/50 last:border-0"
+                      className="w-full text-left px-3 py-2 hover:bg-primary/10 text-sm text-text-primary flex flex-col gap-0.5 transition border-b border-border/50 last:border-0"
                     >
                       {contact.name && (
                         <span className="font-semibold text-text-primary">{contact.name}</span>
@@ -347,7 +347,7 @@ export default function CreateEventModal({
                 {attendees.map((email) => (
                   <span
                     key={email}
-                    className="flex items-center gap-1 px-2.5 py-1 bg-[#0066ff]/10 border border-[#0066ff]/20 text-[#93c5fd] text-xs rounded-full"
+                    className="flex items-center gap-1 px-2.5 py-1 bg-primary/10 border border-primary/20 text-primary text-xs rounded-full font-medium"
                   >
                     {email}
                     <button
@@ -368,8 +368,8 @@ export default function CreateEventModal({
               onClick={() => setAddMeet(!addMeet)}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl border transition text-sm font-medium ${
                 addMeet
-                  ? "bg-[#0066ff]/10 border-[#0066ff]/30 text-[#93c5fd]"
-                  : "bg-surface-hover/30 border-border text-text-muted hover:border-zinc-700 hover:text-text-primary"
+                  ? "bg-primary/10 border-primary/30 text-primary"
+                  : "bg-surface-hover/30 border-border text-text-muted hover:border-border-strong hover:text-text-primary"
               }`}
             >
               <Video className="w-4 h-4" />
@@ -379,7 +379,7 @@ export default function CreateEventModal({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-border bg-zinc-950 flex items-center justify-between">
+        <div className="px-6 py-4 border-t border-border bg-surface-hover/50 flex items-center justify-between">
           <button
             onClick={onClose}
             className="px-4 py-2 text-sm text-text-muted hover:text-text-primary transition"
@@ -389,7 +389,7 @@ export default function CreateEventModal({
           <button
             onClick={handleSubmit}
             disabled={isPending || !title.trim()}
-            className="px-5 py-2 bg-[#0066ff] hover:bg-[#1d4ed8] disabled:bg-border disabled:text-text-muted text-white text-sm font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-blue-900/20"
+            className="px-5 py-2 bg-primary hover:bg-primary-hover disabled:bg-surface-hover disabled:border disabled:border-border disabled:text-text-muted text-white text-sm font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-primary/20"
           >
             {isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
