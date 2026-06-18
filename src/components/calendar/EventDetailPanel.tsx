@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { format, differenceInMinutes } from "date-fns";
 import { api } from "@/trpc/react";
+import { useSession } from "next-auth/react";
 
 interface EventDetailPanelProps {
   event: CalendarEvent | null;
@@ -57,10 +58,7 @@ export default function EventDetailPanel({
   const deleteMutation = api.calendar.deleteEvent.useMutation();
   const sendInviteMutation = api.calendar.sendInviteEmail.useMutation();
   
-  // Use the connection status query since it returns the user's email
-  const connQuery = api.gmail.getConnectionStatus.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-  });
+  const { data: session } = useSession();
 
   if (!event) return null;
 
@@ -70,7 +68,7 @@ export default function EventDetailPanel({
     ? (event.attendees as Attendee[])
     : [];
 
-  const userEmail = connQuery.data?.email;
+  const userEmail = session?.user?.email;
   const userAttendee = attendees.find((a) => a.email === userEmail);
   const needsRsvp = userAttendee && userAttendee.status !== "accepted";
 
