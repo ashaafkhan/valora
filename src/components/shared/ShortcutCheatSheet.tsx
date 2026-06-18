@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { Keyboard, X } from "lucide-react";
 
 interface ShortcutCheatSheetProps {
@@ -67,38 +67,49 @@ const RIGHT_SHORTCUTS = [
   },
 ];
 
-function ShortcutRow({ keys, desc }: { keys: string[]; desc: string }) {
+function ShortcutRow({ keys, desc, isMac }: { keys: string[]; desc: string; isMac: boolean }) {
   return (
     <div className="flex items-center justify-between py-1.5 px-1 rounded-lg hover:bg-surface-hover/60 transition-colors">
       <span className="text-xs text-text-secondary">{desc}</span>
       <div className="flex items-center gap-1 ml-4">
-        {keys.map((k, i) => (
-          <kbd
-            key={i}
-            className="text-[10px] font-mono text-text-muted bg-background border border-border px-1.5 py-0.5 rounded min-w-[22px] text-center shadow-sm"
-          >
-            {k}
-          </kbd>
-        ))}
+        {keys.map((k, i) => {
+          const displayKey = isMac && k === "Ctrl" ? "⌘" : k;
+          return (
+            <kbd
+              key={i}
+              className="text-[10px] font-mono text-text-muted bg-background border border-border px-1.5 py-0.5 rounded min-w-[22px] text-center shadow-sm"
+            >
+              {displayKey}
+            </kbd>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-function ShortcutGroup({ group, items }: { group: string; items: { keys: string[]; desc: string }[] }) {
+function ShortcutGroup({ group, items, isMac }: { group: string; items: { keys: string[]; desc: string }[]; isMac: boolean }) {
   return (
     <div className="mb-4">
       <p className="text-[10px] font-bold uppercase tracking-widest text-text-muted mb-2 px-1">
         {group}
       </p>
       {items.map((item, i) => (
-        <ShortcutRow key={i} keys={item.keys} desc={item.desc} />
+        <ShortcutRow key={i} keys={item.keys} desc={item.desc} isMac={isMac} />
       ))}
     </div>
   );
 }
 
 export default function ShortcutCheatSheet({ isOpen, onClose }: ShortcutCheatSheetProps) {
+  const [isMac, setIsMac] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMac(navigator.platform.toUpperCase().indexOf("MAC") >= 0);
+    }
+  }, []);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -146,14 +157,14 @@ export default function ShortcutCheatSheet({ isOpen, onClose }: ShortcutCheatShe
           {/* Left column */}
           <div className="p-5 border-r border-border">
             {LEFT_SHORTCUTS.map((group) => (
-              <ShortcutGroup key={group.group} group={group.group} items={group.items} />
+              <ShortcutGroup key={group.group} group={group.group} items={group.items} isMac={isMac} />
             ))}
           </div>
 
           {/* Right column */}
           <div className="p-5">
             {RIGHT_SHORTCUTS.map((group) => (
-              <ShortcutGroup key={group.group} group={group.group} items={group.items} />
+              <ShortcutGroup key={group.group} group={group.group} items={group.items} isMac={isMac} />
             ))}
           </div>
         </div>

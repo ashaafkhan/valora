@@ -6,25 +6,18 @@
  */
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export default function ThemeToggle({ className = "" }: { className?: string }) {
-  const [isDark, setIsDark] = useState(true);
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // Read from localStorage or default to dark
-    const stored = localStorage.getItem("valora-theme");
-    setIsDark(stored !== "light");
   }, []);
 
   const toggle = () => {
-    const next = !isDark;
-    setIsDark(next);
-    localStorage.setItem("valora-theme", next ? "dark" : "light");
-    // Apply to root element
-    document.documentElement.classList.toggle("light", !next);
-    document.documentElement.classList.toggle("dark", next);
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   if (!mounted) {
@@ -32,6 +25,8 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
       <div className={`w-8 h-8 rounded-xl bg-surface border border-border ${className}`} />
     );
   }
+
+  const isDark = theme === "dark" || (!theme && document.documentElement.classList.contains("dark"));
 
   return (
     <button

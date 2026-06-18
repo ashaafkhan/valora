@@ -6,11 +6,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Inbox, Star, Send, FileText, Trash2, Mail,
   Zap, Calendar, Settings, LogOut, Plus,
-  CreditCard, ChevronLeft, ChevronRight, Sparkles, Rss
+  CreditCard, ChevronLeft, ChevronRight, Sparkles, Rss, Keyboard
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import ThemeToggle from "./ThemeToggle";
+import ShortcutCheatSheet from "./ShortcutCheatSheet";
 
 interface SidebarProps {
   user: {
@@ -75,6 +77,7 @@ export default function Sidebar({ user, onCompose }: SidebarProps) {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
   const [zaraVisited, setZaraVisited] = useState(true);
+  const [showShortcuts, setShowShortcuts] = useState(false);
 
   useEffect(() => {
     // Check if Zara has been visited before
@@ -295,29 +298,55 @@ export default function Sidebar({ user, onCompose }: SidebarProps) {
 
         <AnimatePresence>
           {!collapsed && (
-            <motion.button
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => signOut({ callbackUrl: "/login" })}
-              className="mt-1.5 w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-text-muted hover:text-error hover:bg-error/5 transition-colors text-xs"
+              className="mt-2 flex items-center justify-between px-1"
             >
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Sign out</span>
-            </motion.button>
+              <div className="flex items-center gap-1.5">
+                <ThemeToggle className="!w-7 !h-7 !rounded-lg" />
+                <button
+                  onClick={() => setShowShortcuts(true)}
+                  className="w-7 h-7 rounded-lg border border-border bg-surface hover:bg-surface-hover flex items-center justify-center transition-all text-text-muted hover:text-primary"
+                  title="Keyboard Shortcuts"
+                >
+                  <Keyboard className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <button
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-text-muted hover:text-error hover:bg-error/5 transition-colors text-xs"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign out</span>
+              </button>
+            </motion.div>
           )}
         </AnimatePresence>
 
         {collapsed && (
-          <button
-            onClick={() => signOut({ callbackUrl: "/login" })}
-            className="mt-1.5 w-full flex items-center justify-center p-1.5 rounded-lg text-text-muted hover:text-error hover:bg-error/5 transition-colors"
-            title="Sign out"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-          </button>
+          <div className="mt-2 flex flex-col gap-1.5 items-center">
+            <ThemeToggle className="!w-7 !h-7 !rounded-lg" />
+            <button
+              onClick={() => setShowShortcuts(true)}
+              className="w-7 h-7 rounded-lg border border-border bg-surface hover:bg-surface-hover flex items-center justify-center transition-all text-text-muted hover:text-primary"
+              title="Keyboard Shortcuts"
+            >
+              <Keyboard className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              className="w-7 h-7 rounded-lg text-text-muted hover:text-error hover:bg-error/5 transition-colors flex items-center justify-center"
+              title="Sign out"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+            </button>
+          </div>
         )}
       </div>
+
+      <ShortcutCheatSheet isOpen={showShortcuts} onClose={() => setShowShortcuts(false)} />
     </motion.aside>
   );
 }

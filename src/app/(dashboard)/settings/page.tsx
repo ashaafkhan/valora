@@ -321,9 +321,7 @@ export default function SettingsPage() {
 
   const navSections = [
     { id: "account", label: "Account", icon: User },
-    { id: "appearance", label: "Appearance", icon: Palette },
     { id: "ai", label: "AI & Priority", icon: Sparkles },
-    { id: "shortcuts", label: "Shortcuts", icon: Keyboard },
     { id: "integrations", label: "Integrations", icon: Link2 },
     { id: "privacy", label: "Privacy & Security", icon: Shield },
     { id: "danger", label: "Danger Zone", icon: AlertTriangle },
@@ -431,114 +429,6 @@ export default function SettingsPage() {
             </SettingsSection>
           )}
 
-          {/* ── Appearance ──────────────────────────────────── */}
-          {activeSection === "appearance" && (
-            <>
-              <SettingsSection icon={Palette} title="Appearance" subtitle="Customize how Valora looks and feels">
-                <div className="py-5 space-y-6">
-                  {/* Theme picker */}
-                  <div>
-                    <p className="text-xs font-semibold text-text-secondary mb-3 uppercase tracking-widest font-mono">Theme</p>
-                    <div className="grid grid-cols-3 gap-2">
-                      {themeOptions.map(({ value, label, icon: Icon }) => {
-                        const isSelected = settings.theme === value;
-                        return (
-                          <button
-                            key={value}
-                            onClick={() => updateSetting("theme", value)}
-                            className={`flex flex-col items-center gap-2 p-3.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
-                              isSelected
-                                ? "border-primary bg-primary/10 text-primary-light"
-                                : "border-border bg-surface-hover/50 text-text-secondary hover:border-primary/40 hover:text-text-primary"
-                            }`}
-                          >
-                            <Icon className={`w-4 h-4 ${isSelected ? "text-primary-light" : "text-text-muted"}`} />
-                            {label}
-                            {isSelected && <Check className="w-3 h-3 absolute top-2 right-2 text-primary-light" />}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Display options */}
-                  <div>
-                    <p className="text-xs font-semibold text-text-secondary mb-0 uppercase tracking-widest font-mono">Display</p>
-                    <ToggleRow
-                      label="Compact Mode"
-                      description="Reduce spacing for higher email density"
-                      enabled={settings.compactMode}
-                      onChange={(v) => updateSetting("compactMode", v)}
-                    />
-                    <ToggleRow
-                      label="Show Read Emails"
-                      description="Include already-read emails in the inbox list"
-                      enabled={settings.showReadEmails}
-                      onChange={(v) => updateSetting("showReadEmails", v)}
-                    />
-                  </div>
-
-                  {/* Emails per page */}
-                  <div>
-                    <p className="text-xs font-semibold text-text-secondary mb-2 uppercase tracking-widest font-mono">Emails per sync</p>
-                    <div className="flex items-center gap-3">
-                      {[10, 25, 50, 100].map((n) => (
-                        <button
-                          key={n}
-                          onClick={() => updateSetting("emailsPerPage", n)}
-                          className={`px-4 py-2 rounded-xl text-xs font-bold border transition cursor-pointer ${
-                            settings.emailsPerPage === n
-                              ? "bg-primary/15 border-primary/40 text-primary-light"
-                              : "bg-surface-hover/50 border-border text-text-secondary hover:border-primary/30 hover:text-text-primary"
-                          }`}
-                        >
-                          {n}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Default calendar view */}
-                  <div>
-                    <p className="text-xs font-semibold text-text-secondary mb-2 uppercase tracking-widest font-mono">Default Calendar View</p>
-                    <div className="flex items-center gap-2">
-                      {(["day", "week", "month"] as const).map((v) => (
-                        <button
-                          key={v}
-                          onClick={() => updateSetting("defaultCalendarView", v)}
-                          className={`px-4 py-2 rounded-xl text-xs font-bold border transition cursor-pointer capitalize ${
-                            settings.defaultCalendarView === v
-                              ? "bg-primary/15 border-primary/40 text-primary-light"
-                              : "bg-surface-hover/50 border-border text-text-secondary hover:border-primary/30 hover:text-text-primary"
-                          }`}
-                        >
-                          {v}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </SettingsSection>
-
-              <SettingsSection icon={Bell} title="Notifications & Sound" subtitle="Control alerts and audio feedback">
-                <div className="py-2">
-                  <ToggleRow
-                    label="Browser Notifications"
-                    description="Show desktop notifications for new emails and events"
-                    enabled={settings.enableNotifications}
-                    onChange={(v) => updateSetting("enableNotifications", v)}
-                  />
-                  <ToggleRow
-                    label="Sound Effects"
-                    description="Play subtle sounds for send, archive, and notifications"
-                    enabled={settings.soundEnabled}
-                    onChange={(v) => updateSetting("soundEnabled", v)}
-                  />
-                </div>
-              </SettingsSection>
-            </>
-          )}
-
           {/* ── AI & Priority ────────────────────────────────── */}
           {activeSection === "ai" && (
             <>
@@ -604,52 +494,6 @@ export default function SettingsPage() {
                 </div>
               </SettingsSection>
             </>
-          )}
-
-          {/* ── Keyboard Shortcuts ───────────────────────────── */}
-          {activeSection === "shortcuts" && (
-            <SettingsSection icon={Keyboard} title="Keyboard Shortcuts" subtitle="Superhuman-grade keyboard-first navigation">
-              <div className="py-2">
-                <ToggleRow
-                  label="Enable Keyboard Shortcuts"
-                  description="Master your inbox at the speed of thought. All shortcuts are context-aware."
-                  enabled={settings.enableKeyboardShortcuts}
-                  onChange={(v) => updateSetting("enableKeyboardShortcuts", v)}
-                />
-              </div>
-              <div className="pb-5">
-                <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest font-mono mb-3">Complete Shortcut Reference</p>
-                <div className="overflow-hidden rounded-xl border border-border">
-                  <table className="w-full text-xs">
-                    <thead>
-                      <tr className="border-b border-border bg-background/50">
-                        <th className="px-4 py-2.5 text-left font-semibold text-text-muted text-[10px] uppercase tracking-wider">Scope</th>
-                        <th className="px-4 py-2.5 text-left font-semibold text-text-muted text-[10px] uppercase tracking-wider">Key</th>
-                        <th className="px-4 py-2.5 text-left font-semibold text-text-muted text-[10px] uppercase tracking-wider">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {SHORTCUT_TABLE.map(({ scope, key, action }, i) => (
-                        <tr
-                          key={i}
-                          className="border-b border-border/40 last:border-0 hover:bg-surface-hover/30 transition"
-                        >
-                          <td className="px-4 py-2.5">
-                            <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border uppercase tracking-wider ${SCOPE_COLORS[scope] ?? ""}`}>
-                              {scope}
-                            </span>
-                          </td>
-                          <td className="px-4 py-2.5">
-                            <kbd className="font-mono">{key}</kbd>
-                          </td>
-                          <td className="px-4 py-2.5 text-text-secondary">{action}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </SettingsSection>
           )}
 
           {/* ── Integrations ─────────────────────────────────── */}
