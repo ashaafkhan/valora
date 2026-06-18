@@ -22,6 +22,8 @@ import ShieldBadge from "./ShieldBadge";
 import { SensitiveEmailBody } from "./SensitiveEmailBody";
 import { format } from "date-fns";
 import { api } from "@/trpc/react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface EmailThreadProps {
   threadId: string;
@@ -289,13 +291,17 @@ export default function EmailThread({
                   {/* Body HTML/Text rendering */}
                   {email.isSensitive && email.sensitiveTypes.length > 0 ? (
                     <SensitiveEmailBody body={email.body} types={email.sensitiveTypes} />
-                  ) : (
+                  ) : email.body.includes("</") ? (
                     <div
                       className="text-sm text-text-secondary leading-relaxed overflow-x-auto whitespace-pre-wrap select-text font-sans"
-                      dangerouslySetInnerHTML={{
-                        __html: email.body.includes("</") ? email.body : email.body.replace(/\n/g, "<br/>"),
-                      }}
+                      dangerouslySetInnerHTML={{ __html: email.body }}
                     />
+                  ) : (
+                    <div className="text-sm text-text-secondary leading-relaxed overflow-x-auto whitespace-pre-wrap select-text font-sans [&_a]:text-primary-light [&_a]:underline hover:[&_a]:text-primary">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {email.body}
+                      </ReactMarkdown>
+                    </div>
                   )}
                 </div>
               )}

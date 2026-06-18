@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { ShieldAlert, Eye, EyeOff } from "lucide-react";
 import type { SensitiveType } from "@/types";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface SensitiveEmailBodyProps {
   body: string;
@@ -25,12 +27,18 @@ export function SensitiveEmailBody({ body, types }: SensitiveEmailBodyProps) {
             Hide
           </button>
         </div>
-        <div
-          className="text-sm text-text-secondary leading-relaxed overflow-x-auto whitespace-pre-wrap select-text font-sans"
-          dangerouslySetInnerHTML={{
-            __html: body.includes("</") ? body : body.replace(/\n/g, "<br/>"),
-          }}
-        />
+        {body.includes("</") ? (
+          <div
+            className="text-sm text-text-secondary leading-relaxed overflow-x-auto whitespace-pre-wrap select-text font-sans"
+            dangerouslySetInnerHTML={{ __html: body }}
+          />
+        ) : (
+          <div className="text-sm text-text-secondary leading-relaxed overflow-x-auto whitespace-pre-wrap select-text font-sans [&_a]:text-primary-light [&_a]:underline hover:[&_a]:text-primary">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {body}
+            </ReactMarkdown>
+          </div>
+        )}
       </div>
     );
   }
