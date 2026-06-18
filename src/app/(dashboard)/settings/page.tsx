@@ -30,7 +30,12 @@ import {
   Mail,
   Calendar,
   Bot,
+  RefreshCw,
+  Unplug,
+  RefreshCcw,
 } from "lucide-react";
+import { api } from "@/trpc/react";
+import { getIntegrationOAuthUrl, disconnectIntegration } from "./actions";
 
 // ── Types ───────────────────────────────────────────────────────
 type ThemeOption = "dark" | "light" | "system";
@@ -175,7 +180,31 @@ export default function SettingsPage() {
   });
 
   const [saved, setSaved] = useState(false);
-  const [activeSection, setActiveSection] = useState("account");
+  const [activeSection, setActiveSection] = useState<"account" | "integrations" | "privacy" | "danger">("account");
+
+  // Query actual connection status from Corsair via our tRPC API
+  const { data: connectionStatus, refetch: checkConnectionStatus, isFetching: checkingStatus } = api.gmail.getConnectionStatus.useQuery(undefined, {
+    refetchOnWindowFocus: true,
+  });
+
+  const handleReconnect = async (pluginId: string) => {
+    try {
+      const url = await getIntegrationOAuthUrl(pluginId);
+      window.location.href = url;
+    } catch (err) {
+      console.error("Failed to get reconnect URL:", err);
+    }
+  };
+
+  const handleDisconnect = async (pluginId: string) => {
+    try {
+      await disconnectIntegration(pluginId);
+      void checkConnectionStatus();
+    } catch (err) {
+      console.error("Failed to disconnect:", err);
+    }
+  };
+
   const [showDangerConfirm, setShowDangerConfirm] = useState(false);
   const [userPlan, setUserPlan] = useState<string>("Free");
 
@@ -430,78 +459,119 @@ export default function SettingsPage() {
 
           {/* ── Integrations ─────────────────────────────────── */}
           {activeSection === "integrations" && (
-            <SettingsSection icon={Link2} title="Integrations" subtitle="Connected services powering Valora">
-              <div className="py-5 space-y-3">
-                {[
-                  {
-                    icon: Mail,
-                    name: "Gmail",
-                    description: "Read, send, archive, star, and manage labels",
-                    status: "connected",
-                    via: "Corsair SDK",
-                    color: "text-red-400 bg-red-400/10 border-red-400/20",
-                  },
-                  {
-                    icon: Calendar,
-                    name: "Google Calendar",
-                    description: "View, create, and manage calendar events",
-                    status: "connected",
-                    via: "Corsair SDK",
-                    color: "text-blue-400 bg-blue-400/10 border-blue-400/20",
-                  },
-                  {
-                    icon: Sparkles,
-                    name: "Groq AI",
-                    description: "Email prioritization, smart drafts, and agent reasoning",
-                    status: "connected",
-                    via: "Groq API",
-                    color: "text-blue-400 bg-blue-400/10 border-blue-400/20",
-                  },
-                  {
-                    icon: Bot,
-                    name: "Mem0 Memory",
-                    description: "Persistent AI agent memory across sessions",
-                    status: "optional",
-                    via: "Mem0 API",
-                    color: "text-amber-400 bg-amber-400/10 border-amber-400/20",
-                  },
-                ].map(({ icon: Icon, name, description, status, via, color }) => (
-                  <div
-                    key={name}
-                    className="flex items-center gap-4 p-4 bg-background/40 rounded-xl border border-border/60 hover:border-border transition"
-                  >
-                    <div className={`w-9 h-9 rounded-xl border flex items-center justify-center flex-shrink-0 ${color}`}>
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="text-sm font-bold text-text-primary">{name}</p>
-                        <span className="text-[9px] font-mono text-text-muted">via {via}</span>
+            <SettingsSection 
+              icon={Link2} 
+              title="Integrations" 
+              subtitle="Manage connected apps and their permissions"
+              rightAction={
+                <button 
+                  onClick={() => checkConnectionStatus()}
+                  disabled={checkingStatus}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/60 text-xs font-semibold text-text-secondary hover:text-text-primary hover:bg-surface-hover transition-all bg-surface/50 cursor-pointer disabled:opacity-50"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${checkingStatus ? "animate-spin text-primary-light" : ""}`} />
+                  Check status
+                </button>
+              }
+            >
+              <div className="py-5 space-y-4">
+                
+                {/* Gmail Card */}
+                <div className="bg-background/40 rounded-xl border border-border/60 overflow-hidden flex flex-col transition-all duration-200">
+                  <div className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Mail className="w-5 h-5 text-red-500" />
                       </div>
-                      <p className="text-xs text-text-muted">{description}</p>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-bold text-text-primary text-sm">Gmail</h3>
+                          <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[10px] font-bold uppercase tracking-wider ${connectionStatus?.gmailConnected ? "bg-success/10 text-success border-success/20" : "bg-surface text-text-muted border-border"}`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${connectionStatus?.gmailConnected ? "bg-success animate-pulse" : "bg-text-muted"}`} />
+                            {connectionStatus?.gmailConnected ? "Connected" : "Disconnected"}
+                          </div>
+                        </div>
+                        <p className="text-xs text-text-secondary mt-1">
+                          Read, compose, send and manage emails
+                        </p>
+                      </div>
                     </div>
-                    <span
-                      className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg border flex-shrink-0 ${
-                        status === "connected"
-                          ? "bg-success/10 text-success border-success/20"
-                          : "bg-warning/10 text-warning border-warning/20"
-                      }`}
-                    >
-                      {status}
-                    </span>
+                    
+                    <div className="flex items-center gap-2">
+                      <button 
+                        onClick={() => handleReconnect("gmail")}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/60 text-xs font-semibold text-text-secondary hover:text-text-primary hover:bg-surface-hover transition cursor-pointer"
+                      >
+                        <RefreshCcw className="w-3.5 h-3.5" />
+                        Reconnect
+                      </button>
+                      <button 
+                        onClick={() => handleDisconnect("gmail")}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-error/20 text-xs font-semibold text-error hover:bg-error/10 transition cursor-pointer"
+                      >
+                        <Unplug className="w-3.5 h-3.5" />
+                        Disconnect
+                      </button>
+                    </div>
                   </div>
-                ))}
-
-                <div className="pt-2">
-                  <a
-                    href="/connect"
-                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-primary/30 text-primary-light text-xs font-semibold hover:bg-primary/5 transition"
-                  >
-                    <Link2 className="w-3.5 h-3.5" />
-                    Manage Integrations
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </a>
+                  <div className="bg-surface/30 px-5 py-3 border-t border-border/40">
+                    <p className="text-[9px] font-bold text-text-muted uppercase tracking-widest mb-2 font-mono">Permissions</p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface border border-border/50 text-[10px] text-text-secondary font-medium"><Check className="w-3 h-3 text-text-muted" /> Read all messages & threads</span>
+                      <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface border border-border/50 text-[10px] text-text-secondary font-medium"><Check className="w-3 h-3 text-text-muted" /> Send emails on your behalf</span>
+                      <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface border border-border/50 text-[10px] text-text-secondary font-medium"><Check className="w-3 h-3 text-text-muted" /> Manage labels & drafts</span>
+                    </div>
+                  </div>
                 </div>
+
+                {/* Google Calendar Card */}
+                <div className="bg-background/40 rounded-xl border border-border/60 overflow-hidden flex flex-col transition-all duration-200">
+                  <div className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Calendar className="w-5 h-5 text-blue-500" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-bold text-text-primary text-sm">Google Calendar</h3>
+                          <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[10px] font-bold uppercase tracking-wider ${connectionStatus?.calendarConnected ? "bg-success/10 text-success border-success/20" : "bg-surface text-text-muted border-border"}`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${connectionStatus?.calendarConnected ? "bg-success animate-pulse" : "bg-text-muted"}`} />
+                            {connectionStatus?.calendarConnected ? "Connected" : "Disconnected"}
+                          </div>
+                        </div>
+                        <p className="text-xs text-text-secondary mt-1">
+                          View and create calendar events with attendees
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <button 
+                        onClick={() => handleReconnect("googlecalendar")}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/60 text-xs font-semibold text-text-secondary hover:text-text-primary hover:bg-surface-hover transition cursor-pointer"
+                      >
+                        <RefreshCcw className="w-3.5 h-3.5" />
+                        Reconnect
+                      </button>
+                      <button 
+                        onClick={() => handleDisconnect("googlecalendar")}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-error/20 text-xs font-semibold text-error hover:bg-error/10 transition cursor-pointer"
+                      >
+                        <Unplug className="w-3.5 h-3.5" />
+                        Disconnect
+                      </button>
+                    </div>
+                  </div>
+                  <div className="bg-surface/30 px-5 py-3 border-t border-border/40">
+                    <p className="text-[9px] font-bold text-text-muted uppercase tracking-widest mb-2 font-mono">Permissions</p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface border border-border/50 text-[10px] text-text-secondary font-medium"><Check className="w-3 h-3 text-text-muted" /> Read calendar events</span>
+                      <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface border border-border/50 text-[10px] text-text-secondary font-medium"><Check className="w-3 h-3 text-text-muted" /> Create & update events</span>
+                      <span className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface border border-border/50 text-[10px] text-text-secondary font-medium"><Check className="w-3 h-3 text-text-muted" /> Manage Google Meet links</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </SettingsSection>
           )}

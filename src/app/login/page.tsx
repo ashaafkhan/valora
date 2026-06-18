@@ -39,9 +39,7 @@ export default async function LoginPage({ searchParams }: PageProps) {
                           bg-gradient-to-r from-transparent via-primary to-transparent rounded-t-2xl" />
 
           <h2 className="text-xl font-semibold text-text-primary mb-1">Sign in</h2>
-          <p className="text-sm text-text-secondary mb-6">
-            Connect Gmail and Calendar to launch your command center.
-          </p>
+
 
           {error && (
             <div className="mb-5 p-3 bg-error/10 border border-error/20 rounded-xl text-xs text-error">
@@ -65,9 +63,7 @@ export default async function LoginPage({ searchParams }: PageProps) {
               >
                 <GoogleIcon />
                 Continue with Google
-                <span className="ml-auto text-xs text-zinc-400 font-mono bg-zinc-100 px-2 py-0.5 rounded-full">
-                  recommended
-                </span>
+
               </button>
             </form>
           </div>
