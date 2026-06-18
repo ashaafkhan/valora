@@ -64,9 +64,16 @@ export default function EventDetailPanel({
 
   const start = new Date(event.startTime);
   const end = new Date(event.endTime);
-  const attendees: Attendee[] = Array.isArray(event.attendees)
-    ? (event.attendees as Attendee[])
-    : [];
+  const rawAttendees = Array.isArray(event.attendees) ? event.attendees : [];
+  
+  const attendees: Attendee[] = rawAttendees.map((a: any) => {
+    if (typeof a === "string") return { email: a, status: "needsAction" };
+    return {
+      email: a.email || "",
+      name: a.name,
+      status: a.status || "needsAction",
+    };
+  }).filter((a) => a.email);
 
   const userEmail = session?.user?.email;
   const userAttendee = attendees.find((a) => a.email === userEmail);
@@ -93,7 +100,7 @@ export default function EventDetailPanel({
                   ? "bg-rose-100 text-rose-700 border border-rose-200 dark:bg-rose-900/30 dark:text-rose-400 dark:border-rose-800/30"
                   : event.status === "tentative"
                   ? "bg-amber-100 text-amber-700 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800/30"
-                  : "bg-emerald-200 text-emerald-800 border border-emerald-300 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800/30"
+                  : "bg-emerald-200 text-[#17432d] border border-emerald-300 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800/30"
               }`}
             >
               {event.status === "confirmed" ? "Scheduled" : event.status}
@@ -203,19 +210,36 @@ export default function EventDetailPanel({
               ))}
             </div>
 
-            {/* Send invite to first attendee */}
-            {attendees[0]?.email && (
+            {/* Send invite to all attendees */}
+            {attendees.length > 0 && (
               <button
-                onClick={() => onSendInvite(attendees[0]!.email)}
+                onClick={async () => {
+                  try {
+                    for (const a of attendees) {
+                      await sendInviteMutation.mutateAsync({
+                        to: a.email,
+                        eventTitle: event.title,
+                        startTime: event.startTime.toISOString(),
+                        endTime: event.endTime.toISOString(),
+                        location: event.location || undefined,
+                        meetLink: event.videoLink || undefined,
+                      });
+                    }
+                  } catch (err) {
+                    console.error("Failed to send invites:", err);
+                  }
+                }}
                 disabled={sendInviteMutation.isPending}
                 className="w-full mt-2 px-3 py-1.5 bg-surface-hover hover:bg-border border border-border text-text-primary text-xs font-semibold rounded-xl flex items-center justify-center gap-1.5 transition disabled:opacity-50"
               >
                 {sendInviteMutation.isPending ? (
                   <Loader2 className="w-3 h-3 animate-spin" />
+                ) : sendInviteMutation.isSuccess ? (
+                  <Check className="w-3 h-3 text-emerald-500" />
                 ) : (
                   <Mail className="w-3 h-3" />
                 )}
-                Send Email Invite
+                {sendInviteMutation.isSuccess ? "Sent!" : "Send Email Invite"}
               </button>
             )}
           </div>
