@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { groq } from "@/lib/ai";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import { PRICING_LIMITS, PlanType } from "@/lib/pricing";
+import { PRICING_LIMITS, type PlanType } from "@/lib/pricing";
 
 export async function POST(req: Request) {
   try {

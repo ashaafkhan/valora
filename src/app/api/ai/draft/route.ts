@@ -4,7 +4,7 @@ import { z } from "zod";
 import { generateSmartDraft } from "@/lib/ai";
 import { handleRouteError, parseJson, requireUserId } from "@/lib/api-route";
 import { db } from "@/server/db";
-import { PRICING_LIMITS, PlanType } from "@/lib/pricing";
+import { PRICING_LIMITS, type PlanType } from "@/lib/pricing";
 
 const draftSchema = z.object({
   to: z.string().min(1),

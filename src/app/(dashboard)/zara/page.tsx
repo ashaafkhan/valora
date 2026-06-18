@@ -435,7 +435,12 @@ export default function ZaraPage() {
       const res = await fetch("/api/agent/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, sessionId }),
+        body: JSON.stringify({ 
+          message: text, 
+          sessionId, 
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          localTime: new Date().toString()
+        }),
       });
 
       if (!res.ok) {

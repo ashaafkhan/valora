@@ -5,7 +5,7 @@ import { groq, AI_MODEL, chatCompletionWithOrchestration } from "@/lib/ai";
 import { searchMemory, addMemory } from "@/lib/mem0";
 import { executeSearchEmails, executeGetSchedule } from "@/lib/agent-tools";
 
-import { PRICING_LIMITS, PlanType } from "@/lib/pricing";
+import { PRICING_LIMITS, type PlanType } from "@/lib/pricing";
 
 interface Message {
   role: "user" | "assistant" | "system";
@@ -64,8 +64,8 @@ export async function POST(req: Request) {
       );
     }
 
-    const body = (await req.json()) as { message: string; sessionId?: string };
-    const { message, sessionId } = body;
+    const body = (await req.json()) as { message: string; sessionId?: string; timezone?: string; localTime?: string };
+    const { message, sessionId, timezone, localTime } = body;
 
     if (!message) {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
@@ -189,7 +189,10 @@ Important rules:
 2. NEVER expose sensitive information (e.g. passwords, OTPs, full bank details).
 3. Be concise and professional — users are busy.
 4. SCOPE GUARDRAIL: You are strictly an executive assistant. Your ONLY capabilities are managing emails and calendar events, and remembering user preferences. If the user asks about ANYTHING outside this scope (e.g., general knowledge, coding, math, writing essays, or unrelated advice), you MUST politely decline. Briefly explain that you are specialized in inbox and calendar management to keep their workflow optimized.
-5. Current time: ${new Date().toISOString()}.
+5. CURRENT TIME & TIMEZONE:
+   - User's Timezone: ${timezone || 'UTC'}
+   - User's Local Time: ${localTime || new Date().toISOString()}
+   - CRITICAL: When generating startISO and endISO for the create_event tool, you MUST include the correct timezone offset in the ISO string (e.g., "2026-06-18T18:00:00+05:30") so the time is correct in the user's local timezone. Do NOT use "Z" (UTC) unless you have mathematically converted the local time to UTC.
 
 User Preferences/Context:
 ${memoryContext}`;

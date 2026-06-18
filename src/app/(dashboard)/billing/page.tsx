@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Loader2, Zap, Check } from "lucide-react";
-import { PRICING_LIMITS, PRICING_PRICES, PlanType } from "@/lib/pricing";
+import { PRICING_LIMITS, PRICING_PRICES, type PlanType } from "@/lib/pricing";
 
 export default function BillingPage() {
   const [user, setUser] = useState<any>(null);

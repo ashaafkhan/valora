@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Razorpay from "razorpay";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import { PRICING_PRICES, PlanType } from "@/lib/pricing";
+import { PRICING_PRICES, type PlanType } from "@/lib/pricing";
 
 const razorpay = new Razorpay({
   key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "",
