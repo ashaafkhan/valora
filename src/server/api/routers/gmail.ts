@@ -240,4 +240,33 @@ export const gmailRouter = createTRPCRouter({
         name: name || undefined,
       }));
     }),
+
+  // ── Unsubscribe (Block Sender) ───────────────────────────────
+  unsubscribeSender: protectedProcedure
+    .input(z.object({ senderEmail: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+
+      // Create a rule to automatically trash future emails from this sender
+      await ctx.db.labelRule.create({
+        data: {
+          userId,
+          fromEmail: input.senderEmail,
+          action: "trash",
+        },
+      });
+
+      // Retroactively archive all existing emails from this sender
+      await ctx.db.email.updateMany({
+        where: {
+          userId,
+          fromEmail: input.senderEmail,
+        },
+        data: {
+          isArchived: true,
+        },
+      });
+
+      return { success: true };
+    }),
 });

@@ -4,6 +4,8 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Search, Loader2, Mail, Clock, Zap, FileText, Inbox, Calendar, BookOpen, Rss } from "lucide-react";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
+import { api } from "@/trpc/react";
+import { toast } from "sonner";
 
 interface SearchResult {
   id: string;
@@ -19,9 +21,9 @@ interface SearchResult {
 }
 
 const TABS = [
-  { id: "search", label: "Search", icon: Search },
   { id: "summary", label: "Daily Summary", icon: BookOpen },
   { id: "newsletters", label: "Newsletters", icon: Rss },
+  { id: "search", label: "Search", icon: Search },
 ];
 
 // ── Types ───────────────────────────────────────────────────────
@@ -183,7 +185,18 @@ function DailySummaryTab({ data, loading, onGenerate }: { data: DigestData | nul
 
 // ── Newsletters Tab ───────────────────────────────────────────
 function NewslettersTab({ data, loading, onGenerate }: { data: DigestData | null, loading: boolean, onGenerate: () => void }) {
-  const newsletters = data?.newsletters || [];
+  const [unsubscribed, setUnsubscribed] = useState<string[]>([]);
+  const unsubscribeMutation = api.gmail.unsubscribeSender.useMutation({
+    onSuccess: (_, variables) => {
+      setUnsubscribed((prev) => [...prev, variables.senderEmail]);
+      toast.success(`Unsubscribed from ${variables.senderEmail}`);
+    },
+    onError: () => {
+      toast.error("Failed to unsubscribe");
+    }
+  });
+
+  const newsletters = data?.newsletters?.filter(n => !unsubscribed.includes(n.email)) || [];
 
   return (
     <div className="flex-1 overflow-y-auto custom-scrollbar px-8 py-6">
@@ -239,7 +252,11 @@ function NewslettersTab({ data, loading, onGenerate }: { data: DigestData | null
                   <div className="text-[10px] text-text-muted">emails</div>
                 </div>
                 <div className="text-xs text-text-muted flex-shrink-0 w-20 text-right">{n.lastSent}</div>
-                <button className="px-3 py-1.5 rounded-lg border border-error/30 text-error text-xs hover:bg-error/5 transition-colors flex-shrink-0">
+                <button 
+                  onClick={() => unsubscribeMutation.mutate({ senderEmail: n.email })}
+                  disabled={unsubscribeMutation.isPending}
+                  className="px-3 py-1.5 rounded-lg border border-error/30 text-error text-xs hover:bg-error/5 transition-colors flex-shrink-0 disabled:opacity-50"
+                >
                   Unsubscribe
                 </button>
               </div>
@@ -253,7 +270,7 @@ function NewslettersTab({ data, loading, onGenerate }: { data: DigestData | null
 
 // ── Digest Page ───────────────────────────────────────────────
 export default function DigestPage() {
-  const [activeTab, setActiveTab] = useState("search");
+  const [activeTab, setActiveTab] = useState("summary");
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
