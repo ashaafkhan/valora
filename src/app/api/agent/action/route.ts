@@ -86,7 +86,7 @@ export async function POST(req: Request) {
       content: h.content,
     }));
 
-    const systemPrompt = `You are Valora, a premium AI executive assistant.
+    const systemPrompt = `You are Zara AI, a premium AI executive assistant.
 A tool call was executed. The results and the *exact parameters* used are provided below. Complete the response to the user with a brief, professional confirmation message.
 If the user modified the parameters (e.g. changed the recipient email or body), make sure you confirm the *actual* parameters executed (from the tool result), NOT their original request.
 If the user cancelled the action, acknowledge it.
@@ -121,7 +121,7 @@ Keep it direct. Never expose password/OTP details.`;
       temperature: 0.5,
     });
 
-    const choice = completion.choices[0];
+    const choice = completion?.choices[0];
     const finalText = choice?.message?.content ?? `Action complete: ${toolResultText}`;
 
     // Update the pending tool call in DB

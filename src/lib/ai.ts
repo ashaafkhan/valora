@@ -22,10 +22,10 @@ export const AI_MODEL = "llama-3.3-70b-versatile";
 export async function chatCompletionWithOrchestration(params: any, retries = 2) {
   for (let i = 0; i <= retries; i++) {
     try {
-      console.log(`[Orchestration] Attempting OpenAI (gpt-4.1)... Attempt ${i + 1}`);
+      console.log(`[Orchestration] Attempting OpenAI (gpt-4o)... Attempt ${i + 1}`);
       return await openai.chat.completions.create({
         ...params,
-        model: "gpt-4.1", // Using requested fallback text
+        model: "gpt-4o", // Upgraded to flagship model
       });
     } catch (err: any) {
       console.warn(`[OpenAI] Completion attempt ${i + 1} failed:`, err?.message || err);

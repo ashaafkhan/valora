@@ -163,7 +163,7 @@ export async function POST(req: Request) {
       },
     ];
 
-    const systemPrompt = `You are Valora, a premium AI executive assistant for Gmail and Google Calendar.
+    const systemPrompt = `You are Zara AI, a premium AI executive assistant for Gmail and Google Calendar.
 You help busy professionals manage their inbox, compose emails, and organize their schedules.
 
 You have access to tools to help the user. Use 'store_memory' if the user explicitly asks you to remember something or states a preference.
@@ -189,7 +189,7 @@ ${memoryContext}`;
       temperature: 0.5,
     });
 
-    const choice = completion.choices[0];
+    let choice = completion?.choices[0];
     if (!choice) {
       return NextResponse.json({ error: "No response from AI agent" }, { status: 500 });
     }
@@ -294,7 +294,7 @@ ${memoryContext}`;
         ],
       });
 
-      const finalChoice = secondCompletion.choices[0];
+      const finalChoice = secondCompletion?.choices[0];
       const finalText = finalChoice?.message?.content ?? "No response could be formulated.";
 
       // Save user & assistant messages to DB
