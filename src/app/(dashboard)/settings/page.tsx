@@ -586,36 +586,39 @@ export default function SettingsPage() {
             <>
               <SettingsSection
                 icon={Shield}
-                title="Security Shield"
-                subtitle="Automatic detection of sensitive email content"
-                iconBg="bg-emerald-500/10 border-emerald-500/20"
-                iconColor="text-emerald-400"
+                title="Google Account Security"
+                subtitle="Manage your connected Google account settings"
+                iconBg="bg-blue-500/10 border-blue-500/20"
+                iconColor="text-blue-500"
               >
-                <div className="py-2">
-                  <ToggleRow
-                    label="Enable Security Shield"
-                    description="Automatically flags emails containing bank details, OTPs, passwords, and medical/legal data."
-                    enabled={settings.enableSecurityShield}
-                    onChange={(v) => updateSetting("enableSecurityShield", v)}
-                    badge="Recommended"
-                  />
-                </div>
-                <div className="pb-5">
-                  <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest font-mono mb-3">Detected Categories</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {[
-                      { label: "🏦 Banking", desc: "Account numbers, card details, wire transfers" },
-                      { label: "🔑 OTP / 2FA", desc: "One-time passwords, verification codes" },
-                      { label: "🔐 Passwords", desc: "Credential resets, API keys" },
-                      { label: "🏥 Medical", desc: "Diagnoses, prescriptions, lab results" },
-                      { label: "⚖️ Legal", desc: "NDAs, subpoenas, legal notices" },
-                      { label: "👤 Personal", desc: "SSN, passport, home address" },
-                    ].map(({ label, desc }) => (
-                      <div key={label} className="p-3 bg-background/40 rounded-xl border border-border/50 text-xs">
-                        <p className="font-semibold text-text-primary mb-0.5">{label}</p>
-                        <p className="text-text-muted text-[10px] leading-relaxed">{desc}</p>
-                      </div>
-                    ))}
+                <div className="flex flex-col">
+                  <div className="p-4 border-b border-border/50 flex items-center justify-between hover:bg-surface-hover transition-colors">
+                    <div>
+                      <h4 className="text-sm font-semibold text-text-primary">Sign-in method</h4>
+                      <p className="text-xs text-text-secondary mt-0.5">Google OAuth 2.0 — managed by Google</p>
+                    </div>
+                    <a 
+                      href="https://myaccount.google.com/security?pli=1" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/60 text-xs font-semibold text-text-secondary hover:text-text-primary hover:bg-surface transition"
+                    >
+                      Manage <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                  <div className="p-4 flex items-center justify-between hover:bg-surface-hover transition-colors">
+                    <div>
+                      <h4 className="text-sm font-semibold text-text-primary">Data & Privacy</h4>
+                      <p className="text-xs text-text-secondary mt-0.5">Manage your data and privacy settings</p>
+                    </div>
+                    <a 
+                      href="https://myaccount.google.com/data-and-privacy" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/60 text-xs font-semibold text-text-secondary hover:text-text-primary hover:bg-surface transition"
+                    >
+                      Manage <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
                   </div>
                 </div>
               </SettingsSection>
