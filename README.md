@@ -1,6 +1,7 @@
 # Valora: The AI Workflow Command Center
 **Version:** 1.0.0-rc.1  
-**Repository:** [github.com/ashaafkhan/valora](https://github.com/ashaafkhan/valora)
+**Repository:** [github.com/ashaafkhan/valora](https://github.com/ashaafkhan/valora)  
+**Live Demo:** [https://www.valorahq.in/](https://www.valorahq.in/)
 
 <div align="center">
   <img src="public/valora_logo.png" alt="Valora Logo" width="120" />
