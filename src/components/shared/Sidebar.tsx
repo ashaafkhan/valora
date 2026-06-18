@@ -56,12 +56,12 @@ const MAIL_NAV: NavItem[] = [
 ];
 
 const TOOLS_NAV: NavItem[] = [
-  { label: "Digest", href: "/digest", icon: Zap, shortcut: "D" },
+  { label: "Calendar", href: "/calendar", icon: Calendar, shortcut: "C" },
 ];
 
 const APP_NAV: NavItem[] = [
-  { label: "Calendar", href: "/calendar", icon: Calendar, shortcut: "C" },
   { label: "Zara AI", href: "/zara", icon: Sparkles, shortcut: "A", isNew: true },
+  { label: "Digest", href: "/digest", icon: Zap, shortcut: "D" },
 ];
 
 const ACCOUNT_NAV: NavItem[] = [
