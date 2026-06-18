@@ -84,6 +84,7 @@ export const calendarRouter = createTRPCRouter({
         endTime: z.string().optional(),
         description: z.string().optional(),
         location: z.string().optional(),
+        attendees: z.array(z.string()).optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -96,6 +97,7 @@ export const calendarRouter = createTRPCRouter({
         endTime: input.endTime ? new Date(input.endTime) : undefined,
         description: input.description,
         location: input.location,
+        attendees: input.attendees,
       });
     }),
 

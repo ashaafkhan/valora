@@ -4,7 +4,7 @@
  * Valora — CreateEventModal (Stage 8)
  * Full create/edit modal with conflict detection, Meet toggle, and attendees
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   X,
   Calendar,
@@ -71,6 +71,10 @@ export default function CreateEventModal({
   const [attendees, setAttendees] = useState<string[]>([]);
   const [addMeet, setAddMeet] = useState(false);
   const [conflict, setConflict] = useState<{ hasConflict: boolean; conflictWith?: string } | null>(null);
+
+  const [locationSuggestions, setLocationSuggestions] = useState<any[]>([]);
+  const [isSearchingLocation, setIsSearchingLocation] = useState(false);
+  const locationDebounce = useRef<NodeJS.Timeout | null>(null);
 
   const contactsQuery = api.gmail.getRecentContacts.useQuery(undefined, {
     enabled: isOpen,
@@ -179,6 +183,7 @@ export default function CreateEventModal({
         endTime: new Date(endTime).toISOString(),
         description: description || undefined,
         location: location || undefined,
+        attendees: attendees.length > 0 ? attendees : undefined,
       });
     } else {
       await createMutation.mutateAsync({
@@ -261,7 +266,7 @@ export default function CreateEventModal({
                     setEndTime(dateToInputValue(newEnd));
                   }
                 }}
-                className="w-full bg-surface-hover/50 border border-border focus:border-primary rounded-xl px-3 py-2 text-sm text-text-primary outline-none transition"
+                className="w-full bg-surface border border-border focus:border-primary rounded-xl px-3 py-2 text-sm text-text-primary outline-none transition"
               />
             </div>
             <div className="space-y-1">
@@ -272,21 +277,61 @@ export default function CreateEventModal({
                 type="datetime-local"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
-                className="w-full bg-surface-hover/50 border border-border focus:border-primary rounded-xl px-3 py-2 text-sm text-text-primary outline-none transition"
+                className="w-full bg-surface border border-border focus:border-primary rounded-xl px-3 py-2 text-sm text-text-primary outline-none transition"
               />
             </div>
           </div>
 
           {/* Location */}
-          <div className="flex items-center gap-3 px-3 py-2 bg-surface-hover/30 border border-border rounded-xl">
-            <MapPin className="w-3.5 h-3.5 text-text-muted flex-shrink-0" />
-            <input
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Location (optional)"
-              className="flex-1 bg-transparent border-0 outline-none text-sm text-text-primary placeholder-text-muted focus:ring-0"
-            />
+          <div className="relative">
+            <div className="flex items-center gap-3 px-3 py-2 bg-surface border border-border rounded-xl">
+              <MapPin className="w-3.5 h-3.5 text-text-muted flex-shrink-0" />
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                  if (locationDebounce.current) clearTimeout(locationDebounce.current);
+                  if (!e.target.value.trim()) {
+                    setLocationSuggestions([]);
+                    return;
+                  }
+                  locationDebounce.current = setTimeout(async () => {
+                    setIsSearchingLocation(true);
+                    try {
+                      const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(e.target.value)}&limit=5`);
+                      const data = await res.json();
+                      setLocationSuggestions(data);
+                    } catch (err) {
+                      console.error(err);
+                    } finally {
+                      setIsSearchingLocation(false);
+                    }
+                  }, 600);
+                }}
+                placeholder="Location (optional)"
+                className="flex-1 bg-transparent border-0 outline-none text-sm text-text-primary placeholder:text-text-muted focus:ring-0"
+              />
+              {isSearchingLocation && <Loader2 className="w-3.5 h-3.5 animate-spin text-text-muted" />}
+            </div>
+            {locationSuggestions.length > 0 && (
+              <div className="absolute left-0 right-0 z-50 bg-surface border border-border rounded-xl mt-1 overflow-hidden shadow-xl max-h-48 overflow-y-auto">
+                {locationSuggestions.map((loc: any, i: number) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => {
+                      setLocation(loc.display_name);
+                      setLocationSuggestions([]);
+                    }}
+                    className="w-full text-left px-3 py-2 hover:bg-surface-hover text-sm text-text-primary flex flex-col gap-0.5 transition border-b border-border/50 last:border-0"
+                  >
+                    <span className="font-semibold text-text-primary line-clamp-1">{loc.display_name.split(",")[0]}</span>
+                    <span className="text-[10px] text-text-muted line-clamp-1">{loc.display_name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Description */}
@@ -295,7 +340,7 @@ export default function CreateEventModal({
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description (optional)"
             rows={2}
-            className="w-full bg-surface-hover/30 border border-border focus:border-[#0066ff] rounded-xl px-3 py-2 text-sm text-text-primary placeholder-text-muted outline-none resize-none transition"
+            className="w-full bg-surface border border-border focus:border-primary rounded-xl px-3 py-2 text-sm text-text-primary placeholder:text-text-muted outline-none resize-none transition"
           />
 
           {/* Attendees */}
@@ -311,7 +356,7 @@ export default function CreateEventModal({
                   onChange={(e) => setAttendeeInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addAttendee()}
                   placeholder="attendee@email.com"
-                  className="flex-1 bg-surface-hover/50 border border-border focus:border-primary rounded-xl px-3 py-2 text-sm text-text-primary placeholder:text-text-muted/70 outline-none transition"
+                  className="flex-1 bg-surface border border-border focus:border-primary rounded-xl px-3 py-2 text-sm text-text-primary placeholder:text-text-muted/70 outline-none transition"
                 />
                 <button
                   onClick={addAttendee}

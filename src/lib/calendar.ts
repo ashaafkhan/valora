@@ -166,8 +166,9 @@ export async function updateCalendarEvent(params: {
   endTime?: Date;
   description?: string;
   location?: string;
+  attendees?: string[];
 }): Promise<unknown> {
-  const { userId, googleEventId, title, startTime, endTime, description, location } = params;
+  const { userId, googleEventId, title, startTime, endTime, description, location, attendees } = params;
 
   try {
     type UpdateParams = Parameters<
@@ -182,6 +183,9 @@ export async function updateCalendarEvent(params: {
     if (location !== undefined) patchBody.location = location;
     if (startTime) patchBody.start = { dateTime: startTime.toISOString() };
     if (endTime) patchBody.end = { dateTime: endTime.toISOString() };
+    if (attendees !== undefined) {
+      patchBody.attendees = attendees.map((email) => ({ email }));
+    }
 
     const res = await corsair
       .withTenant(userId)

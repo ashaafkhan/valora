@@ -56,6 +56,11 @@ export default function EventDetailPanel({
 }: EventDetailPanelProps) {
   const deleteMutation = api.calendar.deleteEvent.useMutation();
   const sendInviteMutation = api.calendar.sendInviteEmail.useMutation();
+  
+  // Use the connection status query since it returns the user's email
+  const connQuery = api.gmail.getConnectionStatus.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  });
 
   if (!event) return null;
 
@@ -64,6 +69,10 @@ export default function EventDetailPanel({
   const attendees: Attendee[] = Array.isArray(event.attendees)
     ? (event.attendees as Attendee[])
     : [];
+
+  const userEmail = connQuery.data?.email;
+  const userAttendee = attendees.find((a) => a.email === userEmail);
+  const needsRsvp = userAttendee && userAttendee.status !== "accepted";
 
   const handleDelete = async () => {
     if (!confirm(`Delete "${event.title}"?`)) return;
@@ -86,10 +95,10 @@ export default function EventDetailPanel({
                   ? "bg-rose-100 text-rose-700 border border-rose-200 dark:bg-rose-900/30 dark:text-rose-400 dark:border-rose-800/30"
                   : event.status === "tentative"
                   ? "bg-amber-100 text-amber-700 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800/30"
-                  : "bg-emerald-100 text-emerald-700 border border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800/30"
+                  : "bg-emerald-200 text-emerald-800 border border-emerald-300 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800/30"
               }`}
             >
-              {event.status}
+              {event.status === "confirmed" ? "Scheduled" : event.status}
             </span>
           </div>
         </div>
@@ -215,31 +224,33 @@ export default function EventDetailPanel({
         )}
 
         {/* RSVP */}
-        <div className="space-y-2">
-          <div className="text-xs font-semibold text-text-muted uppercase tracking-widest">
-            RSVP
+        {needsRsvp && (
+          <div className="space-y-2">
+            <div className="text-xs font-semibold text-text-muted uppercase tracking-widest">
+              RSVP
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => onRSVP?.(event.googleEventId, "accepted")}
+                className="flex-1 py-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 dark:bg-emerald-900/20 dark:hover:bg-emerald-900/40 dark:border dark:border-emerald-800/30 dark:text-emerald-400 text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
+              >
+                <Check className="w-3 h-3" /> Accept
+              </button>
+              <button
+                onClick={() => onRSVP?.(event.googleEventId, "tentative")}
+                className="flex-1 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-700 dark:bg-surface-hover dark:hover:bg-border border border-border dark:text-text-secondary text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
+              >
+                <HelpCircle className="w-3 h-3" /> Maybe
+              </button>
+              <button
+                onClick={() => onRSVP?.(event.googleEventId, "declined")}
+                className="flex-1 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 dark:bg-rose-900/20 dark:hover:bg-rose-900/40 dark:border dark:border-rose-800/30 dark:text-rose-400 text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
+              >
+                <XIcon className="w-3 h-3" /> Decline
+              </button>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => onRSVP?.(event.googleEventId, "accepted")}
-              className="flex-1 py-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 dark:bg-emerald-900/20 dark:hover:bg-emerald-900/40 dark:border dark:border-emerald-800/30 dark:text-emerald-400 text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
-            >
-              <Check className="w-3 h-3" /> Accept
-            </button>
-            <button
-              onClick={() => onRSVP?.(event.googleEventId, "tentative")}
-              className="flex-1 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-700 dark:bg-surface-hover dark:hover:bg-border border border-border dark:text-text-secondary text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
-            >
-              <HelpCircle className="w-3 h-3" /> Maybe
-            </button>
-            <button
-              onClick={() => onRSVP?.(event.googleEventId, "declined")}
-              className="flex-1 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 dark:bg-rose-900/20 dark:hover:bg-rose-900/40 dark:border dark:border-rose-800/30 dark:text-rose-400 text-xs font-semibold rounded-xl flex items-center justify-center gap-1 transition"
-            >
-              <XIcon className="w-3 h-3" /> Decline
-            </button>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Footer Actions */}
