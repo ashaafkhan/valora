@@ -83,7 +83,6 @@ export default function QuickSchedule({ onConfirm }: QuickScheduleProps) {
   const isCreating = createMutation.isPending;
 
   return (
-  return (
     <div className="space-y-3">
       {/* Input */}
       <div

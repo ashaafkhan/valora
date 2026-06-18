@@ -54,7 +54,7 @@ export default async function LoginPage({ searchParams }: PageProps) {
             <form
               action={async () => {
                 "use server";
-                await signIn("google", { redirectTo: "/onboarding" });
+                await signIn("google", { redirectTo: params.callbackUrl || "/onboarding" });
               }}
             >
               <button

@@ -194,7 +194,7 @@ export function Pricing() {
 
               {/* CTA */}
               <Link
-                href={plan.href}
+                href={plan.href === '/login' ? `/login?callbackUrl=/billing?plan=${plan.name.toLowerCase()}` : plan.href}
                 className={`block text-center text-sm font-semibold py-3 rounded-xl mb-7 
                             transition-all duration-200 hover:-translate-y-0.5 ${plan.ctaClass}`}
               >
